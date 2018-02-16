@@ -1,0 +1,54 @@
+<!--#include virtual="header.html" -->
+<!--#include virtual="prodh.html" -->
+
+<h1>Bit Defender 8</h1>
+<p>Code, Script, Sound: PulkoMandy</p>
+<img src="pic/bitdef.png" alt="Bit Defender 8">
+
+<p>1K BASIC prod released at Forever 16. The theme was "defender of the 8bits",
+which I interpreted as making an antivirus for our 8bit machines. It is not very
+good at solving the issues it finds, however.</p>
+<a href="prods/bitdef8.zip">Download DSK</a>
+
+<h1>Plasma Pas Cher</h1>
+<p>Code: CloudStrife &amp; PulkoMandy - Music: PulkoMandy - Graphs: CeD &amp; PulkoMandy</p>
+<img src="pic/ppc.png" alt="Plasma Pas Cher">
+<p>Finally switching to assembly language ! This demo features a plasma made with a trick never used before. It was done using only real CPC hardware and software (Dams, OCP, Starkos, SFC, Parados and the Basic). No emulators or cross-dev tools were involved.</p>
+<p>Will run on any CPC with floppydrive, but not on emulators !</p>
+<a href="prods/ppc.zip">Download DSK</a>
+
+<h1>Rotater Pas Cher</h1>
+<p>Code: PulkoMandy - Design: PulkoMandy</p>
+<img src="pic/rotater.png" alt="Rotater Pas Cher">
+<p>This one is a tunnel, just to show you that Backtro was not that difficult to do. It even features a sidsound.</p>
+<p>Will run on any CPC</p>
+<a href="prods/rotater.zip">Download DSK</a>
+
+<h1>Flipster</h1>
+<p>Code: PulkoMandy - Design: PulkoMandy</p>
+<img src="pic/flipster.png" alt="Flipster">
+<p>Well, this time a real twister, but scrolling horizontally :)</p>
+<p>Will run on any CPC</p>
+<a href="prods/flipster.zip">Download DSK</a>
+
+<h1>COStimus</h1>
+<p>Code: PulkoMandy - Design: PulkoMandy</p>
+<img src="pic/costimus.png" alt="COStimus">
+<p>75 dots, 256bytes basic. Not much to say :)</p>
+<p>Will run on any CPC</p>
+<a href="prods/costimus.zip">Download DSK</a>
+
+<h1>TWiSTeR.PaS.CHeR</h1>
+<p>Code: PulkoMandy - Design: PulkoMandy - Cat: PulkoMandy</p>
+<img src="pic/tpc.png" alt="TWiSTeR.PaS.CHeR">
+<p>Shinra enters the Twister Contest with this simple "twister" written in basic. Not very impressive, but it's here :)</p>
+<p>Will run on any CPC</p>
+<a href="prods/tpc.zip">Download DSK</a>
+
+<h1>RIEN</h1>
+<p>Code: Cloudstrife - Gfx: Cloudstrife &amp; PulkoMandy - Zik: PulkoMandy</p>
+<img src="pic/rien.png" alt="RIEN">
+<p>our first "demo"! Released at Croco Channel 4 for the &amp;2007 bytes compo. This is only a cheatpart. If you want to watch it, you will need to find the correct password.</p>
+<p>Will run on any CPC</p>
+<a href="prods/rien.zip">Download DSK</a>
+<!--#include virtual="footer.html" -->

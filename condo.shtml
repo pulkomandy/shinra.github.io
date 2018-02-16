@@ -1,0 +1,53 @@
+<!--#include virtual="header.html" -->
+<h1>Un condensateur, comment &ccedil;a marche ?</h1>
+<p>Cet article a &eacute;t&eacute; r&eacute;dig&eacute; sp&eacute;cialement pour Sylvestre du groupe <a href="http://sylvestre.cpcscene.com">Les sucres en morceaux</a>,
+qui a l'impression que les condensateurs font des choses un peu magiques dans un circuit &eacute;lectronique. Bien sur, c'est faux :).</p>
+
+<h2>Le condensateur : principe de base</h2>
+<p>Un condensateur fonctionne comme un accumulateur capable de stocker de l'&eacute;nergie et de la restituer plus tard. C'est simple : quand on alimente un condensateur, il se charge. Quand on ne l'alimente plus, il reste charg&eacute;. Quand on le branche sur une r&eacute;sistance, il se d&eacute;charge</p>
+<img src="http://pagesperso-orange.fr/pulko.mandy/shinra/pic/tech/condo_charge.gif" />
+<img src="http://pagesperso-orange.fr/pulko.mandy/shinra/pic/tech/condo_decharge.gif" />
+<p>La charge d'un condensateur n'est pas lin&eacute;aire, elle est rapide au d&eacute;but mais plus on approche de la tension maximale, plus elle ralentit.</p>
+<img src="http://pagesperso-orange.fr/pulko.mandy/shinra/pic/tech/courbe_charge.gif" />
+<p>&Eacute;volution de la tension en sortie d'un condensateur pendant la charge.</p>
+<p>En pratique, dans un circuit, le condensateur est soumis &agrave; une tension variable et se charge ou se d&eacute;charge selon que cette tension est sup&eacute;rieure ou inf&eacute;rieure &agrave; sa charge courante</p>
+<p>En r&eacute;alit&eacute;, on peut consid&eacute;rer la d&eacute;charge d'un condensateur comme une charge &agrave; l'envers.</p>
+
+<h2>Utilisation : le d&eacute;couplage</h2>
+<p>C'est l'utilisation la plus courante d'un condensateur. Nous allons l'appliquer au cas de l'Amstrad CPC pour ne pas rendre cet article trop abstrait, mais ce genre de montage est pr&eacute;sent dans tout appareil utilisant des puces &eacute;lectroniques. On place un condensateur de petite capacit&eacute;
+entre les bornes +5 et 0V d'un circuit int&eacute;gr&eacute;, par exemple le z80, le Gate Array, mais aussi toutes les puces logiques utilis&eacute;es. Au d&eacute;marrage de l'ordinateur, le condensateur se charge
+(rapidement, car c'est un petit condensateur). Ensuite lorsqu'on utilise le circuit, celui-ci consomme plus ou
+moins d'&eacute;nergie sur son alimentation. Cela provoque des appels de courant, et s'il n'y a pas de condensateurs, c'est l'alimentation principale qui doit y r&eacute;pondre.  Le condensateur se d&eacute;charge et se
+recharge un peu pour &eacute;viter ces fluctuations, ce qui &eacute;vite de ressentir des perturbations de
+l'alimentation dans d'autres parties de l'ordinateur (par exemple des interf&eacute;rences &agrave;
+l'&eacute;cran ou encore sur la sortie son). Cela s'entend bien sur un Amstrad CPC un peu us&eacute; : on peut
+entendre du bruit dans le buzzer quand on ex&eacute;cute un "10 goto 10" en basic par exemple, car le z80 fait
+beaucoup de choses de fa&ccedil;on r&eacute;p&eacute;titive. Les appels de courant se produisent de fa&ccedil;on cyclique &agrave; une fr&eacute;quence assez faible pour &ecirc;tre audible. Les petites interf&eacute;rences sont amplifi&eacute;es par le circuit audio de l'Amstrad.</p>
+<p>L'absence de ces condensateurs emp&ecirc;chera l'ordinateur de fonctionner correctement, il y aura trop
+d'interf&eacute;rences, surtout au d&eacute;marrage quand tous les circuits vont essayer de s'allumer en
+m&ecirc;me temps. Cela se produit &eacute;galement avec l'usure naturelle des condensateurs. Ils ne parviennent plus &agrave; r&eacute;pondre aux demandes des puces, et l'une de celles ci, sous-aliment&eacute;e, finit par red&eacute;marrer : c'est le plantage.</p>
+
+<h2>Le cas de la pause hard</h2>
+<p>Notre ami Sylvestre rencontre un probl&egrave;me &eacute;trange : lorsqu'il place son ordinateur en pause hard, la reprise se traduit la plupart du temps par un plantage. Ceci peut &ecirc;tre li&eacute; &agrave; des probl&egrave;mes de condensateurs : la reprise apr&egrave;s une pause d'un z80 est similaire &agrave; un d&eacute;marrage &agrave; froid. Cela dit, bien d'autres probl&egrave;mes sont possibles, je pense nottament &agrave; un "bouncing" de l'interrupteur qui pourrait &ecirc;tre r&eacute;solu par l'ajout d'un filtre passe bas.</p>
+<p>Le bouncing est un ph&eacute;nom&egrave;ne courant sur la plupart des interrupteurs. L'ouverture et la fermeture du circuit ne sont pas parfaitement nettes et il se produit une sorte de clignotement avant que tout se stabilise. Je pense que le z80 n'appr&eacute;cie pas trop ce genre de traitement. Un filtre permet de lisser le signal et de masquer ces pics, c'est propre et l'&eacute;lectronique souffre beaucoup moins.</p>
+
+<h3>Remplacer les condensateurs</h3>
+<p>Il s'agit d'une op&eacute;ration risqu&eacute;e, longue et fastidieuse. Personne n'a jamais essay&eacute; donc on ne sait m&ecirc;me pas si elle en vaut la peine.</p>
+<p>Il s'agit de remplacer tous les condensateurs de d&eacute;couplage. Ce sont des condensateurs non polaris&eacute;s qui fonctionnent dans les deux sens. Pas de probl&egrave;me avec &ccedil;a, donc.</p>
+<p>Les condensateurs sont probablement des 22pF (picofarads). C'est une valeur standard.</p>
+<p>On laisse de c&ocirc;t&eacute; les condensateurs chimiques de l'ampli audio (cylindres bleus). ces derniers sont polaris&eacute;s et de plusieurs valeurs diff&eacute;rentes.</p>
+<p>Il faut faire tr&egrave;s attention quand on dessoude quelque chose sur la carte m&egrave;re du CPC, on risque d'arracher la pastille de soudure et il est alors impossible de remplacer le condensateur. &Ccedil;a donne alors un CPC plein de petits straps bleus. Il est difficile de tester un condensateur pour savoir s'il faut le changer.</p>
+
+<h2>Utilisation : le filtrage analogique</h2>
+<img src="http://pagesperso-orange.fr/pulko.mandy/shinra/pic/tech/filtres.png" />
+<p>Le temps de charge et de d&eacute;charge d'un condensateur d&eacute;pend de sa capacit&eacute; (C) et de la r&eacute;sistance de ce qu'il a autour de lui (R). En changeant ces deux valeurs, on peut r&eacute;aliser des filtres.</p>
+<p>On sch&eacute;matise un filtre avec la masse en bas, une entr&eacute;e en haut &agrave; gauche, et une sortie en haut &agrave; droite.</p>
+<p>Dans un filtre passe bas, on a out + VR = in. Dans un passe haut, on a out + VC = in.</p>
+<p>On fait entrer dans un filtre un signal de type sinusoidal. Si ce signal a une fr&eacute;quence faible, il &eacute;volue lentement. Le condensateur a donc le temps de se charger et suit le signal au plus pr&egrave;s. On retrouve donc le m&ecirc;me signal en sortie du filtre.</p>
+<p>Si maintenant on envoie un signal de fr&eacute;quence beaucoup plus haute, le condensateur n'a pas le temps de se charger ni de se d&eacute;charger. La sortie va donc tr&egrave;s peu varier : on dit que le signal est filtr&eacute;.</p>
+<p>Maintenant, si on envoie la somme des deux signaux dans le filtre, le deuxi&egrave;me sera filtr&eacute; mais le premier passera toujours, on peut donc s&eacute;parer ces deux signaux. Cela peut &ecirc;tre utilis&eacute; pour faire un effet de flou sur une image (tout ce qui est net repr&eacute;sente une forte variation que le filtre va &eacute;liminer), on peut aussi d&eacute;moduler le signal d'une radio AM, et bien d'autres choses.</p>
+
+<p>Si on veut faire le contraire, c'est &agrave; dire garder les fr&eacute;quences rapides et supprimer les lentes, il suffit d'&eacute;changer la position du condensateur et celle de la r&eacute;sistance. En effet, la tension d'entr&eacute;e est &eacute;gale &agrave; la somme de la tension dans la r&eacute;sistance et de celle dans le condensateur. Quand le condensateur ne r&eacute;agit pas &agrave; un signal, la r&eacute;sistance se retrouve donc forc&eacute;e de le suivre &agrave; sa place.</p>
+<p>En effet, VC sur le sch&eacute;ma du filtre passe haut corresond &agrave; la sortie du filtre passe bas, et out correspond &agrave; VR du filtre passe bas.</p>
+<p>En fait, les deux filtres sont identiques, mais dans chaque cas on ne garde qu'une partie du signal. Tout ce que fait le filtre passe haut, c'est prendre le compl&eacute;mentaire du passe bas par rapport &agrave; l'entr&eacute;e.
+<!--#include virtual="footer.html" -->

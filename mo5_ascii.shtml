@@ -1,0 +1,70 @@
+<!--#include virtual="mo5.shtml" -->
+<h2>ASCII commands and special chars</h2>
+<p>Sometimes ASCII is a good way to set up the screen or palette without too much code...</p>
+<ul>
+	<li>0	NUL</li>
+	<li>1	SOH</li>
+	<li>2	STOP KEY (basic)</li>
+	<li>3	BREAK (basic)</li>
+	<li>4 	EOT</li>
+	<li>5	ENQ</li>
+	<li>6	ACK</li>
+	<li>7	beep</li>
+	<li>8	cursor left</li>
+	<li>9	cursor right</li>
+	<li>A	cursor down</li>
+	<li>B	cursor up</li>
+	<li>C	RAZ (clear screen)</li>
+	<li>D	return (begin of next line)</li>
+	<li>E	teletel semigraphic mode</li>
+	<li>F	alphanum mode</li>
+	<li>10	DLE</li>
+	<li>11	show cursor</li>
+	<li>12	nothing</li>
+	<li>13	nothing</li>
+	<li>14 Hide cursor</li>
+	<li>15</li>
+	<li>16 ACC key (call G2 graphics)</li>
+	<li>17</li>
+	<li>18 erase to EOL</li>
+	<li>19</li>
+	<li>1A</li>
+	<li>1B Escape (see below)</li>
+	<li>1C insert (basic)</li>
+	<li>1D erase (basic)</li>
+	<li>1E tab (basic)</li>
+	<li>1F US (set cursor or window, see below)</li>
+</ul>
+
+<p>Escape and US commands</p>
+<ul>
+	<li>1B 20 4x Select frontcolor for whole screen</li>
+	<li>1B 20 5x Select backcolor for whole screen</li>
+	<li>1B 4x Select frontcolor</li>
+	<li>1B 5x select backcolor</li>
+	<li>1B 6x Select border color</li>
+	<li>1B 70 Normal size chars</li>
+	<li>1B 71 Double height</li>
+	<li>1B 72 Double width</li>
+	<li>1B 73 Double size</li>
+	<li>1B 74 Opaque chars (use color ram)</li>
+	<li>1B 75 Transparent chars (don't touch the color RAM)</li>
+	<li>1B 76 video incrustation</li>
+	<li>1B 78 fast scroll</li>
+	<li>1B 79 Soft scroll</li>
+	<li>1B 7A page mode (no scroll)</li>
+	<li>1B 7B Video invert (negate pixeldata)</li>
+	<li>1F 2n 2n Window top border to line nn</li>
+	<li>1F 1n 1n Window bottom border to line nn</li>
+	<li>1F 4n 4n Move cursor (n may be &gt; 0xF, for example 1F 48 50)</li>
+</ul>
+
+<p>Teletel mode allows you to use semigraphic chars. Switch on by sending 0xE, off with 0xF. In Teletel mode each char is divided in 6 areas as follow:</p>
+<table>
+	<tr><td>A</td><td>B</td></tr>
+	<tr><td>C</td><td>D</td></tr>
+	<tr><td>E</td><td>F</td></tr>
+</table>
+<p>To print a char, encode its data as 0F1EDCBA. Other values may not be used. Control chars could still work (?) and colors will be taken into account (?).</p>
+
+<!--#include virtual="footer.html" -->

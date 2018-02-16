@@ -1,0 +1,39 @@
+<!--#include virtual="mo6.shtml" -->
+<h2>Introduction</h2>
+<p>The Thomson MO6 is a French 8-bit computer. It's an upgrade of the MO5,
+using new gate array technology developped for the TO8. The new gate array
+allows more flexible memory mapping and a simpler hardware design, but still
+ensures almost full compatibility with the MO5. This machine is not explored
+very much, people either prefer the "real" MO5 or the more powerful TO8.</p>
+
+<p>Most (but not all) commercial games worked on both the TO8 and the MO5. As
+a result, they often use only the common hardware between the two, missing some
+tricks that are only possible on only one of the machines. The MO6 lacks the
+timer chip (used for tape drive control on TO8), the keyboard microcontroller
+(instead polling the keyboard matrix using the main CPU and system PIA just
+like the MO5). It has a software-controlled caps lock led.</p>
+
+<p>The MO6 integrates some of the external hardware of MO5 expansions.
+This includes the "Sound and Games" expansion (an extra PIA with two joystick
+ports and 6-bit sound output), the tape drive.</p>
+
+<p>The memory gets upgraded as well. The MO6 comes with 128K of RAM, accessible
+using various mapping schemes. The first 64K can be used as screen memory pages,
+and any part of the memory can be mapped either in "user space" or
+"cartridge space". A compatibility mode for the Nanoréseau is also possible.
+The ROM is upgraded as well. Besides the well-known monitor and Basic 1.0 (both
+of them are updated to configure the MO6 gate array at boot to be in MO5 
+compatible mode), there's an imporved BASIC 128 which integrates "Disk Basic"
+extensions from the MO5 and allows use of the full 128K of memory. The MO6 also
+gets a boot screen where you can pick your BASIC version and set the palette.
+The ROM also has the "ExtraMON" extension which add various useful things to
+the monitor and syscalls.</p>
+
+<p>Most documentation on the machine is only available as scanned PDF of old
+books, and in French. The idea of this page is to sum up all of it in an
+accessible format, using hyperlinks, and all that modern webstuff.</p>
+
+<p>This MO6 documentation will not always repeat things that are the same as
+on the MO5. Please cross-reference the MO5 guide when in doubt.</p>
+
+<!--#include virtual="../footer.html" -->

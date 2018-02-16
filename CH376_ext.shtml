@@ -1,0 +1,769 @@
+<!--#include virtual="header.html" -->
+<h1>USB disk and SD card file management control chip CH376</h1>
+<h2>Part 2: Auxiliary and low-level USB transmission commands</h2>
+
+<p>Version: 1</p>
+<a href="http://wch.cn">http://wch.cn</a>
+
+<p>Note: this page was translated mostly using Google translate from the file
+'CH376DS2.pdf', of which there seem to be no official english translation available.</p>
+
+<h3>1. Additional Commands</h3>
+
+<style>
+table {border-collapse: collapse; }
+.int {background-color: #CCC;}
+</style>
+
+<table border="1"><tr>
+<th>Code</th>
+<th>Command name CMD_</th>
+<th>Input data</th>
+<th>Output Data</th>
+<th>Command Purpose</th>
+</tr>
+
+<tr>
+<td>04H</td>
+<td>SET_USB_SPEED</td>
+<td>Bus Speed</td>
+<td></td>
+<td>USB bus speed setting</td>
+</tr>
+
+<tr>
+<td>0AH</td>
+<td>GET_DEV_RATE</td>
+<td>Data 07H</td>
+<td>Data rate type</td>
+<td>Get the data rate of the USB device type</td>
+</tr>
+
+<tr>
+<td>0AH</td>
+<td>READ_VAR8</td>
+<td>Variable Address</td>
+<td>data</td>
+<td>Read the specified system variable (8-bit)</td>
+</tr>
+
+<tr>
+<td rowspan="2">0BH</td>
+<td rowspan="2">SET_RETRY</td>
+<td>Data 25H</td>
+<td rowspan="2"></td>
+<td rowspan="2">Set the number of retries USB transaction operations</td>
+</tr>
+<tr><td>Retry count</td></tr>
+
+<tr>
+<td rowspan="2">0BH</td>
+<td rowspan="2">WRITE_VAR8</td>
+<td>Variable Address</td>
+<td rowspan="2"></td>
+<td rowspan="2">Set the specified system variable (8-bit)</td>
+</tr>
+<tr><td>data</td></tr>
+
+<tr>
+<td>0CH</td>
+<td>READ_VAR32</td>
+<td>Variable Address</td>
+<td>Data (4 bytes)</td>
+<td>Read the specified 32-bit system variable</td>
+</tr>
+
+<tr>
+<td rowspan="2">0DH</td>
+<td rowspan="2">WRITE_VAR32</td>
+<td>Variable Address</td>
+<td rowspan="2"></td>
+<td rowspan="2">Sets the specified 32-bit system variable</td>
+</tr>
+<tr>
+<td>Data (4 bytes)</td>
+</tr>
+
+<tr>
+<td>0FH</td>
+<td>DELAY_100US</td>
+<td></td>
+<td>Delay Status</td>
+<td>Delay, 100uS</td>
+</tr>
+
+<tr>
+<td>13H</td>
+<td>SET_USB_ADDR</td>
+<td>Address value</td>
+<td></td>
+<td>Setting USB Address</td>
+</tr>
+
+<tr>
+<td>16H</td>
+<td>TEST_CONNECT</td>
+<td></td>
+<td>(delay 2uS)<br/>
+Connection Status</td>
+<td>USB device connection status check</td>
+</tr>
+
+<tr>
+<td>17H</td>
+<td>ABORT_NAK</td>
+<td/><td/>
+<td>Abandon the current Retry NAK</td>
+</tr>
+
+<tr>
+<td>1CH</td>
+<td>SET_ENDP6</td>
+<td>Working mode</td>
+<td>(delay 3uS)</td>
+<td>Set Receiver USB host endpoint</td>
+</tr>
+
+<tr>
+<td>1DH</td>
+<td>SET_ENDP7</td>
+<td>Working mode</td>
+<td>(delay 3uS)</td>
+<td>Setting Transmitter USB host endpoint</td>
+</tr>
+
+<tr>
+<td>25H</td>
+<td>DIRTY_BUFFER</td>
+<td/><td/>
+<td>Clear internal disk and file buffers</td>
+</tr>
+
+<tr>
+<td>41H</td>
+<td>CLR_STALL</td>
+<td>Endpoint number</td>
+<td class="int">Interrupt</td>
+<td>Control Transfer: Clear endpoint error</td>
+</tr>
+
+<tr>
+<td>45H</td>
+<td>SET_ADDRESS</td>
+<td>Address value</td>
+<td class="int">Interrupt</td>
+<td>Control Transfer: Sets the USB address</td>
+</tr>
+
+<tr>
+<td>46H</td>
+<td>GET_DESCR</td>
+<td>Descriptor type</td>
+<td class="int">Interrupt</td>
+<td>Control Transfer: Get Descriptor</td>
+</tr>
+
+<tr>
+<td>49H</td>
+<td>SET_CONFIG</td>
+<td>Configuration value</td>
+<td class="int">Interrupt</td>
+<td>Control Transfer: USB configuration settings</td>
+</tr>
+
+<tr>
+<td>4DH</td>
+<td>AUTO_SETUP</td>
+<td/>
+<td class="int">Interrupt</td>
+<td>Automatic configuration USB device</td>
+</tr>
+
+<tr>
+<td rowspan="2">4EH</td>
+<td rowspan="2">ISSUE_TKN_X</td>
+<td>Sync flag</td>
+<td rowspan="2" class="int">Interrupt</td>
+<td rowspan="2">Issue synchronization tokens, the enforcement branch</td>
+</tr><tr>
+<td>Transaction attributes</td>
+</tr>
+
+<tr>
+<td>51H</td>
+<td>DISK_INIT</td>
+<td/>
+<td class="int">Interrupt</td>
+<td>Initialize USB memory</td>
+</tr>
+
+<tr>
+<td>52H</td>
+<td>DISK_RESET</td>
+<td/>
+<td class="int">Interrupt</td>
+<td>Reset USB storage device</td>
+</tr>
+
+<tr>
+<td>53H</td>
+<td>DISK_SIZE</td>
+<td/>
+<td class="int">Interrupt</td>
+<td>Obtain capacity USB memory</td>
+</tr>
+
+<tr>
+<td>58H</td>
+<td>DISK_INQUIRY</td>
+<td/>
+<td class="int">Interrupt</td>
+<td>Discover USB Memory Features</td>
+</tr>
+
+<tr>
+<td>59H</td>
+<td>DISK_READY</td>
+<td/>
+<td class="int">Interrupt</td>
+<td>Check the USB memory ready</td>
+</tr>
+
+<tr>
+<td>5AH</td>
+<td>DISK_R_SENSE</td>
+<td/>
+<td class="int">Interrupt</td>
+<td>Check the USB memory error</td>
+</tr>
+
+<tr>
+<td>5BH</td>
+<td>RD_DISK_SEC</td>
+<td/>
+<td class="int">Interrupt</td>
+<td>Read disk sector data to the internal buffer</td>
+</tr>
+
+<tr>
+<td>5CH</td>
+<td>WR_DISK_SEC</td>
+<td/>
+<td class="int">Interrupt</td>
+<td>The internal buffer data is written to disk sector</td>
+</tr>
+
+<tr>
+<td>5DH</td>
+<td>DISK_MAX_LUN</td>
+<td/>
+<td class="int">Interrupt</td>
+<td>Get from USB storage device the maximum unit number</td>
+</tr>
+</table>
+
+<h4>1.1 Command CMD_SET_USB_SPEED</h4>
+
+<p>This command is used to set the USB bus speed.</p>
+
+<p>The command needs to input a data for selecting USB bus speed,
+<ul>
+<li>00H corresponding to 12Mbps full-speed mode,</li>
+<li>01H corresponding to 1.5Mbps full speed mode (non-standard mode),</li>
+<li>02H corresponding to 1.5Mbps low-speed mode.</li>
+</ul>
+</p>
+
+<p>The USB bus speed defaults to 12Mbps full speed mode, and after
+performing CMD_SET_USB_MODE command to set USB work mode, it also
+automatically reverts to full speed 12Mbps mode.</p>
+
+<h4>1.2 Command CMD_GET_DEV_RATE</h4>
+
+<p>This command is used to retrieve data rate type of USB device currently connected.</p>
+
+<p>The command needs to input a data 07H, output number according to the
+rate type, which is: a bit 4 is 1.5Mbps low-speed USB device, otherwise it is
+12Mbps full-speed USB device.</p>
+
+<p>This command can only be used in USB Mode 5 (USB host mode enabled, no SOF
+packet).</p>
+
+<h4>1.3 Command CMD_READ_VAR8</h4>
+
+<p>This command is used to read the specified 8-bit (single byte) file system variables.</p>
+
+<p>The command needs the address to read as input, and outputs the current value
+for the requested variable.</p>
+
+<h4>1.4 Command CMD_SET_RETRY</h4>
+
+<p>This command sets the number of retries USB transaction operations.</p>
+
+<p>The command needs to input two data, namely data 25H and retry count.</p>
+<p>Retries bits 7 and 6 designated CH376 NAK response when receiving treatment,
+the bit 7 to 1 and bit 6 to 0 unlimited weight</p>
+
+<p>Test (you can use CMD_ABORT_NAK command to temporarily abandon the current
+retry), bit 7 to 1 and bit 6 is a finite retry up to three seconds.</p>
+
+<p>So, bit 7 to 0 as a result of the notification will NAK microcontroller or
+as error handling.</p>
+
+<p>Retries bits 5 to 0 to specify when the USB device answers retries after a
+timeout CH376 for 0 no retries after a timeout.</p>
+<p>The default number of retries after a chip reset or re-set the USB mode is 8FH,
+it will NAK response received unlimited retries</p>
+
+<p>USB devices after the timeout retries 15 times.</p>
+
+<h4>1.5. Command CMD_WRITE_VAR8</h4>
+
+<p>This command sets the specified 8-bit (single byte) system variable.</p>
+
+<p>The command needs two input bytes, respectively, to specify the variable
+Address and specify variable value.</p>
+
+<h4>1.6 Command CMD_READ_VAR32</h4>
+
+<p>This command is used to read the specified 32-bit (4-byte) system variable.</p>
+
+<p>The command needs the variable address as input.</p>
+<p>The commands reply with the 4 byte value, LSB first.</p>
+
+<h4>1.7 Command CMD_WRITE_VAR32</h4>
+
+<p>This command sets the specified 32-bit (4-byte) system variable.</p>
+
+<p>The command needs 5 input bytes, first the address of the variable, then the
+4 bytes of the value, LSB first.</p>
+
+<h4>1.8 Command CMD_DELAY_100US</h4>
+
+<p>This command is used to delay the 100uS, does not support the
+serial port.</p>
+
+<p>During the delay, any read from the device will return 0, after the end of
+the delay, non-zero data is returned (Usually a chip version number).
+The host microcontroller can poll the data port to detect the end of the delay.</p>
+
+<h4>1.9 Command CMD_SET_USB_ADDR</h4>
+<p>This command sets the USB device address.</p>
+<p>The command needs to input a data for selecting the USB device to be operated
+address.</p>
+<p>After reset or USB device is connected or disconnected, USB device address is
+always 00H, which is the address used for USB device configuration from the microcontroller.</p>
+
+<p>If the microcontroller is provided through a standard USB requests USB
+device address, then you must also set the same USB device through the command
+to allow access to the new address by CH376 USB device communication.</p>
+
+<h4>1.10. Command CMD_TEST_CONNECT</h4>
+
+<p>This command is used to query the current connection status of the USB device
+in the USB host mode.</p>
+
+<p>Typically, the command completes in about 2uS.</p>
+
+<p>After completing the command outputs one of the three states USB_INT_CONNECT, USB_INT_DISCONNECT or
+USB_INT_USB_READY three.
+<ul>
+<li>USB_INT_CONNECT: USB device is connected or has been connected but not initialized.</li>
+<li>USB_INT_DISCONNECT: USB device is not connected or has been disconnected,</li>
+<li>USB_INT_USB_READY: show the USB device is connected and has been initialized (already
+allocated USB address)</li>
+</ul>
+
+<p>outputs 0 indicating that the command has not been completed, you can then read later
+state.</p>
+
+<h4>1.11. Command CMD_ABORT_NAK</h4>
+<p>This command is used to abort the current retry the NAK.</p>
+<p>When CH376 works in USB host mode, the default, CH376 USB receipt
+when the device returns NAK state, will keep retrying until it returns success or
+error.</p>
+<p>This command can be forced to terminate CH376 retry, and then try another operation</p>
+<p>See also SET_RETRY command to set whether to ban NAK retries.</p>
+
+<h4>1.12. Command CMD_SET_ENDP6</h4>
+<p>This command sets the USB host endpoint or endpoint 2 receiver (device mode
+Endpoint OUT / IN 2 of the host endpoint).</p>
+<p>The command needs one input byte, specifying a new working mode.</p>
+<p>For example, if you perform a transaction and would like to receive DATA0 IN abandoned
+DATA1, you must set the host endpoint via the command receiver
+synchronization trigger flag is 0, the corresponding work mode byte
+is 80H.</p>
+
+<p>The command usually completes within 3uS.</p>
+<p>For USB endpoint transceiver working modes, refer to the following table.</p>
+
+<table border="1">
+<tr>
+<th>Mode byte</th>
+<th>Name</th>
+<th>Bit analysis shows ways of working</th>
+</tr>
+
+<tr>
+<td>Bit 7 to bit 6</td>
+<td>Synchronous trigger flag</td>
+
+<td>If bit 7 is a 6-bit synchronous trigger for the new logo:
+	<ul>
+		<li>00 or 01 = holding current synchronous trigger flag unchanged</li>
+		<li>10 = synchronous trigger flag 0</li>
+		<li>11 = synchronous trigger flag is set to 1</li>
+	</ul>
+</td>
+
+</tr>
+
+<tr>
+<td>Bits 5 to 4</td>
+<td>(Reserved bits)</td>
+<td>(Undefined, must be 0)</td>
+</tr>
+
+<tr>
+<td>Bit 3 ~ Bit 0</td>
+<td>Transaction Response Information</td>
+<td>Must be 0000</td>
+</tr>
+</table>
+
+<h4>1.13. Command CMD_SET_ENDP7</h4>
+<p>This command sets the USB host endpoint or endpoint 2 (device mode endpoint
+IN / OUT 2 of host endpoints).</p>
+
+<p>The command needs one input byte, specifying the new mode.</p>
+<p>For example, if you perform SETUP or OUT transaction and want to send DATA0,
+that must be set by the host endpoint command transmitter
+synchronization trigger flag is 0, the corresponding work mode byte
+is 80H.</p>
+
+<p>If you want to send to DATA1, the work mode byte is C0H.</p>
+
+<p>Under normal circumstances, the command completes within 3uS of time.</p>
+
+<h4>1.14. Command CMD_DIRTY_BUFFER</h4>
+
+<p>This command is used at the host file mode clears the internal disk and the file buffer.</p>
+<p>After entering the host file mode, CH376 always store some frequently used data to the internal disk buffer,
+but some commands (for example CMD_RD_DISK_SEC or CMD_WR_DISK_SEC, etc.) also use the internal buffer,
+and invalidate its data. After such commands are finished executing, the CH376 must be notified that it
+should refresh the internal buffer variables.</p>
+
+<h4>1.15. Command CMD_CLR_STALL</h4>
+
+<p>The command is to remove endpoint error control transfer commands.</p>
+<p>The command needs one input byte, which is the identifier of the stalled USB
+device endpoint to clear. For OUT endpoint, the effective address is 01H to
+0FH, for IN endpoints, the effective address is 81H to 8FH.</p>
+
+<p>To simplify the standard USB requests CLEAR_FEATURE, CH376
+complete command after executing an interrupt request to the MCU,
+if the interrupt status is USB_INT_SUCCESS, then the command is executed
+successfully.</p>
+
+<h4>1.16. Command CMD_SET_ADDRESS</h4>
+<p>The command is to set the control transfer command USB address.</p>
+<p>The command needs to input one data to appoint new USB device address, there is
+effective address is 00H ~ 7FH.</p>
+<p>This command is used to simplify the standard USB requests SET_ADDRESS, CH376
+execute the command after the completion of the microcontroller request interrupt,
+if the interrupt status is USB_INT_SUCCESS, then the command is executed successfully.</p>
+
+<h4>1.17. Command CMD_GET_DESCR</h4>
+
+<p>The command is to obtain the descriptor control transfer commands.</p>
+<p>The command needs to input one data to appoint will be acquired descriptor
+type, effective type is 1 or 2, corresponding to the DEVICE CONFIGURATION device
+descriptor and configuration descriptor, wherein the configuration descriptor
+also includes an interface descriptor and endpoint
+descriptors.</p>
+<p>This command is used to simplify the standard USB requests GET_DESCRIPTOR<p>
+<p> On command completion, the CH376 triggers an interrupt request to the MCU,
+if the interrupt status is USB_INT_SUCCESS,
+then the command is successful, microcontroller can use the CMD_RD_USB_DATA0 command to get
+descriptor data.</p>
+
+<p>Because CH376 control transmission buffer is only 64 bytes, when the
+descriptor is longer than 64 bytes, CH376 returns to the operating
+state USB_INT_BUF_OVER. In that case, the control transfer must be performed
+manually using the CMD_ISSUE_TKN_X command.</nobr>
+
+<h4>1.18. Command CMD_SET_CONFIG</h4>
+<p>The command is to set the USB configuration control transfer commands.</p>
+<p>The command needs to input one data to appoint new USB configuration values.</p>
+
+<p>0 configuration is canceled, or should the USB device from the configuration
+descriptor.</p>
+<p>This command is used to simplify the standard USB requests SET_CONFIGURATION,
+CH376 complete command after executing an interrupt request to the MCU, if the
+interrupt status is USB_INT_SUCCESS, then the command is executed successfully.</p>
+
+<h4>1.19. Command CMD_AUTO_SETUP</h4>
+<p>This command is used to automatically configure the USB device (does not
+<p>This command is used to simplify common USB device initialization step, phase
+when in GET_DESCR, SET_ADDRESS, SET_CONFIGURATION and other command sequence.</p>
+<p>CH376 After completion of a command
+to execute single request interrupt, if the interrupt status is USB_INT_SUCCESS, then the command is executed
+successfully.</p>
+
+<h4>1.20. Command CMD_ISSUE_TKN_X</h4>
+<p>This command enables the CH376 issues a synchronization token, the enforcement
+branch.</p>
+<p>The command needs to input two data, respectively, and a
+synchronization flag affairs which sex.</p>
+<p>Receiver synchronization flag bit 7 for the host endpoint synchronous
+trigger flag, bit 6 for the host endpoint transmitter synchronization trigger flag,
+Bits 5 to 0 must be zero.</p>
+<p>Low transaction attribute four specified transaction token PID,
+high four designated purpose USB device endpoint number.</p>
+
+<p>CH376 complete command after executing an interrupt request to the MCU,
+the MCU can read the interrupt status as the operating state of the
+command.</p>
+<p>in case Operating state is USB_INT_SUCCESS, then the command is
+executed successfully, otherwise described command fails, the
+microcontroller can operate State further analyze the reasons for
+failure.</p>
+
+<p>SETUP transaction for sending data and OUT transaction, the number ready
+to be sent should be written by CMD_WR_HOST_DATA command.</p>
+<p>It is, then perform a transaction through CMD_ISSUE_TKN_X command; for receiving data IN
+transaction, it should first pass</p>
+
+<p>CMD_ISSUE_TKN_X command is executed transaction, after
+successful execution, and then reads the data that has been
+received by CMD_RD_USB_DATA0 command.</p>
+
+<p>Here is CH376 supports USB token PID.</p>
+
+<table>
+<tr>
+<th>PID byte
+<th>name</th>
+<th>Explanation</th>
+</tr>
+
+<tr>
+<td>0DH</td>
+<td>DEF_USB_PID_SETUP</td>
+<td>Launch control transfer, the establishment of data sent</td>
+</tr>
+
+<tr>
+<td>01H</td>
+<td>DEF_USB_PID_OUT</td>
+<td>Executive OUT transaction, the transmission data</td>
+</tr>
+
+<tr>
+<td>09H</td>
+<td>DEF_USB_PID_IN</td>
+<td>IN transaction execution, the received data</td>
+</tr>
+</table>
+
+
+<p>For example, when
+the transaction attribute byte is 09H, the CH376 receive data from
+the default endpoint 0 USB devices; transaction attribute
+bytes.</p>
+<p>When 21H, the CH376 USB devices to send data to the endpoint 2; when the
+transaction attribute byte 29H, the CH376 from USB endpoint 2 receives data,
+the endpoint address is 82H.</p>
+
+<h4>1.21. Command CMD_DISK_INIT</h4>
+
+<p>This command is used to initialize the USB storage device (does not support the SD card).</p>
+<p>For USB devices already connected, this command first reset USB
+Bus, and then parses the USB device descriptor, if it is able to support USB
+storage device, it will automatically configure the device, most</nobr>
+After establishing a connection with the USB storage device.</p>
+<p>CH376 complete command after executing an interrupt request to the MCU, if the USB
+device has been disconnected, Interrupt status may be
+USB_INT_DISCONNECT; if the USB device is not recognized or the USB
+storage device is not supported, Then the
+state usually is USB_INT_DISK_ERR or USB_INT_BUF_OVER; if USB storage
+device initialization is successful, then the state will be USB_INT_SUCCESS.</p>
+
+<h4>1.22. Command CMD_DISK_RESET</h4>
+<p>This command is used to reset the control transfer by USB storage device (does not support the SD
+card).</p>
+<p>CH376 complete command after executing the microcontroller
+Request interrupt, if the interrupt status is USB_INT_SUCCESS, the command is executed
+successfully.</p>
+<p>Complete the reset process comprising: This command resets the USB storage
+device, by CLR_STALL command to reset the Bulk-IN endpoint,
+By CLR_STALL command resets Bulk-OUT endpoint.</p>
+<p>When a USB storage device errors occur, CH376 will analyze cause of the error and
+automatically select whether to reset the USB device as needed.</p>
+
+<h4>1.23. Command CMD_DISK_SIZE</h4>
+<p>This command is used to obtain the capacity of USB memory (does not support SD cards).</p>
+
+<p>After successful initialization USB storage device, the command
+<p>CH376 complete command after executing an interrupt request to the MCU, if the interrupt
+status is USB_INT_SUCCESS, you
+can get the data from the CMD_RD_USB_DATA0 command, data is usually
+8 bytes, the first four bytes 
+is the total number of sectors USB storage
+device, double-word data after four byte consisting
+of the number of bytes per sector (both LSB first),
+the result of multiplying the two data is the total capacity in
+bytes of USB storage devices.</p>
+
+<h4>1.24. Command CMD_DISK_INQUIRY</h4>
+<p>The command queries the USB storage device characteristics (does not support SD cards).</p>
+
+<p>CH376 complete command after executing the request to the MCU, if the interrupt status is
+USB_INT_SUCCESS, you can get data from the CMD_RD_USB_DATA0
+command, data is usually 36 bytes, including the
+characteristics of USB storage devices as well as vendor and
+product identification information.</p>
+<p>Generally, this command does not need to be used, unless Analyzing new logical unit.</p>
+
+<h4>1.25. Command CMD_DISK_READY</h4>
+<p>This command is used to check the USB storage device is ready (do not support the SD card).</p>
+
+<p>CH376 complete command after executing an interrupt request to MCU, if the interrupt status
+is USB_INT_SUCCESS, then that USB storage device is already ready.</p>
+
+<h4>1.26. Command CMD_DISK_R_SENSE</h4>
+<p>This command is used to check for
+<p>CH376 complete command
+after executing an interrupt request to the MCU, under normal
+circumstances Interrupt status is
+USB_INT_SUCCESS, after the data can be obtained by the
+CMD_RD_USB_DATA0 command parsing errors.</p>
+
+<h4>1.27. Command CMD_RD_DISK_SEC</h4>
+
+<p>This command is used in a host file mode to read data from
+the disk one sector to the internal buffer.</p>
+
+<h4>1.28. Command CMD_WR_DISK_SEC</h4>
+
+<p>This command is used in a host file mode to write data to a
+disk sector internal buffer.</p>
+
+<h4>1.29. Command CMD_DISK_MAX_LUN</h4>
+
+<p>The command gets the largest logical unit number of USB storage device by
+controlling the transmission.</p>
+<p>CH376 complete command after executing Ask microcontroller
+Seeking interrupt, if the interrupt status is USB_INT_SUCCESS, you can get the data from the
+CMD_RD_USB_DATA0 command, data communication.</p>
+
+<h3>2. External firmware mode</h3>
+
+<h4>2.1 Overview</h4>
+
+<p>CMD_ISSUE_TKN_X command is used to perform basic USB
+transmission services, firmware programming is the most basic USB
+host mode operation.</p>
+
+<p>On this basis, the
+external USB device can be in accordance with the requirements of
+the agreement, the discretion has not been directly CH376 provides
+a simplified command control Transmission system.</p>
+<p>Still further, the
+device can be in accordance with the requirements of the USB
+protocol, dealing with their own particular type of equipment USB
+protocol, to achieve USB device control and data
+exchange.</p>
+<p>CH376 built-Mass-Storage mass storage device Bulk-Only Transport Protocol
+on CBI transport
+protocol in use, or other transfer protocol USB storage device,
+still need external microcontroller based CMD_ISSUE_TKN_X</p>
+Command and control transfer commands
+themselves.</p>
+
+<h4>2.2. External Firmware Reference Flow</h4>
+
+<p>The firmware provides an external reference procedure in CH376
+evaluation board, the following processes are executed by the
+external microcontroller controls the transmission
+standard</p>
+
+<p>Quasi USB request GET_STATUS, get the status of USB devices, reference designs for
+external microcontroller firmware.</p>
+
+<h5>⑴ control establishment phase transfer</h5>
+ <p>① issue CMD_WR_HOST_DATA command writes the requested data eight bytes of
+output buffer, followed by the requested data</p>
+
+<p>80H, 00H, 00H, 00H, 00H, 00H, 02H, 00H, length is
+8.</p>
+ <p>② issue
+CMD_ISSUE_TKN_X command transaction, the synchronization flag is
+00H, the transaction attribute byte is 0DH, the default
+port endpoint 0 SETUP token issue and send
+DATA0.</p>
+ <p>③ wait for the transaction
+to complete microcontroller interrupt or wait for interrupt
+notification.</p>
+ <p>④ after the transaction
+is complete, CH376 the INT # pin is set low, the interrupt request
+to the microcontroller;</p>
+ <p>⑤ the device
+enters the interrupt service routine, or in the main program after
+receiving notice of the interrupt exit standby.</p>
+ <p>⑥ issue CMD_GET_STATUS command to get
+a break.</p>
+ <p>After ⑦ CH376
+completed in CMD_GET_STATUS command INT # pin back to high, to
+cancel an interrupt request.</p>
+
+<p>⑧ SCM Analytical results of the interrupt status, if not
+USB_INT_SUCCESS the operation fails, exception handling; such
+as If the transaction is
+USB_INT_SUCCESS executed successfully complete the build
+phase.</p>
+
+<h5>⑵ control data transfer phase</h5>
+ <p>① issue CMD_ISSUE_TKN_X command transaction, the synchronization flag is
+80H, the transaction attribute byte is 09H, the default port
+ 0 endpoint issued IN token and receive DATA1.</p>
+ <p>② wait for the transaction to complete
+microcontroller; after the transaction is completed, CH376 SCM
+interrupt request.</p>
+ <p>③ CMD_GET_STATUS command
+to get the interrupt status issue, CH376 undo the interrupt
+request.</p>
+ <p>④ Microcontroller Analytical results of the interrupt status, if the
+operation fails exception handling; if USB_INT_SUCCESS
+The transaction is executed successfully.</p>
+ <p>⑤ issue CMD_RD_USB_DATA0 command to get the data returned USB devices, and
+save it as a control transfer return results.</p>
+ <p>⑥ because the control transmission
+requires only one IN transaction, so the data phase is completed.</p>
+
+<h5>⑶ control transfer status stage</h5>
+ <p>① issue CMD_WR_HOST_DATA
+command writes the state data output zero-length buffer length of
+zero.</p>
+ <p>② issue
+CMD_ISSUE_TKN_X command transaction, the synchronization flag is
+40H, the transaction attribute byte is 01H, the default
+port endpoint 0 OUT token issue and send
+DATA1.</p>
+ <p>③ wait for the transaction to complete
+microcontroller; after the transaction is completed, CH376 SCM
+interrupt request.</p>
+ <p>④ issue CMD_GET_STATUS
+command to get the interrupt status, CH376 undo the interrupt
+request.</p>
+ <p>⑤ Microcontroller Analytical results of the interrupt status, if the
+operation fails exception handling; if
+USB_INT_SUCCESS The transaction is successful, the status phase is
+completed.</p>
+
+<h5>⑷ control transfer is complete, the data phase data returned
+data is returned as a standard USB request GET_STATUS
+usually</h5>
+ <p>The returned data length is 2 bytes.</p>
+
+<!--#include virtual="footer.html" -->

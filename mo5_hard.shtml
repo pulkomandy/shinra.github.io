@@ -1,0 +1,202 @@
+<!--#include virtual="mo5.shtml" -->
+<h2>Features and hardware</h2>
+<ul>
+	<li>CPU : 1MHz Motorola <a href="http://koti.mbnet.fi/~atjs/mc6809/">6809E</a></li>
+	<li>Memory : 16K ROM, 48K RAM</li>
+	<li>Screen : 320x200 pixels, 16 colors but only 2 for an 8x1 block (2*8K screen memory : 8K pixel, 8K palette)</li>
+	<li>6821 PIA for handling all the I/O stuff</li>
+	<li>Custom gate array for everything else (mostly video generation and memory mapping)</li>
+	<li>Storage : Tape, available external disk extension, ROM cartridges (overriding the basic)</li>
+	<li>Sound : 1bit buzzer</li>
+</ul>
+
+<p>Overall, it looks quite like a spectrum 48k</p>
+
+<p>There are some hardware extensions available. These include "sound and game"
+(one extra PIA for joysticks and a 6-bit DAC), modem, floppy controllers,
+serial interface (RF57, the CC90 needs some hardware patches), and vocal
+synthetizer. Some of them can logically be plugged together, but the single
+expansion port doesn't allow it. It is possible to use a flat
+cable as a bus for multiple extensions, or use the Megabus or Thomson MO5
+expansion, both of which add some hardware and replicate 3 expansion ports.</p>
+
+<p>Some share the same addresses so they can't be used together in any way.</p>
+
+<h2>CPU</h2>
+<p>The 6809 is a 8 bit CPU with an orthogonal instruction set and a lot of
+addressing modes.<p>
+
+<p>comments are prefixed with ;</p>
+<p>Addressing modes: (assuming there is $33 at address $12 and $FF at address $33)</p>
+<table>
+	<tr><td>LDA #$12</td><td>A = 12 (immediate)</td></tr>
+	<tr><td>LDA $12</td><td>A = *12 = 33 (direct)</td></tr>
+	<tr><td>LDA [$12]</td><td>A = **12 = *33 = FF (indirect)</td></tr>
+	<tr><td>LDA ,X</td><td>A = *X (indexed)</td></tr>
+	<tr><td>LDA ,X+</td><td>A = *X++ (also X++,X-, X--)</td></tr>
+	<tr><td>LDA 5,X</td><td>A = *(X+5) (offset coded on 5, 8 or 16 bits)</td></tr>
+	<tr><td>LDA [5],X</td><td>...or anything you can come up with</td></tr>
+</table>
+
+<p>Registers: AB (or 16-bit D); CC (flags), DP (direct page pointer), X and Y (16 bit indexes), U and S (user and system stack)</p>
+
+<p>Isntructions.</p>
+<p>LDr STr nn</p>
+<p>ADDr ADCr ANDr ASLr ASRr BITr CLRr CMPr COMr DECr EORr INCr LSLr NEGr</p>
+<p>ORr ROLr RORr SBCr SUBr TSTr nn</p>
+<p>ABX (add B to X)</p>
+<p>MUL (D=A*B)</p>
+<p>SEX (sign extend)</p>
+<p>LEASr</p>
+<p>DAA</p>
+<p>EXG r,r</p>
+<p>TFR r,r</p>
+<p>PSH{U,S} r, PUL{U,S} r</p>
+<p>BCC BCS BEQ BNE BGE BGT BHI BHS BLE nn</p>
+<p>BRA nn, JMP nn, JSR nn, RTS</p>
+
+
+<h2>Memory</h2>
+<p>From the 48K of RAM, 16 are dedicated to the screen (see below).
+The screen memory is in two planes, and the remaining 32K are mapped linearly.</p>
+
+<p>All the hardware is mapped in memory space. The memory is at the bottom, the
+ROMs at the top and the IO in between.</p>
+
+<p>See the memory map for more info.</p>
+
+<h2>Screen format</h2>
+<p>The screen is separated in two parts : border and actual pixel data.
+Both use the same color data format : 4 bits, P,B,G,R. P means 'Pastel'
+and is used to lighten the color, except for white which can't be lightened, you get orange instead. It does not work like on spectrum,
+however. Here is the palette :</p>
+
+<table>
+<tr><th>P</th><th>B</th><th>G</th><th>R</th><th>Color</th></tr>
+<tr><td>0</td><td>0</td><td>0</td><td>0</td>
+	<td style="color:white; background:#000">Black</td></tr>
+<tr><td>0</td><td>0</td><td>0</td><td>1</td>
+	<td style="background:#F55">Red</td></tr>
+<tr><td>0</td><td>0</td><td>1</td><td>0</td>
+	<td style="background:#0F0">Green</td></tr>
+<tr><td>0</td><td>0</td><td>1</td><td>1</td>
+	<td style="background:#FF0">Yellow</td></tr>
+<tr><td>0</td><td>1</td><td>0</td><td>0</td>
+	<td style="background:#55F">Blue</td></tr>
+<tr><td>0</td><td>1</td><td>0</td><td>1</td>
+	<td style="background:#F0F">Magenta</td></tr>
+<tr><td>0</td><td>1</td><td>1</td><td>0</td>
+	<td style="background:#5FF">Cyan</td></tr>
+<tr><td>0</td><td>1</td><td>1</td><td>1</td>
+	<td style="background:#FFF">White</td></tr>
+<tr><td>1</td><td>0</td><td>0</td><td>0</td>
+	<td style="background:#AAA">Grey</td></tr>
+<tr><td>1</td><td>0</td><td>0</td><td>1</td>
+	<td style="background:#FAA">Pink</td></tr>
+<tr><td>1</td><td>0</td><td>1</td><td>0</td>
+	<td style="background:#AFA">Light Green</td></tr>
+<tr><td>1</td><td>0</td><td>1</td><td>1</td>
+	<td style="background:#FFA">Chicken Yellow</td></tr>
+<tr><td>1</td><td>1</td><td>0</td><td>0</td>
+	<td style="background:#5AF">Light Blue</td></tr>
+<tr><td>1</td><td>1</td><td>0</td><td>1</td>
+	<td style="background:#FAF">Parma Pink</td></tr>
+<tr><td>1</td><td>1</td><td>1</td><td>0</td>
+	<td style="background:#AFF">Light Cyan</td></tr>
+<tr><td>1</td><td>1</td><td>1</td><td>1</td>
+	<td style="background:#FA5">Orange</td></tr>
+</table>
+
+<p>To set the border color, you have to use PIA port A, bits 4..1.</p>
+<p>The pixel data is mapped as two overleayed pages at address 0..1FFF. You must select color or pixel page by
+writing 0 or 1 to PIA port A, bit 0. Note there are some free bytes at the end of both pages (see the memory map
+for more details). In the color area, the data for each pixel is stored as two P,B,V,R nibbles, one for foreground, and the other for background. At the same adress, but switching to the other page, you can set the pixel data for the same position.</p>
+
+<h2>PIA and Gate Array</h2>
+<p>The hardware is quite restricted and can't do much.</p>
+<p>The PIA is used to access the tape port, the buzzer, keyboard and set the screen border color.</p>
+<p>The Gate Array does all the video timing generation. Unfortunately, there isn't
+any way to control that. No overscan, no weird video modes, no page flipping.
+The only interesting thing is a register allowing to read the electron beam
+position at the last lightpen hit.</p>
+
+<h2>Keyboard</h2>
+<p>The keyboard matrix is scanned using PIA port B. Bits 1, 2 and 3 select a column,
+bits 4, 5 and 6 select a line, and bit 7 reads the state of the selected key.</p>
+
+<p>Internally, the column is selected with a 74LS56 demultiplexer, and the line is selected with a 74LS151 multiplexer (PB7 is the output of this one).</p>
+
+<table>
+	<tr><td>N</td><td>eff</td>     <td>J</td><td>H</td><td>U</td><td>Y</td><td>7</td><td>6</td></tr>
+	<tr><td>,</td><td>ins</td>     <td>K</td><td>G</td><td>I</td><td>T</td><td>8</td><td>5</td></tr>
+	<tr><td>.</td><td>back</td>    <td>L</td><td>F</td><td>O</td><td>R</td><td>9</td><td>4</td></tr>
+	<tr><td>@</td><td>right</td>   <td>M</td><td>D</td><td>P</td><td>E</td><td>0</td><td>3</td></tr>
+	<tr><td>space</td><td>down</td><td>B</td><td>S</td><td>/</td><td>Z</td><td>-</td><td>2</td></tr>
+	<tr><td>X</td><td>left</td>    <td>V</td><td>Q</td><td>*</td><td>A</td><td>+</td><td>1</td></tr>
+	<tr><td>W</td><td>up</td>      <td>C</td><td>raz</td><td>ent</td><td>cnt</td><td>acc</td><td>stop</td></tr>
+	<tr><td>shift</td><td>basic</td></tr>
+</table>
+
+<h2>Tape drive</h2>
+<p>The first thing to notice about the tape drive is the connector use a non-standard pinout. It is as follows (computer connector viewed from outside):</p>
+<img src="pic/din5-180.svg" alt="5 pin 180° DIN connector"/>
+
+<ul>
+<li>Pin 1 - Motor ON (active low)</li>
+<li>Pin 2 - Ground</li>
+<li>Pin 3 - Audio in</li>
+<li>Pin 4 - Data in</li>
+<li>Pin 5 - Data out</li>
+</ul>
+
+<p>Notice the "audio" pin. This one is wired straight to the audio amplifier and then to the SCART connector. On the (stereo!) tape drive, one track is data, and the other is audio. This means you can get a musical tape loader for free!</p>
+<p>All the other pins work on TTL levels. All the analogue signal handling is done in the tape drive to avoid interferences over the wires. This means this port can be used very easily as GPIOs, some pins an even be used in both directions.</p>
+
+<h3>Tape drive detection</h3>
+<p>If you try to access the tape drive without plugging it in, you get an error 60 from BASIC. The detection is done by looking for a logical high level on the tape input.</p>
+
+<h3>Programming and encoding</h3>
+<p>Motor ON is wired to PIA Control A pin. Tape IN/OUT are PIA port A bits 7 and 6.</p>
+<p>The default encoding is an MFM variant. A 0 bit is made of a 830 microsecond constant level (either 1 or 0) without change. An 1 bit is made of two consecutive levels (0 then 1 or 1 then 0) with durations of 411 and 422 microseconds (notice 1 bits are slightly longer!). so a bit always start with a level change, then the reading routine waits for 548 microseconds and reads the line again. If the state changed since the last read, it's a 0, else it's a 1 (and there were two state changes).</p>
+<p>Of course it is possible to work with shorter timings. The tape audio quality is the limiting factor, along with the filtering done in the tape drive. Working with newer media solves this and allows reaching much faster rates.</p>
+
+<h3>Files and blocks</h3>
+
+<p>Files on tape are stored as blocks.</p>
+<ul>
+<li>Inter-block space : variable depending on file type (and save/load block handling code!).</li>
+<li>Block header: 16 bytes with value 01, then 0x3C, 0x5A</li>
+<li>Block data</li>
+</ul>
+
+<p>The data is structured depending on the block type</p>
+<table>
+<tr><th>Offset</th><th>Contents</th></tr>
+<tr><td>0</td><th>Block type = 0: start block</th></tr>
+<tr><td>1</td><td>Block length (0x10)</td></tr>
+<tr><td>2..C</td><td>File name and extension (no dot, space padded)</td></tr>
+<tr><td>D</td><td>File type (00 BASIC, 01 Data, 02 binary, ...)</td></tr>
+<tr><td>E</td><td>File mode (00 binary, FF text)</td></tr>
+<tr><td>F</td><td>File mode (again?)</td></tr>
+<tr><td>10</td><td>Checksum (256-sum of [2..F])</td></tr>
+</table>
+
+<table>
+<tr><th>Offset</th><th>Contents</th></tr>
+<tr><td>0</td><th>Block type = 1: data block</th></tr>
+<tr><td>1</td><td>Block length including length and checksum (0 = 256 bytes, 1 = invalid (?), 2 = 2 bytes (no data), 3 = 3 bytes (1 data byte), ...)</td></tr>
+<tr><td>2..L</td><td>File data (0 to 254 bytes)</td></tr>
+<tr><td>L+1</td><td>Block checksum (256-sum of [2..L])</td></tr>
+</table>
+
+<p>All data blocks usually have a length of 256, except the last one. This is not mandatory.</p>
+
+<table>
+<tr><th>Offset</th><th>Contents</th></tr>
+<tr><td>0</td><th>Block type = FF: end block</th></tr>
+<tr><td>1</td><td>Block length = 2</td></tr>
+<tr><td>2</td><td>Checksum (always 0)</td></tr>
+</table>
+
+<p>Notice for binary files, after decoding hte blocks, there's still a logical header system that specifies load address and file size. There can be multiple logical chunks in the same file, each with an header. The last chunk is similar to the last block, but both must be present.</p>
+<!--#include virtual="footer.html" -->

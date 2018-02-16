@@ -1,0 +1,46 @@
+<!--#include virtual="header.html" -->
+<h1>The MEA8000 speech synthetizer</h1>
+<p>This chip is meant for speech synthesis. but given the limited capabilities of Thomson computers, it's the less cpu-hungry method for making sound.</p>
+<p>It is available as an hardware extension on all Thomson machines. It is, unfortunately, not part of the default setup.</p>
+<p>There are two flavours of it : the Cedic Nathan and Techni Musique ones. They are identical on the programming side.</p>
+
+<h2>Synthetizer system</h2>
+
+<p>The synthetizer is made of a sawtooth generator of adjustable frequency, or a noise generator ; followed by 3 2-order all-pole IIR digital filters.</p>
+<p>The filters coefficients are 14-bits wide, but they are computed by interpolating input values, which have a much lower precision. This makes it a bit hard to output musical notes directly.</p>
+<p>there is an amplifier (multiplier) between the tone generator and the filters. Putting it here means there may be saturation in the filtering chain ?</p>
+
+<h2>Accessing the hardware</h2>
+<p>There are two registers : command and data. When reading any of them, you always get a status byte back.</p>
+<p>On MO5, DATA is at A7CE, and COMMAND at A7CF.</p>
+
+<h3>status register</h3>
+<p>This register only has a single bit, which is bit7. When set, it tells you you can write to the chip. when reset, the chip is busy, and you have to wait.</p>
+<p>This is very important because the MEA8000 interrupts aren't wired in Thomson hardware.</p>
+
+<h3>Command register</h3>
+
+<p>Bit4 (STOP) - Setting this will reset the MEA8000. Any runnning sound will be immediately stopped. Always start with this before sending anything else.</p>
+<p>Bit3 sets what to do when a frame is done. If reset, the MEA8000 will keep the sound generator running, if set, it will stop it.</p>
+<P>Bit2 tells how the end-of-frame stop is done. If reset, the stop will be progressive fade out to silence instead of brultal stop.</p>
+<p>bit1 and 0 : manage the REQ system. Unused on Thomson, since interrupts aren't wired.</p>
+
+<h3>Data register</h3>
+<p>The start of a talk sequence is the initialization of the fondamental frequency as an 8-bit number.</p>
+<p>Then, frames of 4 bytes can be sent to the synthetizer. The first one sets the bandwidth of the 4 filters ; the second one sets the cutoff frequency of filters 2 and 3 ; the third and fourht one sets filters 0 cutoff frequency, volume control, and interpolation speed, as well as the frame duration.</p> 
+
+<h2>Playing samples</h2>
+<p>The synthesis method used in this filter is mostly the same as the one used in cellphones. This means it should be possible to reproduce any sound sample with an update of 4 bytes to the synthetizer every 8ms.
+That makes a bitrate of 4 bits per millisecond, or 4000 b/s. That's 500 bytes for a second of music. It is possible to play 98 seconds of music with the 48K memory of the MO5 :).</p>
+
+<p>The main problem here is properly encoding the music. The theory is as follows :</p>
+<ul>
+<li>Take a sound sample</li>
+<li>for each 8ms frame, analyse its frequency spectrum to find the 4 main frequencies</li>
+<li>find the filter values matching these</li>
+<li>Use the noise generator, and adjust the amplitude to the one of the max peak</li>
+<li>Adjust the bandwidth of each filter to match the power (width*height) of the frequency peak.</li>
+
+<p>That's it, you successfully encoded your music ! Of course, the synthetizer is made for speech encoding, so the results will not be very good with complex symphonic music.</p>
+
+<!--#include virtual="footer.html" -->

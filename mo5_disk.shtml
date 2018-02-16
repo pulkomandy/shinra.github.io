@@ -1,0 +1,191 @@
+<!--#include virtual="mo5.shtml" -->
+
+<h2>Disk Format</h2>
+<p>40 track, 16 sectors (128 or 256 bytes, depends on the floppy controller)</p>
+<p>directory is at track 20, structured as follow :</p>
+<p>sector 1 : reserved (on TO this holds the disk label, 8 ASCII chars, space-padded)</p>
+<p>sector 2 : FAT</p>
+<p>sector 3-16 : directory</p>
+
+<p>FAT: occupation map unit is 8 sectors, so you get 2 blocks per track (1KB in SD, 2KB in DD)</p>
+<p>each byte in the FAT represents a block. but byte 0 is not used. Possible values are:</p>
+<ul>
+<li>FF = block free</li>
+<li>FE = reserved</li>
+<li>0..BF = id of next block for file</li>
+<li>C1..C8 = last block of file (1..8 is the used sector count)</li>
+</ul>
+<p>Catalog format : each entry uses 32 bytes, so you can store up to 112 files per disk. (actually per side, each side is handled as an independant drive).</p>
+<ul>
+	<li>0..7 filename (space padded). First byte is 0 if the entry is free, FF for end of catalog.</li>
+	<li>8..A extension (space padded)</li>
+	<li>B filetype 0 = basic, 1 = ascii, 2 = binary, 3 = asm source, 4 = Paragrape (word processor application for Thomson TO), ...</li>
+	<li>C Flag. Meaning depends on the filetype. For BASIC files, FF=ASCII, 0=bin</li>
+	<li>D first block of file in FAT</li>
+	<li>E..F number of bytes used in last sector. If the last sector is exactly full, one more sector is allocated and this is set to 0.</li>
+	<li>10..1F : reserved (TO9 use them as comment, file date, and some info for CHG resident applications)</li>
+</ul>
+
+<p>There is a trick when reading the FAT from a DD disk : as the FAT is 256 bytes, to point with it with a single pointer andan 8-bit offset, the two halves of the FAT are swapped and the pointer put in the middle. This way you can use offsets directly, the 6809 will count them as signed and this will compensate for the swap. Of course everything is put back in order when writing to disk.</p>
+<p>On SD disks this does not happen as the FAT isonly 128 bytes long.</p>
+
+<h3>Standard process for handling files</h3>
+
+<h4>Reading</h4>
+<ul>
+	<li>Read FAT</li>
+	<li>Open file with mode 1</li>
+	<li>Read data</li>
+</ul>
+
+<h4>Save file without erasing</h4>
+<ul>
+	<li>Read FAT</li>
+	<li>Open file with mode 2 (will fail if file exists)</li>
+	<li>Write data</li>
+	<li>Close file</li>
+	<li>Open file with mode 1</li>
+	<li>Update last sector size in catalog</li>
+	<li>Write catalog/Close file</li>
+</ul>
+<h4>Save file without erasing</h4>
+<ul>
+	<li>Read FAT</li>
+	<li>Open file with mode 3</li>
+	<li>Write data</li>
+	<li>Close file</li>
+	<li>Open file with mode 1</li>
+	<li>Update last sector size in catalog</li>
+	<li>Write catalog/Close file</li>
+</ul>
+
+<h4>erasing a file</h4>
+<ul>
+	<li>Read FAT</li>
+	<li>Open file with mode 2 (will fail if file exists)</li>
+	<li>Erase file</li>
+	<li>Close file</li>
+</ul>
+
+<h4>File header</h4>
+<p>Binary files use a chunk based format. You need to follow this if you want the file to be loadable
+with LOADM. the format is :</p>
+<ul>
+<li>1 byte set to 0 (chunk type)</li>
+<li>Chunk size (2 bytes)</li>
+<li>Load address (2 bytes)</li>
+</ul>
+
+<p>There may be as many chunks as you want in a single binary file. To end the file, the latest chunk is:</p>
+<ul>
+<li>0xFF end marker</li>
+<li>2 bytes set to 0 (empty chunk)</li>
+<li>2 bytes for execution address of the chunk</li>
+</ul>
+
+<p>This allows for some tricks. You can have small chunks changing the screen border by writing to the PIA directly, for example.</p>
+
+<h2>Floppy controller</h2>
+<p>There are 3 different floppy disk extensions, each with his own controller. They are all of the WD279x family.</p> 
+<p class="todo">This part only talks about the CD90-640, whichis the only controller I have. It is apparently a WD1770 based one.</p>
+<p>There are 4 registers to communicate with the FDC. Writing to the command register starts a command, you may need to set 
+parameters in the ther registers before that. While the command runs, there may be a daa phase where you get/send data in the data register.</p>
+
+<p>Here are some useful documents :</p>
+<ul>
+	<li><a href="http://regregex.bbcmicro.net/fdc-combined.htm">Quicksheet</a></li>
+	<li><a href="http://info-coach.fr/atari/documents/datasheets/WD177x-Prog.txt">Programming info</a></li>
+	<li><a href="http://www.atarimagazines.com/startv1n2/ProbingTheFDC.html">Probing hte FDC</a></li>
+	<li>Datasheet of WD controllers and TMS279x which is better redacted. Also, the manuel technique du TO8/TO8D/TO9+ has some info on the Thomson variant of this controller, used in the 3.5" expansion for the MO5/6.</li>
+</ul>
+
+<p>There is no interrupt wired on the MO5 (as usual). This means when reading or writing, you have to do do everything by polling. With the 1MHz 6809, it can get tricky to do it right.</p>
+
+<h3>Registers</h3>
+<p>Nothing special to say about them, just look at the docs above.</p>
+<ul>
+	<li>A7D0 : Command/Status</li>
+	<li>A7D1 : Track</li>
+	<li>A7D2 : Sector</li>
+	<li>A7D3 : Data</li>
+</ul>
+
+<p>There is an additionnal register at A7D8, this one allows to select the drive and side you want to work with. Bit 0 selects the side, bit 2 and 3 act as drive select bits (one for each drive). Bit 7 allows to switch
+to single density mode when it is set.</p>
+
+<h3>Simple routines</h3>
+<p>These are the basics to get started with FDC programming.</p>
+
+<h4>Waiting for the controller</h4>
+<p>Since the floppy drive is a slow device, you need to wait for your commands to be done. It is a good idea to do that after any of the other commands.</p>
+<pre>
+wready	LDA	,X
+	BITA	#$1
+	BNE	wready
+	RTS
+</pre>
+
+<h4>Seeking to a track</h4>
+<p>This routine assumes that the track register is up to date. Either you write the current track to this register, or you start with a RESTORE command to get the head on track 0.</p>
+<p>Input : register A holds track to seek to. X points to the FDC (A7D0)</p>
+<pre>
+seek	STA	3,X	* A is stored in the DATA register 
+	LDA	#$10	* SEEK command
+	STA	,X
+	RTS
+</pre>
+
+<h4>Restore</h4>
+<pre>
+restor	CLRA
+	STA	,X
+	RTS
+</pre>
+
+<h4>Write</h4>
+<p>Input : U points to data to write, D holds track number and sector ID</p>
+<pre>
+write	ORCC	#$50	* Disable all interrupts, our timing is critical
+	STD	1,X	* Send Track and Sector IDs
+	LEAY	3,X	* Y points to data register (we need fast access to it)
+	LDA	#$A8	* Write command with motor spinup delay
+	STA	,X
+	BSR	delay	* Wait for the FDC to handlethe command
+	BRA	do 
+load	STA	,Y	* Write one byte 
+do	LDA 	,U+	* Get one byte from memory
+wai	LDB	,X	* Read status 
+	BITB	#2	* Do we need to write one byte now ?
+	BNE	load 
+	BITB	#1	* Is the command done ?
+	BNE	wai	* If not, we need to wait for previous byte to be handled 
+	ANDCC	#$AF	* Allow interrupts again
+	RTS 
+
+delay	BSR hop		* Just waste some time (35 cycles) jumping around
+	BSR hop
+	BSR hop
+	BSR hop
+	BSR hop
+hop	RTS
+</pre>
+
+<h4>Read</h4>
+<p>Input : U points to destination, D holds track number and sector ID. Head should already be on the right track and drive selected.</p>
+
+<pre>
+read	STD	1,X
+	LDB	#$88	* Read command, motor on
+	STB	,X
+	BSR	delay
+rloop	LDB	,X
+	BITB	#2
+	BEQ	done 
+	LDA	3,X
+	STA	,U+
+	BRA	rloop
+done	BITB	#1
+	BNE	rloop
+	RTS
+</pre>
+<!--#include virtual="footer.html" -->

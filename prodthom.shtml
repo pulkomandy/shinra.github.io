@@ -1,0 +1,38 @@
+<!--#include virtual="header.html" -->
+<!--#include virtual="prodh.html" -->
+
+<h1>Wizball!</h1>
+<p>Graphics: PulkoMandy</p>
+<img src="pic/SHR_MO5_wizball.png" alt="Wizball!">
+<p>We had no time to write a demo for Forever 15, so here is a graphic entry.
+It is a conversion to the MO5 palette of the Amiga loading screen from Wizball.
+The MO5 version of Wizball looks not too bad, but has a really bad loading screen.
+This is an attempt to repair that.
+</p>
+
+<h1>F-14 - Forever Young</h1>
+<p>Code : PulkoMandy - Music : Graphs : Exocet - Design : PulkoMandy &amp; Exocet</p>
+<img src="pic/SHR_MO5_f14.gif" alt="F14 - Forever Young">
+<p>For the Forever 2013, Shinra joined forces with JFF. With amazing graphics
+from Exocet, and slightly better code from PulkoMandy, the MO5 is finally starting
+to look like a viable demomachine.</p>
+<p>This demo shows some screen distorsion, a colorful plasma, and a twister.
+It has non-working code for making noises using the vocal synthetizer.</p>
+
+<a href="prods/foreveryoung.zip">Download disk version</a>
+
+<h1>Alien Message</h1>
+<p>Code : PulkoMandy - Music : Random keyboard bashing - Graphs : PulkoMandy - Design : PulkoMandy</p>
+<img src="pic/SHR_MO5_AlienMessage.png" alt="Alien Message">
+<p>MO5 demos are getting better! This one was coded and released at the Forever 2012 demoparty and ranked 4th in the wild compo.</p>
+<p>This time there is music while the effects are going on on screen! This is possible thanks to the MEA8000 speech synthetizer.</p>
+
+<a href="prods/ALIENMESSAGE.fd">Download disk version</a>
+
+<h1>First Ever</h1>
+<p>Code : PulkoMandy - Music : Computer - Graphs : None - Design : PulkoMandy</p>
+<img src="pic/SHR_MO5_FirstEver.png" alt="First Ever">
+<p>This is the first demo ever made on the MO5. It was coded and released at the Forever 2011 demoparty.</p>
+<p>This demo is less than 512 bytes long and shows an intro screen with music, and an effect that looks like a plasma.</p>
+<a href="prods/SHR_MO5_FirstEver.zip">Download disk version</a>
+<!--#include virtual="footer.html" -->

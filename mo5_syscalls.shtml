@@ -1,0 +1,362 @@
+<!--#include virtual="mo5.shtml" -->
+<h2>Syscalls</h2>
+<p>The system offer you a set of calls you can use to do various things. Of course, it is faster to use the hardware directly, but in some cases it may avoid you some bytes of code. To call one of them, first you set the
+parameters, then use (n being the id of the syscall you want executed) :</p>
+<pre>
+SWI
+FCB n
+</pre>
+<p>You can also use "CALL n" if you use the 6809 language module cartridge.</p>
+<p>Note that by adding 0x80 to the ID, you can call the syscall with a JMP instead of a JSR, so the RTS at the end of the subprogram will get back to the last JSR that was executed.</p>
+
+<h3>00 - MENU</h3>
+	<p>Back to assembler or basic. This is identical to pressing the "initial prog" button, it calls the reset vector.</p>
+<h3>02 - PUTC</h3>
+	<p>Put ASCII Char in regB to screen at current cursor position (as defined by 0x201B)</p>
+<h3>04 - FRM0</h3>
+	<p>Switch screen bank to COLOR ram</p>
+<h3>06 - FRM1</h3>
+	<p>Switch screen bank to PIXEL ram</p>
+<h3>08 - BEEP</h3>
+	<p>Emit a beep</p>
+<h3>0A - GETC</h3>
+	<h4>Description</h4>
+	<p>Get character from keyboard. This call does all the needed decoding to actually handle text input. 
+	<h4>Output</h4>
+	<ul>
+		<li>Flag Z set if no key pressed</li>
+		<li>Variable KEY (0x2037) set to BASIC token associated with key, if BASIC key pressed in combination with another, or raw keycode else.</li>
+		<li>Register B set to ASCII code of the pressed key.</li>
+	</ul>
+<h3>0C - KTST</h3>
+	<h4>Description</h4>
+	<p>Keyboard lowlevel scan. This scans the keyboard at the hardware level and works with raw key codes only.</p>
+	<h4>Output</h4>
+	<ul>
+		<li>Flag Z set if no key pressed</li>
+		<li>Register B set to raw keycode for normal keys</li>
+		<li>Register A used as a bitfield for the modifiers : bit 0 is the state of the BASIC key, bit 1 is the state of the CNT key, and bit 2 is the state of the yellow key.</li>
+	</ul>
+<h3>0E - DRAW</h3>
+	<h4>Description</h4>
+	<p>Draw a line on screen from (PLOTX, PLOTY) to (X,Y). If CHDRAW=0, uses color defined by FORME reg. 
+	If CHDRAW is not 0, draw line using it as an ASCII value, the coordinates are handled as text one (in range 0..39/0..24), and COLOUR is used instead of FORME.</p>
+	<h4>Input</h4>
+	<ul>
+		<li>Variable CHDRAW (0x2036) : ASCII code of char to use for drawing, or 0 to draw in pixel mode.</li>
+		<li>Variables PLOTX and PLOTY (0x2032 - 0x2035) : starting position</li>
+		<li>Variable FORME (0x2029) : Colors to use when drawing in pixel mode.</li>
+		<li>Variable COLOUR (0x202B) : Colors to use when drawing in ASCII mode.</li>
+		<li>Registers X Y : end position</li>
+	</ul>
+	<h4>Output</h4>
+	<ul>
+		<li>Variables PLOTX and PLOTY are set to the initial value of X,Y. This allows to call DRAW again to draw a line that starts where the previous one stopped.</li>
+	</ul>
+<h3>10 - PLOT</h3>
+	<h4>Description</h4>
+	<p>Set a single pixel or character. Works the same way as DRAW.</p>
+<h3>12 - CHPL</h3>
+	<h4>Description</h4>
+	<p>Puts character on screen.</p>
+	<h4>Input</h4>
+	<ul>
+		<li>Variable CHDRAW (0x2036) : ASCII code of char to use for drawing</li>
+		<li>Variable COLOUR (0x202B) : Colors to use.</li>
+		<li>Registers X Y : position</li>
+	</ul>
+<h3>14 - GETP</h3>
+	<h4>Description</h4>
+	<p>Get pixel</p>
+	<h4>Input</h4>
+	<ul>
+		<li>X, Y: position of pixel to get</li>
+	</ul>
+	<h4>Output</h4>
+	<ul>
+		<li>B: color of pixel</li>
+	</ul>
+<h3>16 - LPIN</h3>
+	<h4>Description</h4>
+	<p>Test lightpen button</p>
+	<h4>Output</h4>
+	<ul>
+		<li>Flag C : set if lightpen button is being pressed</li>
+	</ul>
+<h3>18 - GETL</h3>
+	<h4>Description</h4>
+	<p>Get lightpen position.</p>
+	<h4>Output</h4>
+	<ul>
+		<li>Flag C : set if lightpen is not in front of the screen</li>
+		<li>X, Y : position of the lightpen.</li>
+	</ul>
+<h3>1A - GETS</h3>
+	<h4>Description</h4>
+	<p>Read ASCII char from screen.</p>
+	<h4>Input</h4>
+	<ul>
+		<li>(X,A): position of character to read</li>
+	</ul>
+	<h4>Output</h4>
+	<ul>
+		<li>B : result. ASCII code or 0 if unknown, or 16 if the char is accented. In this case, call GETS again or read the SS2GET and SS3GET variables (0x205C, 0x205D)</li>
+	</ul>
+<h3>1C - JOYS</h3>
+	<h4>Description</h4>
+	<p>Read joystrick status (if you have the hardware extension to plug a joystick)</p>
+	<h4>Input</h4>
+	<ul>
+		<li>A: Joystick to read (0 or 1)</li>
+	</ul>
+	<h4>Output</h4>
+	<ul>
+		<li>B : position. 0 is center, 1 is up, then clockwise up to 8 which is up-left.</li>
+		<li>Flag C : set if button is pressed.</li>
+	</ul>
+<h3>1E - NOTE</h3>
+	<h4>Description</h4>
+	<p>Play music</p> 
+	<h4>Input</h4>
+	<ul>
+		<li>B : note to play (one octave range from 0 to D)</li>
+		<li>0x203A..0x203E : settings for duration and octave</li>
+	</ul>
+<h3>20 - K7CO</h3>
+	<h4>Description</h4>
+	<p>Cassette read/write</p>
+	<h4>Input</h4>
+	<ul>
+		<li>A : 0 for reading, 1 for writing</li>
+		<li>B : block type (0 = header, 1 = data, FF = end)</li>
+		<li>Y : address of data block (fisrt byte is the size, last byte is the checksum)</li>
+	</ul>
+	<h4>Output</h4>
+	<ul>
+		<li>A : when reading, holds the difference between computed and recorded checksums. For normal files it is 0 if all went well, but nothing prevents you from using other values.</li>
+	</ul>
+<h3>22 - K7MO</h3>
+	<h4>Description</h4>
+	<p>Cassette motor control. Stopping is done after a 0.5s delay.</p>
+	<h4>Input</h4>
+	<ul>
+		<li>A : bit 0 = motor status (0 to stop, 1 to start). Bit 1 : set to delay starting motor 1 second (for writing)</li>
+	</ul>
+	<h4>Output</h4>
+	<ul>
+		<li>Flag C : set if there is no tape drive</li>
+	</ul>
+<h3>24 - RSCO</h3>
+	<h4>Description</h4>
+	<p>Parallel port module control. (needs parallel port hardware expansion)</p>
+	<h4>Input</h4>
+	<ul>
+		<li>B : byte to send</li>
+		<li>PROPC : operation code (1 = write byte, 2 = screendump, 4 = open, 10 = close)</li>
+	</ul>
+	<h4>Output</h4>
+	<ul>
+		<li>Flag C : set on error</li>
+		<li>PRSTA : status</li>
+	</ul>
+
+<hr />
+<p>From now on, the syscalls are actually pointing to the floppy extension ROM. Ensure you have it plugged in before trying to use these.</p>
+<h3>26 - DKCONT</h3>
+	<h4>Description</h4>
+	<p>Floppy control. Can perform various actions depending on DKOPC</p>
+	<ul>
+		<li>DKOPC = 1 : Reset. If Sector and FAT buffer are less than 256bytes apart, switch to single density, else use double density. DKSTA is set to 'D' for Double density, 'C' for single density, or error code if carry is set. Reset does not work on RAMdisk.</li>
+		<li>DKOPC = 2 : Read sector.</li>
+		<li>DKOPC = 4 : Switch to single density (DD floppy only)</li>
+		<li>DKOPC = 8 : Write sector</li>
+		<li>DKOPC = 0x10 : Switch to double density (DD floppy only)</li>
+		<li>DKOPC = 0x20 : Seek track 0. May fail.</li>
+		<li>DKOPC = 0x40 : Seek track. May fail.</li>
+		<li>DKOPC = 0x88 : Write and chec sector</li>
+	</ul>
+	<h4>Input</h4>
+	<ul>
+		<li>DKOPC (0x2048)</li>
+		<li>0x2049 : Drive number (used by read/write)</li>
+		<li>0x204A* : Track number (used by read/write/seek) (using 0xFF on QDD, you can do LBA access)</li>
+		<li>0x204C* : Sector number (used by read/write) (0x204D is used only for QDD LBA)</li>
+		<li>0x204F* : Pointer to destination (read) / source (write)</li>
+		<li>0x20E9* : Sector buffer pointer (used by Reset)</li>
+		<li>0x20ED* : FAT buffer pointer (used by Reset).</li>
+	</ul>
+	<h4>Output</h4>
+	<ul>
+		<li>Flag C : Set on error by Reset</li>
+		<li>DKSTA (0x204E) : status</li>
+	</ul>
+	<p class="todo">See what happens when setting multiple bits.</p>
+<h3>28 - BOOT</h3>
+	<h4>Description</h4>
+	<p>Run bootsector and launch AUTO.BAT.</p>
+	<h4>Output</h4>
+	<ul>
+		<li>Sets DKSTA (0x204E) and 2080 on error. Else, no return as the disk is booted.</li>
+	</ul>
+<h3>2A - FRMT</h3>
+	<h4>Description</h4>
+	<p>Format floppy</p>
+	<h4>Input</h4>
+	<ul>
+		<li>0x2048 : bit 7 : format and verify<.li>
+		<li>0x2049 : disk unit number</li>
+		<li>0x204D : sector interleaving (1 to 15, floppy only)</li>
+		<li>0x204F : buffer pointer</li>
+	</ul>
+	<h4>Output</h4>
+	<ul>
+		<li>Flag C : set on error</li>
+		<li>DKSTA (0x204E) : error code</li>
+	</ul>
+<h3>2C - ALLOB</h3>
+	<h4>Description</h4>
+	<p>Allocate block. FAT must be loaded.</p>
+	<h4>Input</h4>
+	<p>0x20F6 - Current block number</p>
+	<h4>Output</h4>
+	<ul>
+		<li>C flag set if FAT is full.</li>
+		<li>0x20E5 set to 5 ("disk full")</li>
+		<li>0x20F9 : New block number</li>
+		<li>Memory copy of the FAT : the block is allocated</li>
+	</ul>
+<h3>2E - ALLOD</h3>
+	<h4>Description</h4>
+	<p>Initial block allocation for new files. FAT must be loaded. Save the new FAT on disk, with filename, type, flag, and initial block.</p>
+	<h4>Input</h4>
+	<ul>
+		<li>0x20E9* : Sector buffer</li>
+		<li>0x20E7* : File descriptor pointer</li>
+		<li>0x20F0 : file open mode (2 or 3)</li>
+		<li>0x20EB : file type</li>
+		<li>0x20EC : file flag</li>
+	</ul>
+	<h4>Output</h4>
+	<ul>
+		<li>C flag set on error.</li>
+		<li>0x204E : hardware error code</li>
+		<li>0x2045 : software error code</li>
+		<li>0x20F6 : Allocated block number.</li>
+	</ul>
+<h3>30 - ECRSE</h3>
+	<h4>Description</h4>
+	<p>Write sector. If an error happens, restore the FAT.</p>
+	<p class="todo">I think this uses the same parameters as read sector if you want to buld the sector yourself.</p>
+	<h4>Input</h4>
+	<p>0x20E9* : Sector buffer</p>
+	<h4>Output</h4>
+	<ul>
+		<li>C flag set on error.</li>
+		<li>0x204E : error code</li>
+		<li>0x2045 : set to 3 (I/O Error) on error</li>
+		<li>Y : pointer to sector buffer</li>
+	</ul>
+<h3>32 - FINTR</h3>
+	<h4>Description</h4>
+	<p>Close file. FAT must be loaded and file opened in save mode (2 or 3). FAT written to disk. If open mode is 3, the SCRATCH.DOS file is renamed and erases the existing file with the same name.</p>
+	<p class="warning">Nobody sets the "sector count in last cluster" nor the "byte count in last sector". If you need to know the filesize with a byte precision, you must do it yourself.</p>
+	<h4>Input</h4>
+	<ul>
+		<li>0x20FE* : Sector buffer</li>
+		<li>0x20E7* : File desciptor</li>
+		<li>0x20F0 : File opening mode (2 or 3)</li>
+	</ul>
+	<h4>Output</h4>
+	<ul>
+		<li>C flag set on error</li>
+		<li>0x204E : Error code</li>
+	</ul>
+<h3>34 - LECTAT</h3>
+	<h4>Description</h4>
+	<p>Read FAT</p>
+	<h4>Input</h4>
+	<p>0x20ED* : FAT buffer pointer</p>
+	<h4>Output</h4>
+	<p>C flag set on error</p>
+<h3>36 - MAJCL</h3>
+	<h4>Description</h4>
+	<p>Update Cluster.</lp>
+	<h4>Input</h4>
+	<p>0x20F6 : next block number</p>
+	<h4>Output</h4>
+	<ul>
+		<li>0x20F5 : Sector count for last block (initialized to 1)</li>
+		<li>0x20FA : First sector of block (1 or 9)</li>
+		<li>0x20FB* : track number</li>
+	</ul>
+<h3>38 - RECFI</h3>
+	<h4>Description</h4>
+	<p>Find file. You must read the FAT first.</p>
+	<h4>Input</h4>
+	<ul>
+		<li>0x20E9* : Sector buffer pointer (used by Reset)</li>
+		<li>0x20E7* : File desriptor pointer (11 bytes)
+		<li>0x20F0 : Open mode (3 = save and erase)</li>
+		<li>0x20EB : File type</li>
+		<li>0x20EC : File flag</li>
+	</ul>
+	<h4>Output</h4>
+	<ul>
+		<li>Flag C set on error</li>
+		<li>A and 0x20E5 : Error code (0x03 on I/O Error, 0 else)</li>
+		<li>0x20F9 : Sector number of file entry in catalog. For "save and erase", the pointer is actually to the temporary SCRATCH.DOS file. 0 if file not found. <span class="warning">File not found does not set the carry!</span></li>
+		<li>0x20F6 : First block of file</li>
+		<li>0x20F5 : Sector counter (set to 0)</li>
+		<li>0x20F7* : Byte count in the last sector</li>
+		<li>0x20FA* : Pointer to file entry in sector</li>
+	</ul>
+<h3>3A - RECUP</h3>
+	<h4>Description</h4>
+	<p>Erase file. You must read the FAT and find the file first. Note the FAT is modified in RAM but not written back to disk, for that you must close the file descriptor.</p>
+	<h4>Output</h4>
+	<ul>
+		<li>Flag C set on error.</li>
+		<li>0x20F5 : Error code</li>
+		<li>Y : FAT pointer</li>
+	</ul>
+
+<h3>Undocumented syscalls</h3>
+<p class="warning">The values may be different on other versions of the ROM. This is for version 2.</p>
+<p>These ar enot really useful since you can relocate the SWI table in RAM. Unless you are hunting for a way to save 256 bytes avoiding to do that.</p>
+<table>
+	<tr><th>ID</th><th>Jump at</th><th>Description</th></tr>
+	<tr><td>1</td><td>03F7</td><td>Jumps in screen RAM</td></tr>
+	<tr><td>3</td><td>73FB</td><td>Jumps in user RAM</td></tr>
+	<tr><td>5</td><td>2CFB</td><td>Jumps in user RAM</td></tr>
+	<tr><td>7</td><td>23FA</td><td>Jumps in user RAM</td></tr>
+	<tr><td>9</td><td>C5F1</td><td>Jumps in basic ROM</td></tr>
+	<tr><td>B</td><td>FDF1</td><td>Jumps in basic ROM</td></tr>
+	<tr><td>D</td><td>D2F4</td><td>Jumps in basic ROM</td></tr>
+	<tr><td>F</td><td>87F3</td><td>Jumps in user RAM</td></tr>
+	<tr><td>11</td><td>F0F3</td><td>Jumps in basic ROM</td></tr>
+	<tr><td>13</td><td>A2F3</td><td>Jumps in Floppy ROM</td></tr>
+	<tr><td>15</td><td>D5F5</td><td>Jumps in basic ROM</td></tr>
+	<tr><td>17</td><td>31F5</td><td>Jumps in user RAM</td></tr>
+	<tr><td>19</td><td>48F2</td><td>Jumps in user RAM</td></tr>
+	<tr><td>1B</td><td>FCF5</td><td>Jumps in basic ROM</td></tr>
+	<tr><td>1D</td><td>0BF6</td><td>Jumps in screen RAM</td></tr>
+	<tr><td>1F</td><td>9BF0</td><td>Jumps in user RAM</td></tr>
+	<tr><td>21</td><td>FFF1</td><td>Jumps in basic ROM</td></tr>
+	<tr><td>23</td><td>8BF7</td><td>Jumps in user RAM</td></tr>
+	<tr><td>25</td><td>13A0</td><td>Jumps in screen RAM</td></tr>
+	<tr><th></th><th></th><th>The one below are artifacts of address in the disk ROM, which never changes. They are safe to use on all MO5s. Unfortunately most of them land into screen RAM.</p>
+	<tr><td>27</td><td>04A0</td><td>Jumps in screen RAM</td></tr>
+	<tr><td>29</td><td>07A0</td><td>Jumps in screen RAM</td></tr>
+	<tr><td>2B</td><td>0AA0</td><td>Jumps in screen RAM</td></tr>
+	<tr><td>2D</td><td>1CA0</td><td>Jumps in screen RAM</td></tr>
+	<tr><td>2F</td><td>19A0</td><td>Jumps in screen RAM</td></tr>
+	<tr><td>31</td><td>16A0</td><td>Jumps in screen RAM</td></tr>
+	<tr><td>33</td><td>22A0</td><td>Jumps in user RAM</td></tr>
+	<tr><td>35</td><td>0DA0</td><td>Jumps in screen RAM</td></tr>
+	<tr><td>37</td><td>1FA0</td><td>Jumps in free area of screen RAM</td></tr>
+	<tr><td>39</td><td>10A0</td><td>Jumps in screen RAM</td></tr>
+	<tr><th></th><th></th><th>End of confirmed-to-be-stable syscalls</th></tr>
+	<tr><td>39</td><td>131A</td><td>Jumps in screen RAM</td></tr>
+</table>
+
+<!--#include virtual="footer.shtml" -->

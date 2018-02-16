@@ -1,0 +1,13 @@
+<!--#include virtual="mo5.shtml" -->
+<h2>Introduction</h2>
+<p>The Thomson MO5 is a French 8-bit computer. It's quite known there
+because it was part of a government plan to put computers in all
+schools. The educative software was usually quite bad and made most
+French people hate computing. It is quite a limited machine, but
+that's what demoing is all about : pushing the limits.</p>
+
+<p>Most documentation on the machine is only available as scanned PDF of old
+books, and in French. The idea of this page is to sum up all of it in an
+accessible format, using hyperlinks, and all that modern webstuff.</p>
+
+<!--#include virtual="footer.html" -->

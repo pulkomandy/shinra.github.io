@@ -1,0 +1,61 @@
+<!--#include virtual="header.html" -->
+
+<h1>USB interface for Amstrad CPC</h1>
+
+<h2>What is it?</h2>
+
+<p>This is a simple to build interface, which allows to plug any USB device to the Amstrad CPC.
+The chip used is the WCH CH376, which handles the USB stack, but also USB Mass Storage and FAT32
+file system. This makes it very, very  easy to use the interface with an USB stick or hard drive
+and access files on the FAT32 partition directly, without using a lot of CPU power or memory on
+the CPC.</p>
+
+<h2>Wiring</h2>
+
+<p>The wiring is fairly simple. I used a module with a WCH376 on it for my prototype (from
+LC Technology). This means the interface consists only of 3 extra chips for address decoding</p>
+
+<p>From the CPC bus: A15-A0, D7-D0, /IORQ, /RD, /WR are used (and of course GND and +5v)</p>
+<p>Parts list:</p>
+<ul>
+<li>IC1: 74HCT20 - 2xQuad input NAND gate</li>
+<li>IC2: 74HCT02 - 4xDual input NOR  gate</li>
+<li>IC3: 74HCT138 - 3-to-8 Demultiplexer</li>
+</ul>
+
+<p>No schematics yet, instead here is a description of the wiring:</p>
+<ul>
+	<li>Connect the power supply to IC1-3 and the WCH module. Don't forget decoupling capacitors.</li>
+	<li>A15 to A12 go to the first NAND gate (IC1A)</li>
+	<li>A11 to A9 and A7 go to the second NAND gate (IC1B)</li>
+	<li>Output of both NAND gates go to the first NOR gate (IC2A).</li>
+	<li>A8 and A6 go to the second NOR gate (IC2B)</li>
+	<li>A5 and A4 go to the third NOR gate (IC2C)</li>
+	<li>A2 and A1 go to the fourth NOR gate (IC2D)</li>
+	<li>IC2B output goes to IC3.A0</li>
+	<li>IC2C output goes to IC3.A1</li>
+	<li>IC2D output goes to IC3.A2</li>
+	<li>/IORQ goes to IC3.E1</li>
+	<li>A3 goes to IC3.E2</li>
+	<li>IC2A output goes to IC3.E3</li>
+	<li>IC3.Y7 goes to WCH module CS</li>
+	<li>/RD, /WR, A0, D7-D0 go directly to the WCH module</li>
+	<li>I have not yet tried plugging INT from WCH376 to the CPC, probably it needs a diode to make it behave properly with other interrupt sources.</li>
+</ul>
+
+<p>That was not so hard! With this wiring scheme, the WCH command/status port is &amp;FE81. The data port is &amp;FE80.</p>
+<p>Note that the Y3 output of IC3 decodes FE82-FE87. This may be useful to plug another device to these addresses.</p>
+
+<h2>Software</h2>
+
+<p>The software is not written yet! But you can make sure your device is working.</p>
+
+<pre>
+10 ?hex$(inp(&amp;FE81)) ' Status byte = 80 - Device is idle
+20 out &amp;FE81,1 : ?hex$(inp(&amp;FE80)) ' Get chip version - 44 for mine (starts from 40)
+30 out &amp;FE81,6 : out &amp;FE80,&amp;55 : ?hex$(inp(&amp;FE80)) ' Prints AA - bit-reverse of the input
+</pre>
+
+<p>The CH376 datasheets lists all the commands, and it should not be a problem to write a complete driver.</p>
+
+<!--#include virtual="footer.html" -->

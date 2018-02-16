@@ -1,0 +1,644 @@
+<!--#include virtual="header.html" -->
+
+<h1>Albireo - Programmer's manual</h1>
+
+<div id="generated-toc" class="generate_from_h2"></div>
+
+<h2>Getting started</h2>
+
+<p>
+This is the reference for the Albireo board. It is a technical document to provide early adopters
+with all the information they need to make use of the device and write software for it. Hopefully
+the said software will come with a more easily understandable manual.
+</p>
+
+<h2>Complete feature list</h2>
+
+<p>The board is quite feature packed. Here is an attempt to list everything.</p>
+
+<ul>
+	<li>SD and SDHC card mass storage support with fast (6MHz) SPI link with the SD card. Hardware FAT32
+	support for easy file access. Raw sector access also possible for homegrown filesystems and
+	other advanced applications.</li>
+	<li>USB host support with built in mass storage driver, also with FAT32 and direct secotr access.</li>
+	<li>Generic USB host with direct control of USB endpoints, for connecting other kinds of USB devices.</li>
+	<li>High-speed (1.5Mbaud) serial link with built-in USB interface for linking with other computers
+	for fast data exchange. Includes flow control, 16 byte FIFO on CPC side, and 512 byte FIFO on
+	remote side, allowing fast buffered and interrupt-driven operation.</li>
+	<li>Software configurable interrupt routing to either NMI or INT, or interrutp masking. Multiplexing of several interrupt sources: USB host controller, UART, remotely triggered, and CRTC CURSOR signal interrupts are gathered and easily accessible from a single interrupt status register.</li>
+</ul>
+
+<h2>Software support</h2>
+
+These can be used with Albireo:
+<ul>
+	<li>SymbOS: HID mouse support.</li>
+	<li>Offset's Albireo ROM (not yet released): mass storage support in AMSDOS.</li>
+</ul>
+
+Of course you can also write your own software.
+
+<h2>I/O ports</h2>
+
+<p>
+Albireo is largely built around two independant chips, the CH376 and the TL16C550D. Because of
+cost and chip count limitations in address decoding, they each have slightly separate address ranges.
+The decoding is clean, this means there aren't any mirror ports or undecoded address bits. Just the
+addresses listed below are used.
+</p>
+
+<p>The addresses are in the I/O range, which means you access them with the OUT and IN instructions.
+They are not memory mapped, and to match with the CPC address decoding, the address is decoded on
+16 bytes. This makes using OTIR and similar looped instructions tricky, but is required for
+compatibility with the CPC.</p>
+
+<h3>CH376 registers</h3>
+<ul>
+	<li>FE80: "DATA" port (read/write)</li>
+	<li>FE81: "COMMAND" (write) and "STATUS" (read) port</li>
+    </ul>
+
+    <h3>TL16C550D registers</h3>
+
+    <p>Some of the registers are sharing the same address. A register bit (DLAB) is used to switch between the two groups.</p>
+
+    <table>
+	<tr><th>Address</th><th>DLAB</th><th>Description</th></tr>
+	<tr><td>FEB0</td><td>0</td><td>RBR/THR: RX buffer (read), TX buffer (write)</td></tr>
+	<tr><td>FEB1</td><td>0</td><td>IER: Interrupt enable</td></tr>
+	<tr><td>FEB0</td><td>1</td><td>DLL: Divisor latch LSB</td></tr>
+	<tr><td>FEB1</td><td>1</td><td>DLM: Divisor latch MSB</td></tr>
+	<tr><td colspan="2">FEB2</td><td>IIR/FCR: Interrupt status (read), FIFO control (write)</td></tr>
+	<tr><td colspan="2">FEB3</td><td>LCR: Line control</td></tr>
+	<tr><td colspan="2">FEB4</td><td>MCR: Modem control</td></tr>
+	<tr><td colspan="2">FEB5</td><td>LSR: Line status</td></tr>
+	<tr><td colspan="2">FEB6</td><td>MSR: Modem status</td></tr>
+	<tr><td colspan="2">FEB7</td><td>SCR: Scratch register</td></tr>
+    </table>
+
+<h2>DIP switches</h2>
+
+<p>
+The board holds 4 DIP switches for configuration. From top to bottom:
+</p>
+
+<h3>S1 - CH376 interrupt enable</h3>
+
+<p>
+When this switch is ON, the usb controller is allowed to generate interrupts to signal the CPC
+when it is done performing an operation.
+</p>
+
+<p>When this switch is OFF, the usb controller is not allowed to generate interrupts. The CPC
+must then poll the CH376 STATUS register to know wether the operation is finished.</p>
+
+<h3>S2 - CH376 reset enable</h3>
+
+<p>
+When this switch is ON, the CH376 will be reset at the same time as the CPC (hardware reset only).
+When this switch is OFF, the CH376 will not be reset, and the CPC must initialize it using the
+reset command (software reset). In this case, the CH376 internal buffer may be used to store
+reset resident data (but I don't know if this is of any practical use, yet).
+</p>
+
+<h3>S3 - Remote reset enable</h3>
+
+<p>When this switch is ON, the DTR signal from the remote side of the serial link is connected to the
+CPC reset. This means that the remote side computer can trigger the CPC reset by toggling that line.
+When the switch is OFF, such reset is not allowed and the CPC is safe.
+</p>
+
+<h3>S4 - Remote interrupt enable</h3>
+
+<p>When this switch is ON, the DTR signal from the remote side of the serial link is plugged to the
+DSR line of the UART controller. It then generates an interrupt which the CPC can process.</p>
+
+<h2>Detecting the hardware</h2>
+
+<h3>Detecting the CH376</h3>
+
+<p>You can use the CHECK_EXIST command for this. It gets one byte as argument, and returns the
+negation of it.</p>
+
+<pre>
+CH376_CMD	EQU	0xFE81
+CH376_DATA	EQU	0xFE80
+
+CMD_CHECK_EXIST	EQU	0X06
+
+		; Send the command
+		LD	BC,	CH376_CMD
+		LD	E,	CMD_CHECK_EXIST
+		OUT	(C),	E
+
+		; Send one data byte
+		LD	BC,	CH376_DATA
+		OUT	(C),	E
+
+		; Get the result
+		IN	A,	(C)
+
+		; Check that the result is the same as what we sent
+		XOR	E
+		INC	A
+		JR	NC,	ERROR_NOT_DETECTED
+
+		; Here, we know that the CH376 is present!
+</pre>
+
+<h3>Detecting the TL16C550D</h3>
+
+<p>The T16C550D can be detected using its scratch register. This is a read/write register with
+no effect on the chip. We can check that writing a value there and reading it back works.</p>
+
+<pre>
+SCR	EQU	0xFEB7
+
+	LD	BC,	SCRATCH
+	LD	A,	0x55
+	OUT	(C),	A
+	IN	A,	(C)
+	CP	0x55
+	JP	NZ,	ERROR_NOT_DETECTED
+
+	; Here, we know the TL16C550D is present!
+</pre>
+
+<h2>Interrupts</h2>
+
+<p>All interrupts on the board are handled by the TL16C550D. They can be configured to trigger either an INT or an NMI, or nothing at all.</p>
+
+<h3>Individual interrupts control</h3>
+
+<p>The TL16C550D manages several different interrupt sources. These can be individually configured using the interrupt enable register.</p>
+
+<ul>
+    <li>Bit 0: data receive interrupt, triggered whenever a byte is received on the serial line</li>
+    <li>Bit 1: TX register empty, when the UART has nothing to send.</li>
+    <li>Bit 2: receiver line status, to detect RTS/CTS handshaking</li>
+    <li>Bit 3: modem status, used for all other interrupts (CH376, remote control, raster interrupt from CRTC cursor)</li>
+</ul>
+
+<h3>Interrupt routing</h3>
+
+<p>The interrupts can also be routed to NMI or INT, or none of them if you don't want your code
+to be interrupted. This is done using the OUT1 and OUT2 bits of the modem control register (MCR).</p>
+
+<ul>
+    <li>OUT1 (MCR bit 2) must be set to 0 to enable INT.</li>
+    <li>OUT2 (MCR bit 3) must be set to 0 to enable NMI.</li>
+    <li>If both bits are set to 1, interrupts are disabled.</li>
+    <li>If both bits are set to 0, both INT and NMI will be triggered, which is probably useless.</li>
+</ul>
+
+<h3>Interrupt identification</h3>
+
+<p>When an interrupt occurs, the first step in the interrupt handler is to identify where it comes
+from. This board provides support only for Z80 interrupt mode 1.</p>
+
+<p>You get information about interrupts by first reading the IIR register. If bit 0 is set, it means
+Albireo is not the one which generated the interrupt. You should turn to other hardware plugged to your CPC,
+or, if all else fails, to the gate array interrupt.</p>
+<p>If the bit is cleared, there is a pending interrupt from Albireo. You then look at bits 1-3 of IIR to
+determine which interrupt it is.</p>
+<ul>
+    <li>3: Receive line interrupt, read the LSR register for more details and to clear the interrupt.</li>
+    <li>2: RX data waiting, read the RX register to get the data and clear the interrupt.</li>
+    <li>6: RX timeout, read the RX register as soon as possible to get the data and clear the interrupt.</li>
+    <li>1: TX register empty, this is cleared by reading the IIR or writing more data bytes.</li>
+    <li>0: "modem status", means one of the external interrupts was triggered, read the MSR to learn more and clear the interrupt.</li>
+</ul>
+
+<h3>External interrupts</h3>
+
+<p>The identification of the external interrupts in the MSR is as follows:</p>
+<ul>
+    <li>Bit 0: CTS, used for flow control of serial line. It is recommended to use automatic flow control, in that case this bit is unused and can be ignored.</li>
+    <li>Bit 1: Remote control interrupt, when it is enabled using switch S4. This can be triggered from the other side of the serial link using the DTR pin.</li>
+    <li>Bit 2: CRTC CURSOR raster interrupt. This is triggered when the CRTC CURSOR signal is activated. When not in use, it is recommended to disable the CURSOR signal using CRTC register 10 to avoid parasite interrupts coming from here.</li>
+    <li>Bit 3: Interrupt request from the CH376. Note that this bit will be set both when the CH376 triggers an interrupt, and also when the interrupt is acknowledged on the CH376 side. This means a double-acknowledge scheme is required.</li>
+</ul>
+
+<h4>Double acknowledge of interrupts</h4>
+
+<p>Due to the way the interrupts are wired, the TL16C550D will trigger an interrupt both when the
+CH376 triggers one, but also when it is cleared by software. This means after clearing the CH376
+interrupt, the interrupt flags of the TL16C550D should be checked again to make sure there isn't
+any other pending interrupt.</p>
+<p>This is not a problem when using the INT pin, because everything will happen with interrupts masked
+by the z80. However, when using the NMI, there is no masking and this would trigger a new entry into the
+NMI routine, which is probably not what you want.</p>
+<p>To avoid this problem in NMI mode, it is recommended that the NMI handler masks the NMI by using the
+OUT2 bit in MCR, while it processes the interrupt. This allows to perform all tasks as required. Once
+all interrupts have been cleared (IIR bit 0 is set again), it is safe to enable the NMI again.</p>
+
+<p>The same applies for the remote control interrupt, when clearing it on the remote side a new interrupt
+will be triggered. A similar approach can be used: mask out the NMI, tell the remote side the interrupt is
+handled and let it clear the bit, acknowledge that with the TL16C550D, and finally enable the NMI again.</p>
+
+<p>The CURSOR interrupt is not subject to this, because it is edge triggered. You can use it as an
+NMI source without such problems. The interrupt is cleared simply by reading the MSR register.</p>
+
+<h2>Using USB devices</h2>
+
+The documentation for the CH376 chip is only partially available in english.
+Pretty much the only thing you can get is CH376DS1.pdf, which is only the first
+part of the datasheet. It covers the use with mass storage drives, only.
+
+However, the CH376 can also do raw USB transfers, and even act as an USB device.
+Getting this to work requires digging into WCH original documents, which are all
+in chinese. It is possible to get away with that thanks to Google Translate or
+other similar tools. If all else fails, it's also possible to ask for help on
+WCH forums, which are mainly in chinese, but they did reply to my questions in
+english.
+
+Using the CH376 in this way requires some understanding of how USB works in
+general. I recommend reading "USB in a nutshell" and "USB made simple" (both
+available freely online) in order to get basic understanding of how things are
+laid out.
+
+<h3>General information about the CH376 and its family</h3>
+
+The CH376 is a chip manufactured by the chinese company WCH. It is an upgrade of
+their previous CH372 (USB device only) and CH375 (USB host, mass storage without
+filesystem management).
+
+As far as I can tell, all 3 devices are essentially rebadged 8051
+microcontrollers. What makes them nice for us, is the availability of an 8-bit
+parallel interface, which is easy to interface to any CPU, and the tolerance
+for 5V TTL I/O without any problems. What makes them less nice is that most of
+the documentation is available only in chinese, making it a bit difficult to
+locate and use the many available resources. But, this page is here to fix that.
+
+The CH376 can only do USB1. This limits the speed to 12 megabytes per second,
+which is more than enough in our case (the CPC isn't fast enough to use it to
+its full potential). There is a newer chip, the CH378, which brings USB2 support.
+
+The microcontrollers used to implement all this are also sold separately. But,
+as far as I could see, the firmware to implement the complete CH376 functions is
+not available. Possibly, parts of it such as the 8-bit bus interface, are
+available.
+
+<h3>CH376 I/O interface</h3>
+
+The CH376 is interfaced to the z80 bus at ports FE80 and FE81 (using 16-bit
+addresses in the IO space as usual on CPC). FE80 is the data port, and FE81 is
+the command and status port.
+
+The usual command execution goes this way:
+
+<ul>
+	<li>Write a command to the command port</li>
+	<li>Write parameters to the data port</li>
+	<li>Wait for an interrupt or poll the status register</li>
+	<li>Get the status using CMD_GET_STATUS</li>
+</ul>
+
+There are variants. Some commands complete immediately and an interrupt is not
+required. Some do not affect the status byte.
+
+<h4>The status register</h4>
+
+Only 2 bits are of interest in the status register in our case.
+
+<ul>
+	<li>Bit 7 is a mirror of the interrupt pin. It is 0 when the CH376 raises an interrupt. Reading the status with CMD_GET_STATUS clears the interrupt state.</li>
+	<li>Bit 4 indicates when the CH376 is busy performing a command. We should check for this before writing any command or data to the CH376, however, the z80 in the CPC is slow enough that this is usually not a problem.</li>
+</ul>
+
+<h3>Complete list of commands handled by the CH376</h3>
+
+You would think a single datasheet would provide a complete list of commands.
+But, that is not the case. WCH decided to scatter the command list in different
+documents, depending on when they were introduced (some commands were for the
+CH372, more were added for the CH375, and even more for the CH376), and to which
+functionality group they belong to (mass storage, raw USB host, raw USB device).
+
+<h4>01 - GET_IC_NUMBER</h4>
+
+This function returns the chip firmware version number.
+
+All chips I've dealt with used firmware version 4.
+
+<h4>02 - SET_BAUDRATE</h4>
+
+This is used to configure the baud rate for the serial interface. This is not
+of any use to us, as we use the parallel interface and there is no notion of a
+baudrate there.
+
+<h4>03 - ENTER_SLEEP</h4>
+
+Put the chip in low-power mode.
+
+<h4>05 - RESET</h4>
+
+Hardware reet of the CH376. This can take up to 35 milliseconds.
+It is recommended to do this for proper initialization of the chip.
+
+<h4>06 - CHECK_EXIST</h4>
+
+This command expects 1 byte written to the data register. It will return the
+1-complement (byte XOR 0xFF) in the data register. This can be used to detect
+the CH376 chip presence.
+
+<h4>0B - SET_SD0_INT</h4>
+
+Configure interrupts when using the SPI interface. This is not relevant for us,
+as we use the parallel interface.
+
+<h4>0C - GET_FILE_SIZE</h4>
+
+Returns the size of the file currently open.
+
+<h4>15 - SET_USB_MODE</h4>
+
+Switch between different operation modes of the CH376.
+
+<h4>22 - GET_STATUS</h4>
+
+Get the CH376 status. This function is used to check the result of all asynchronous commands.
+The typical flow is:
+
+<ul>
+	<li>Write command to CMD register and parameters to DATA register</li>
+	<li>Poll STATUS register or wait for interrupt</li>
+	<li>Use GET_STATUS to get the operation result</li>
+	<li>Act according to the result we get</li>
+</ul>
+
+The command returns one byte in the DATA register.
+
+<h4>27 - RD_USB_DATA0</h4>
+
+This command is used to read data returned by USB operations. The typical flow is:
+
+<ul>
+	<li>Write command to CMD register</li>
+	<li>Wait for interrupt</li>
+	<li>Use GET_STATUS</li>
+	<li>Send RD_USB_DATA0</li>
+	<li>Read data from the DATA port.</li>
+</ul>
+
+The command returns first the number of bytes, then the data itself, in the DATA
+register.
+
+(to be continued)
+
+<h3>Available resources at WCH</h3>
+
+<ul>
+	<li>The datasheets for CH376, 375 and 372. Most are split in 2 parts.</li>
+	<li>Many example libraries and applicatio notes.</li>
+	<li>CH376HST.ZIP: examples for using CH376 as USB host</li>
+</ul>
+
+<h3>Practical case: driver for an HID mouse</h3>
+
+<p>
+Since the early developments on Albireo, things have changed a little in the CPC
+world and several other mass storage interfaces are now easily available.
+However, another problem was still not completely solved: there was not a
+simple solution for connecting a mouse to the CPC.</p>
+<p>
+Of course, the Albireo USB port can drive any USB peripheral, including any
+standard USB mouse. It is no more needed to dig out a PS/2 compatible mouse
+for your Symbiface, or even worse, an Atari/Amiga one for the MutliPlay.</p>
+<p>
+Moreover, the USB standard provides a rather high level view on events from the
+mouse, which makes implementing this with low CPU use possible (the mouse driver
+was initially written completely in BASIC, and if using assembler, an interrupt
+driven setup is possible, freeing most CPU cycles).</p>
+<p>
+This also serves as an example of how USB communications are implemented with
+the CH376. It opens the possibility of writing drivers for more devices. Gamepads,
+printers, webcams... you name it.</p>
+<p>
+The code in this section is written in BASIC-like syntax. This makes it easy to
+read for everyone.</p>
+
+<h4>Initialization</h4>
+<p>
+First of all, we need to initialize and detect the CH376. We start by sending it
+the RESET command:
+<pre>
+OUT CMD,&amp;05
+</pre></p><p>
+This can take up to 35 milliseconds to complete, so we wait a little.
+Next, we try to detect if the CH376 is up and running. We use the CHECK_EXIST
+command for that.</p>
+<pre>
+OUT CMD,&amp;06
+OUT DAT,&amp;55
+v = INP(DAT)
+</pre>
+<p>
+If the value of v is &amp;AA, we have detected the CH376. If it is not, something
+went wrong. The detection doesn't always work reliably, so you may want to try
+a few times just to be sure.</p>
+<p>
+We can additionnally check the CH376 version:
+<pre>
+OUT CMD,&amp;01
+v = INP(DAT) - &amp;40
+</pre></p><p>
+In all Albireo boards currently available, you should get v = 4.</p>
+
+<h4>Device enumeration</h4>
+<p>
+Now that the CH376 is ready and awaiting orders, we can enable its USB port.
+Note that switching the mode will disconnect it from any USB or SD mass storage,
+if that is also used. Switching between the two dynamically may require some
+experimenting.
+</p><p>
+Anyway, let's switch our USB device on!
+</p><pre>
+OUT CMD,&amp;15:OUT DAT,7:v = INP(DAT)
+OUT CMD,&amp;15;OUT DAT,7:v = INP(DAT)
+</pre><p>
+This sequence puts the CH376 in "HOST" mode. In this mode it acts just like a PC
+and you can connect USB devices to it.
+</p><p>
+HID mouses are slow-speed devices. We must force the CH376 to use low speed.
+</p><pre>
+OUT CMD,&amp;0B:OUT DAT,&amp;17:OUT DAT,&amp;D8
+</pre><p>
+This command acts like a "POKE" into the CH376 internal memory. It would be
+cleaner to use the SET_SPEED command, but the example I got from WCH forums
+uses this, and it works.
+</p><p>
+The next step is to assign our USB device with its own address. When they are
+newly connected to a computer, all USB devices initially get an address of 0.
+It is up to the host to scan them and assign them other addresses. This should
+allow to use multiple devices at the same time, but I haven't tried that yet.
+</p><pre>
+OUT CMD,&amp;45:OUT DAT,1:v = INP(DAT)
+</pre><p>
+So, we just tell our device to use address 1. And we must also tell the CH376
+itself that it should now communicate with device 1, which is a separate command:
+</p><pre>
+OUT CMD,&amp;13:OUT DAT,1
+</pre><p>
+The device may expose several "configurations", that is, several different ways
+to talk to it. In the case of our mouse, we will just try the first configuration.
+</p><pre>
+OUT CMD,&amp;49:OUT DAT,1
+</pre><p>
+This command generates an interrupt. If you have interrupts enabled, you can
+wait for that, otherwise just busy loop on the status register:
+<pre>
+WAIT:
+
+v = INP(CMD)
+IF v &gt; 127 THEN GOTO WAIT
+
+OUT CMD,&amp;22
+STATUS = INP(DAT)
+RETURN
+</pre></p><p>
+This little subroutine waits for an interrupt and then reads and return the
+status (using CMD_GET_STATUS). Most of the time the status should be &amp;14,
+when everything went well.
+</p>
+<h4>Configuring the mouse</h4>
+<p>
+Ok, the device and configuration are now set, which means we are now ready to
+communicate with the mouse. We are taking some shortcuts here and assuming the
+user did in fact plug a mouse and not some other device. Ideally, we should get
+the device descriptor and see what kind of device it is at this point.
+</p><p>
+Since we are only interested in the mouse, we can send it some HID commands.
+HID (Human Interface Device) is a part of the USB standard, and tells how to
+communicate with input peripherals: mouses, keyboards, gamepads, tablets, etc.
+</p><p>
+For this simple test, we will request the mouse to use "boot mode". This is a
+simplified mode which is designed for use in PC BIOSes. It removes some of the
+complexity of HID. The drawback is, it supports only 3 buttons and 2 movement
+axes. Basically, that means no mouse wheel.
+</p><p>
+It is possible to use the mouse in standard ("report") mode, but doing this
+properly is a little more complex, and there may be more compatibility problems
+with different mouses.
+</p><p>
+So, let's first tell the CH376 we want to perform a data transfer:
+<pre>
+OUT CMD,&amp;2C
+</pre></p><p>
+And let's tell how many bytes there is:
+<pre>
+OUT DAT,8
+</pre></p><p>
+The CH376 is now waiting for our 8 data bytes. We will now write the HID command
+to enter boot mode:
+<pre>
+OUT DAT,&amp;21 ' (because all HID commands start with &amp;21)
+OUT DAT,&amp;0B ' (this is the HID SET PROTOCOL command)
+OUT DAT,&amp;00:OUT DAT,&amp;00 ' (protocol number 0 - on 16 bits - is the BOOT protocol)
+OUT DAT,&amp;00:OUT DAT,&amp;00:OUT DAT,&amp;00:OUT DAT,&amp;00
+</pre></p>
+<p>
+All USB commands must also include an index and a data length, 16 bits each.
+Both are set to 0 for the SET PROTOCOL command.
+</p><p>
+The bytes are now loaded in the CH376. We can request it to perform the USB
+transaction:
+<pre>
+OUT CMD,&amp;4E:OUT DAT,&amp;80:OUT DAT,&amp;0D
+</pre></p><p>
+Command 4E (ISSUE_TOKEN_X) is the command used to trigger data transfers with
+the USB devices.
+</p><p>
+The second parameter tells we are performing a control transfer (D), on
+endpoint 0 (the 4 high bits). An USB device has several endpoints, which are
+like independant communication channels. Endpoint 0 is used for control transfers,
+specific commands to configure the device.
+</p><pre>
+GOSUB WAIT
+</pre><p>
+We need to wait for the transfer to complete. When it does, our mouse will be
+ready for reporting data. Before entering the main loop, we need an important
+initialization:
+<pre>
+TOKEN = 0
+</pre>
+</p>
+<h4>Reading mouse data</h4>
+<p>
+The mouse, like any HID device, sends its data on endpoint 1 which is an
+"interrupt" endpoint. In USB terms, that means... we must poll for data on the
+endpoint regularly. Quite the opposite of an interrupt, if you ask me.
+</p><p>
+So, let's ask the mouse for this data. This time it is a READ transaction, so
+we start with ISSUE_TOKEN_X:
+<pre>
+LOOP:
+
+OUT CMD,&amp;4E:OUT DAT,TOKEN:OUT DAT,&amp;19
+</pre></p><p>
+As you can see, this is a READ transaction (9), and it happens on endpoint 1
+(4 high bits of the last parameter).
+</p><p>
+We need to prepare our token for the next time:
+<pre>
+TOKEN = TOKEN XOR &amp;80
+</pre></p><p>
+The token is used by the CH376 to decide wether the data it will send or receive
+should be a DATA0 or DATA1 packet. On a given USB endpoints, there should always
+be an alternance of DATA0 and DATA1 packets. If two consecutive data packets
+have the same type, the second one will be rejected (with a STALL). So, each time
+command 4E is used, the token should alternate between 00 and 80.
+</p>
+<pre>
+GOSUB WAIT
+</pre><p>
+We now need to wait for the mouse to reply to our request. Note that the mouse
+will reply with a NAK if it has nothing to say, however in that case the CH376
+will keep retrying, until the mouse says something. There are two options to
+handle this: go doing something else instead of waiting, and look at the
+status byte from time to time to see if there are some changes, or configure the
+CH376 to not retry on NAKs. I leave this as an exercise for the reader.
+</p><p>
+Once the mouse moves or a button is clicked, it will send an HID report. The
+status bit (and the interrupt pin, if configured) signals an interrupt, and we
+can proceed with reading the mouse state:
+<pre>
+OUT CMD,&amp;27
+LENGTH = INP(DAT)
+</pre></p><p>
+Command 27 allows us to read the data from the CH376 internal buffer. It first
+returns the nulber of bytes received. We ignore this because we are in a simple
+example and we know the HID mouse in boot mode always sends data in the same
+format. But, a complete program should check it nonetheless.
+</p><p>
+We can finally read the data:
+<pre>
+BUTTONS = INP(DAT)
+X = INP(DAT)
+Y = INP(DAT)
+</pre></p><p>
+We get the buttons state (lsb is the left button, 2nd bit is the
+right one, 3rd bit is the middle one), and the X and Y deltas since the last
+report as signed 8-bit values.
+</p>
+<pre>
+GOTO LOOP
+</pre><p>
+And that's it! We can send the command to get the next report and start over.
+</p>
+<h2>Other resources</h2>
+
+<p>Test program I wrote to check that the Albireo boards are working fine:</p>
+<ul>
+	<li><a href="ch376.bas">Mass storage tests, for SD and USB (get disk capacity, read root directory).</a></li>
+	<li><a href="ch376_hid.bas">HID mouse test.</a></li>
+</ul>
+
+<p>
+The datasheets of the chips used on the board may be useful:
+<ul><li>CH376: USB-Host and SD card controller (part 1 readily available as "CH376DS1.PDF", and <a href="CH376_ext.shtml">part 2</a>, with help from Google translate.</li>
+	<li>TL16C550D: UART for hi-speed link (also used for interrupts control)</li>
+	<li>FT231X: UART to USB converter for hi-speed link (also used for clock generation)</li>
+</ul>
+</p>
+
+<!--#include virtual="footer.html" -->

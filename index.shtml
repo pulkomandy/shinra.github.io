@@ -1,0 +1,25 @@
+<!--#include virtual="header.html" -->
+<h2>Hello world!</h2>
+<p>Welcome to the Shinra team's website! Here you will find infos about the team, our prods and projects, and so on. Click on the menu to go to the page you want :)</p>
+
+<h2>News</h2>
+<p>24-03-16 :: Added our entry to the Forever 2016 edition.</p>
+<p>17-03-14 :: Added our entries to the Forever 2013 (!) and 2014 editions.</p>
+<p>12-05-12 :: Finally updated the making of page with steps for GirlAE, released at AE 2010.</p>
+<p>17-03-11 :: New demo released : ALIEN MESSAGE is the second demo ever made on the Thomson MO5. It needs a vocal synthetizer with MEA8000 (either Techni Musique or Cedic Nathan).</p>
+
+<p>28-03-11 :: New demo released : first_ever is the first demo ever made on the Thomson MO5. Tech page also updated with some info about this computer.</p>
+<p>03-10-10 :: New article in the tech section, about the inner workins of the ramcard.</p>
+<p>30-06-10 :: New release for the Amstrad Expo 2010 ! Enjoy Plasma Pas Cher on the Downloads page !</p>
+<p>26-11-09 :: Two new articles in the technical section... in french this time!</p>
+<p>18-06-09 :: New section opened (again)! Some technical documentation...</p>
+<p>18-06-09 :: New section opened! Look at the making of of some of our work!</p>
+<p>17-03-09 :: 256bytes BASIC strikes again, this time with a tunnel!</p>
+<p>15-10-08 :: Check out our Linux port of the famous pixelling program GrafX2!</p>
+<p>30-04-08 :: Another 256bytes BASIC twister!</p>
+<p>02-02-08 :: Another 256bytes BASIC thing.</p>
+<p>27-01-08 :: New prod! A 256bytes BASIC twister.</p>
+<p>14-10-07 :: Our first demo was released! Download it in the Prods page!</p>
+<h2>About the team</h2>
+<p>The Shinra team is coding things on the Amstrad CPC and Plus computers, building strange hardware interfaces and others electronic projects.</p>
+<!--#include virtual="footer.html" -->

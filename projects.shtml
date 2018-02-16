@@ -1,0 +1,13 @@
+<!--#include virtual="header.html" -->
+<p>We are currently working on:</p>
+<ul>
+<li>A powerful cruncher</li>
+<li>JACC: A ciphering system for hiding our cheatparts. (coming soon!)</li>
+<li>Angie: a top secret project! We will not say what it's about.</li>
+<li>A real demo! (yes! with real effects inside!)</li>
+<li>A game with overscan graphics and assembler code</li>
+<li>The <a href="http://code.google.com/p/cpcsdk">cpcsdk</a> project, an open source toolkit for doing any kind of cpc related things under linux. This is not a Shinra-exclusive project, other people help us. Feel free to join!</li>
+</ul>
+<p>... and many others projects in our secret lab.</p>
+<p>Our goal is to bring some newschool things to the CPC. We are sick of standard logo-scroll-raster demos an we want to make something else. We like experimenting strange screenmodes, which would be deemed as totally useless by every scener, and find what can be done. We are experimenting with some technique that can't be used in theory. I you see something weird, strange, or very diferent, there is a chance that it is a Shinra prod.</p>
+<!--#include virtual="footer.html" -->

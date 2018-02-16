@@ -1,0 +1,110 @@
+<!--#include virtual="header.html" -->
+<h1>Inside the Ramcard</h1>
+
+<p>The Ramcard is a great extension for the CPC range of computers. It allows you to have up to 8 expansion ROMs on your CPC to store your most useful programs.
+But the Ramcard is more than a regular rombox : it uses RAM and allows you to write data to the memory. This way, it is easy to replace your roms anytime and even to write new ones and test them without buying an EPROM burner.</p>
+
+<p>In this article, I'm going to explain how the Ramcard works. The documentation that comes with it is great, but lacks the details on the hardware itself and most notably the schematics.</p>
+
+<h2>Before we start...</h2>
+<p>The Ramcard is done by Ram7. Greetings to him for the great work on this and other pieces of hardware that can make working with a CPC much more fun.</p>
+<p>The schematic was reverse-engineered from my Ramcard, by tracing the tracks on the PCB.</p>
+<p>This article is a bit technical, but I hope it will be useful and will help you start thinking about your own expansion devices.</p>
+<p>The Ramcard is a simple device with not too much components on it. However, it uses some tricks that maybe useful when building your own hardware, to decrease the number of cips used and the price.</p>
+
+<h2>Overview</h2>
+<p>Instead of providing you with a ful lschematic in one go, I decided to split it in multiple small parts to make it easier to understand. However, this means I also removed some parts, mostly the power supply
+and battery handling. I alsoswapped some pin numbers for readability and because of limitations in the software used.</p>
+
+<p>The Ramcard is made in a way that allows us to follow the signals starting from the CPC expansion port and going on until we reach the RAM chip. So this is the way I'll take.</p>
+
+<h2>OUT Decoder</h2>
+
+<img src="pic/outdec.png" />
+
+<p>The purpose of this is to detect an "OUT &amp;DF00,nn", that is, the selection of an expansion ROM number.</p>
+<p>To do that, we must look at three things :</p>
+<ul>
+<li>The address : obviously, the address must match. On the CPC we use partial IO decoding, so we only have to test A13 on the CPC address bus. when A13 is 1, it's no use to look for anything else : it's not for us.</li>
+<li>The I/O space : we want to react to OUT, not to LD. So we make sure the access is in I/O space. This is done by looking at the IORQ bit on the CPC expansion port. when this bit is 1, the CPC is reading or writing in memory, sowedon't care.</li>
+<li>The direction : we want to react to OUT, not IN, on this port. So we also test the WR bit. When this bit is 0, we know the CPU is writing to the bus.</li>
+</ul>
+<p>We must test these 3 bits are all equal to 0 to decide if we are going to react. The simplest way is to use two OR gates. The output, ROMSEL, will be 0 if all 3 are 0, else it will be 1.</p>
+
+<h2>ROM number storage</h2>
+
+<img src="pic/numstor.png" />
+
+<p>Now that we detected that the CPC is doing an "OUT &amp;DF00,nn", what do we do about it ? We read the DATA sent in the operation and we store it somewhere. This is what a register does.</p>
+<p>The register is a chip that will store a value on its D0 to D7 pins when ROMSEL goes low. It will keep this value and send it on O0 to 07.</p>
+<p>That's it! we stored the ROM number that the CPC selected. Now we keep it in a safe place, but we will also do more things with it. from now on, the bits of this value will be called A0 to A7, as this is the address of the rom we will be working with.</p>
+
+<h2>The address comparator</h2>
+
+<img src="pic/addrcom.png" />
+
+<p>We need to decide if the selected ROM address is for us. This will be used for two things : when there is a read or write operation to our ROM, we will have to handle it. When there is none, we will have to leave the
+bus free so other peripherals can use it (for example, a DDI-1 or the internal AMSDOS ROM). We must also notify the CPC when we are handling an operation : this is used to hide the BASIC ROM, which is selected if no other
+ROM is answering.</p>
+
+<p>The comparation is done with a comparator. This chip can test 4 bits at a time and compares them with the selected address from the dip switch. don't you notice a problem ? Yes : there are 5 bits on the switches !
+The trick is that the 5th one (labelled A3 on the schematic) is handled a bit differently. It's negated using the 74LS00 chip, then sent to the "IA=B" pin. What does this pin do ? It's meant to extend the comparator to
+more bits. Here, we just tell it that the other part of the comparison didn't match. Notice that the pin is also plugged to A3 (the not-reversesed version),through a resistor. This needs some more explanations.</p>
+
+<ul>
+<li>when A3=1, _A3=0, and switch closed : _A3 goes through the switch, sets the IA=B pin to 0, and forces OA=B to 0: nothing will match.</li>
+<li>when A3=0, _A3=1, and switch closed : _A3 goes through the switch, sets the IA=B pin to 1, the comparison for the 4 other bits decides of OA=B value.</li>
+<li>when A3=1, _A3=0, and switch closed : _A3 can't go through the switch, so the resistor can drive IA=B to A3, that is, 1: the other part of the comparison is performed for the 4 other bits.</li>
+<li>when A3=1, _A3=0, and switch closed : _A3 can't go through the switch, so the resistor can drive IA=B to A3, that is, 0: OA=B is also forced to 0.</li>
+</ul>
+
+<p>This works just as expected : we get IA=B to be set only when A3 matches the switch status.</p>
+
+<h2>Individual switches comparison</h2>
+
+<img src="pic/romsel.png" />
+
+<p>We could stop there, but Ram7 decided to add one more feature, we have 8 switches that allows us to enable or disable individual ROMs.</p>
+<p>We have the internal rom identifier (from 0 to 7) stored in A0..A2. But we need to look at it closer and compare it with the 8 switches. To do this, we use a demultiplexer. This chip will look at the binary number at
+the input and set the matching output to 0. For example, if A0..A2 = 000, output 0 will be 0, and all others will be 1. if A0..A2 = 001, output 1 will be 0, and all others will be 1.</p>
+<p>We now have a 0 and seven 1 on different wires. What do we do with them ? we make them go through the switches. At the switches output, we can get 3kinds of things :</p>
+<ul>
+<li>A wire that is set to 0</li>
+<li>A wire that is set to 1</li>
+<li>A wire that is not plugged to anything because the switch is open</li>
+</ul>
+
+<p>What are we trying to do with that ? If one single wire is a 0, it means one of our enabled ROMs is being accessed, so, we need to enable the RAM to allow the reading or writing to occur.</p>
+<p>The proper way would be to use an OR gate, as we did atthe beginning for the OUT Decoder. However, this can't work here, because of the opened switches that leaves wires that are neither 1 nor 0.</p>
+<p>the solution is to use diodes. Diodes only leave electricity pass in one direction. In this case, if a wire is 0, the diode will allow it to pull the output down to 0, while if it is 1, it will not beable to do anything because the diode will be locking it.</p>
+
+<p>If you look at the schematic closely, you will notice there is more than that. The demultiplexer also takes MATCH, MREQ and ROM_ACC as inputs. What are these ? They are "chip select" lines. If they don't have the right values, the demultiplexer will not do anything and all the output will be 1. Here is what they mean :</p>
+<ul>
+<li>MATCH is the output from the address comparator, it enables the demultiplexer when the 5 higher address bits are matching the other switch.</li>
+<li>MREQ comes from the expansion bus. It is the opposite of IORQ, it means the CPU is currently accessing memory, not I/O.</li>
+<li>ROM_ACC is decoded from A14 and A15 and detects an access to the ROM page (0xC000 to 0xFFFF).</li>
+</ul>
+
+<p>With all these signals, we generate the ROM_ACTIVE output that means we are handling a ROM access and we need to react. This signal is sent to the RAM to enable it.</p>
+
+<h2>Rom notification</h2>
+
+<img src="pic/notify.png" />
+
+<p>The last step is to signal the CPC that we are handling the access. This is done by forcing ROMDIS to 1. ROMDIS is set whenever the ROM has to be disabled. This happens when the RAMCARD is in use, but also when another ROM is active (such as the AMSDOS one in the CPC 664 or 6128). To avoid short circuiting the logic gate, we use a diode that allows the ramcard to force the signal high, but not to force it low. The CPC internal logic to use ROMDIS does the same, so the forced signal from the Ramcard does not short circuit anything inside the CPC either.</p>
+
+<h2>Writing</h2>
+
+<img src="pic/wrdetect.png" />
+
+<p>Another feature of the Ramcard is the write protection. There is a switch to enable or disable writing to the RAM. The little trick is thatthe CPC doesn't expect writing to a ROM. So we must make sure writing is allowed only when :</p>
+<ul>
+	<li>The CPC is actually writing : we test the WR bit</li>
+	<li>The ROM is connected : we test ROM_ACTIVE, the output of all the previous stuff</li>
+	<li>The switch is ON : this is the easiest part, we just let the combination ofthe two previous signals go through the switch.</li>
+</ul>
+<p>That's it, you can now read and write your ramcard!</p>
+
+<h2>Last words</h2>
+<p>I hope you enjoyed reading and found the informations useful. This article is not finished, I'll add some infos on how to make your ramcard even better ! Stay tuned and thanks for reading.</p>
+<!--#include virtual="footer.html" -->

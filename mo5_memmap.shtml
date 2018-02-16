@@ -1,0 +1,315 @@
+<!--#include virtual="mo5.shtml" -->
+
+<h2>Memory map</h2>
+<p>All the hardware is RAM-Mapped. Address with an * mean a word is used, not a single byte.</p>
+
+<script language="javascript" type="text/javascript">
+function showhide(obj)
+{
+	var nodes = obj.parentNode.childNodes;
+	var isfirst = true;
+	for(var i=0; i<nodes.length; i++) {
+		if (nodes[i].nodeName.toLowerCase() == 'tr')
+		{
+			if (nodes[i].isFolded)
+			{
+				if (isfirst) {
+					nodes[i].style.cssText = 'color: #000;';
+					isfirst = false;
+				} else {
+					nodes[i].style.cssText = 'display: table-row';
+				}
+				nodes[i].isFolded = false;
+			} else {
+				if (isfirst) {
+					nodes[i].style.cssText = 'color: #666;';
+					isfirst = false;
+				} else {
+					nodes[i].style.cssText = 'display: none';
+				}
+				nodes[i].isFolded = true;
+			}
+		}
+	}
+}
+</script>
+
+<table>
+	<thead>
+		<tr><th>Address</th><th>Name</th><th>Description</th></tr>
+	</thead>
+	<tbody>
+		<tr onclick="showhide(this)"><th>0x0000..0x1FFF</th><th>Screen RAM</th></tr>
+		<tr><td>0x0000..0x1F3F</td><td>Screen</td><td>Linear pixel or color data</td></tr>
+	<tr><td>0x1F40..0x1FFF</td><td>Unused</td><td>by the screen in both pages. Some programs use it as a temporary buffer.</td></tr>
+	</tbody><tbody>
+	<tr onclick="showhide(this)"><th>0x2000..0x20FF</th><th>Monitor RAM page</th></tr>
+	<tr><td>0x2000..0x2018</td><td>TERMIN</td><td>Logical lines ends for textmode</td></tr>
+	<tr><td>0x2019</td><td>STATUS</td><td>
+			<p>bit0: keyboard already read</p>
+			<p>bit1: enable keyboard repeat</p>
+			<p>bit2: cursor visibility</p>
+			<p>bit3: inhibit Beep on keypress</p>
+			<p>bit4: DRAWH dont alter COLOR RAM</p>
+			<p>bit5: unused</p>
+			<p>bit6: scroll char without color</p>
+			<p>bit7: caps lock</p></tr>
+	<tr><td>0x201A*</td><td>TABPT</td><td>Pointer to current line terminator (includes cursor X ?)</td></tr>
+	<tr><td>0x201B</td><td>RANG</td><td>Cursor X</td></tr>
+	<tr><td>0x201C</td><td>COLN</td><td>Cursor Y</td></tr>
+	<tr><td>0x201D</td><td>TOPTAB</td><td>Window top</td></tr>
+	<tr><td>0x201E</td><td>TOPRAN</td><td>Window left</td></tr>
+	<tr><td>0x201F</td><td>BOTTAB</td><td>Window bottom</td></tr>
+	<tr><td>0x2020</td><td>BOTRAN</td><td>Window right</td></tr>
+	<tr><td>0x2021*</td><td>SCRPT</td><td>screen pointer</td></tr>
+	<tr><td>0x2023*</td><td>STADR</td><td>window start address</td></tr>
+	<tr><td>0x2025*</td><td>ENDDR</td><td>Window end address +1</td></tr>
+	<tr><td>0x2027</td><td>BLOCZ</td><td>always 0 for inits (?)</td></tr>
+	<tr><td>0x2029</td><td>FORME</td><td>Specify color for pixel drawing, from -16 to 15. If negative, the drawing will put pixel at 0 (back) and set the backcolor of the block, else, pixel at 1 and set forecolor</td></tr>
+	<tr><td>0x202A</td><td>ATRANG</td><td>
+		<p>Attribute Range. Define attributes and where they are applied</p>
+		<p>bit0: double height</p>
+		<p>bit1: double width</p>
+		<p>bit6: fullscreen fore</p>
+		<p>bit7: fullscreen back</p></td></tr>
+<tr><td>0x202B</td><td>COLOUR</td><td>Same format as screenram, used for PUTCH.</td></tr>
+<tr><td>0x202C</td><td>PAGFLG</td><td>1 enters page mode and disable scrolling</td></tr>
+<tr><td>0x202D</td><td>SCROLS</td><td>255 for slow scroll, 0 for normal</td></tr>
+<tr><td>0x202E</td><td>CURSFL</td><td>255: do not link next line to current one for cursor move</td></tr>
+<tr><td>0x202F</td><td>COPCHR</td><td>255: moving left or right copy current char</td></tr>
+<tr><td>0x2030</td><td>EFCMPT</td><td>counter for cursor blink</td></tr>
+<tr><td>0x2031</td><td>ITCMPT</td><td>interrupt counter</td></tr>
+<tr><td>0x2032*</td><td>PLOTX</td><td>last drawn point, set by all drawing routines (used as param for DRAWH)</td></tr>
+<tr><td>0x2034*</td><td>PLOTY</td><td>''</td></tr>
+<tr><td>0x2036</td><td>CHDRAW</td><td>char for CHPLH and DRAWH (0 switches to graphic)</td></tr>
+<tr><td>0x2037</td><td>KEY</td><td>	id of pressed key set by GETCH</td></tr>
+<tr><td>0x2038</td><td>CMPTKB</td><td>keyboard repeat delay counter</td></tr>
+<tr><td>0x2039</td><td>reserved (?)</td></tr>
+<tr><td>0x203A</td><td>TEMPO</td><td>for playing music, note length multiplier</td></tr>
+<tr><td>0x203B</td><td>reserved (?)</td></tr>
+<tr><td>0x203C</td><td>DUREE</td><td>length of note, for playing music</td></tr>
+<tr><td>0x203D</td><td>WAVE</td><td>for playing music (0..5)</td></tr>
+<tr><td>0x203E*</td><td>OCTAVE</td><td>for playing music (16, 8, 4, 2, 1, lower to higher)</td></tr>
+<tr><td>0x2040</td><td>K7DATA</td><td>byte being read/written from tape</td></tr>
+<tr><td>0x2041</td><td>K7LENG</td><td>counter of byte to write to tape</td></tr>
+<tr><td>0x2042</td><td>PROPC</td><td>printer operation (command)</td></tr>
+<tr><td>0x2043</td><td>PRSTA</td><td>printer status: 4 = port open, 8 = not ready, 10 = closed</td></tr>
+<tr><td>0x2044*</td><td>TEMP</td><td>misc. temp. reg.</td></tr>
+<tr><td>0x2046*</td><td>SAVEST</td><td>Stack pointer backup</td></tr>
+<tr><td>0x2048</td><td>DKOPC</td><td>
+	<p>command for DKCONT (floppy operation) Possible values :</p>
+	<p>1: init controller. carry=0 if ok</p>
+	<p>2: Read sector</p>
+	<p>4: Switch to single density</p>
+	<p>8: Write sector</p>
+	<p>10: Switch to double density</p>
+	<p>20: Seek track 0</p>
+	<p>40: Seek track DKTRK</p>
+	<p>80: Check write</p></td></tr>
+<tr><td>0x2049</td><td>DKDRV</td><td>active drive (0, 1 for drive A and 2, 3 for drive B)</td></tr>
+<tr><td>0x204A*</td><td>DKTRK</td><td>active track (0..39 on 5.25" drives, 0..79 on 3.5"). 16 bit reg because of QDD use.</td></tr>
+<tr><td>0x204C</td><td>DKSEC</td><td>sector number</td></tr>
+<tr><td>0x204D</td><td>DKNUM(?)</td><td>sector interleave</td></tr>
+<tr><td>0x204E</td><td>DKSTA</td><td>
+	<p>error code (and controller type)</p>
+	<p>1 : write protected</p>
+	<p>2 : track error</p>
+	<p>4 : sector error</p>
+	<p>8 : data error</p>
+	<p>10 : drive not ready, motor off, no drive</p>
+	<p>20 : error checking (memory and re-reading the drive are different)</p>
+	<p>40 : controller not ready</p>
+	<p>43 : Single Density controller</p>
+	<p>44 : Double density controller</p>
+	<p>80 : disk not formatted</p></td></tr>
+<tr><td>0x204F*</td><td>DKBUF</td><td>pointer to disk buffer (128 or 256 bytes)</td></tr>
+<tr><td>0x2051-0x2058</td><td>DKTRACK</td><td>documented as disk drives head positions, but actually used as temporary storage for various stuff by floppy controller ROM.</td></tr>
+<tr><td>0x2059</td><td>SEQUCE</td><td>indicates current screen handling state (for accented chars?)</td></tr>
+<tr><td>0x205A</td><td>US1</td><td>for "unit metaphor" sequences (?)</td></tr>
+<tr><td>0x205B</td><td>ACCENT</td><td>for accent sequences</td></tr>
+<tr><td>0x205C</td><td>SS2GET</td><td>for reading accented lowercase char</td></tr>
+<tr><td>0x205D</td><td>SS3GET</td><td>for reading accented lowercase char</td></tr>
+<tr><td>0x205E*</td><td>SWIPT</td><td>Software interrupt pointer</td></tr>
+<tr><td>0x2560</td><td>reserved (?)</td></tr>
+<tr><td>0x2061*</td><td>TIMEPT</td><td>called on IRQ</td></tr>
+<tr><td>0x2063</td><td>SEMIRQ</td><td>!=0 to reroute irq handler</td></tr>
+<tr><td>0x2064*</td><td>IRQPT</td><td>called on IRQ</td></tr>
+<tr><td>0x2066</td><td>reserved (?)</td></tr>
+<tr><td>0x2067*</td><td>FIRQPT</td><td>fast interrupt</td></tr>
+<tr><td>0x2069</td><td>reserved(?)</td></tr>
+<tr><td>0x206A*</td><td>SIMUL</td><td>monitor entry points table</td></tr>
+<tr><td>0x206C</td><td>reserved(?)</td></tr>
+<tr><td>0x206D*</td><td>CHRPTR</td><td>keyboard decoder table pointer (getch)</td></tr>
+<tr><td>0x206</td><td>reserved(?)</td></tr>
+<tr><td>0x2070</td><td>*USERAF</td><td>pointer to char table for 128..255</td></tr>
+<tr><td>0x2072</td><td>reserved(?)</td></tr>
+<tr><td>0x2073*</td><td>GENPTR</td><td>pointer to char table (pixels for char 32..127), each char stored bottom to top (!)</td></tr>
+<tr><td>0x2075</td><td>reserved(?)</td></tr>
+<tr><td>0x2076</td><td>LATCLV</td><td>keyboard repeat delay</td></tr>
+<tr><td>0x2077</td><td>GRCODE</td><td>code for printer to enable graphic mode</td></tr>
+<tr><td>0x2078</td><td>DECALG</td><td>Adjust lightpen</td></tr>
+<tr><td>0x2079..207E</td><td>reserved(?)</td></tr>
+<tr><td>0x207F</td><td>DEFDST</td><td>simple or double density</td></tr>
+<tr><td>0x2080</td><td>DKFLG</td><td>FF if there is a disk controller</td></tr>
+	</tbody><tbody>
+<tr onclick="showhide(this)"><th>0x2082..0x2085</th><th>Serial port control registers (not in ROM)</th></tr>
+<tr><td></td><td>This area is used only by the serial port software which is not ROM-resident, but loaded from tape.</td></tr>
+<tr><td>0x2081..0x20CC</td><td>system stack</td></tr>
+<tr><td>0x20CD..0x20E4</td><td>LPBUFF</td><td>buffer for lightpen reading</td></tr>
+<tr><td>0x20E5..20FD</td><td>reserved(?)</td></tr>
+<tr><td>0x20FE..20FF</td><td>FSTRST</td><td>cold or warm reset</td></tr>
+	</tbody><tbody>
+<tr onclick="showhide(this)"><th>0x2100..0x21FF</th><th>BASIC RAM Page</th></tr>
+<tr><td>0x2113*</td><td>Basic start address</td></tr>
+<tr><td>0x2115*</td><td>Basic end address</td></tr>
+<tr><td>0x2117*</td><td>Basic variables end</td></tr>
+<tr><td>0x2119*</td><td>Basic tables end</td></tr>
+<tr><td>0x2199*</td><td>Loading type</td><td> (run, merge, load, loadm, auto.bat, ...)</td></tr>
+<tr><td>0x219B</td><td>Loading type</td><td> (basic or binary)</td></tr>
+<tr><td>0x219C*</td><td>LOADM address</td></tr>
+	</tbody><tbody>
+<tr onclick="showhide(this)"><th>0x2200..0x9FFF</th><th>User RAM</th><td>(free for your program)</th></tr>
+<tr><td>0x23FA..0x2404</td><td>FILENAME</td><td>Namelength, name, extension for writing files.</td></tr>
+	</tbody><tbody>
+<tr onclick="showhide(this)"><th>0xA000..0xA7BF</th><th>Floppy ROM</th></tr>
+<tr><td>0xA000</td><td>ROM ID</td><td>Identifies the hardware : M = Thomson controller, D = Western Digital controller, Q = QDD, R = Nanoréseau</td></tr>
+<tr><td>0xA001</td><td>FATSZ</td><td>Size of FAT : K for 80B, T for 160B</td></tr>
+<tr><td>0xA002</td><td>SECSZ</td><td>Density : D for DD, C for SD</td></tr>
+<tr><td>0xA003</td><td>CHKSM</td><td>Checksum : sum of the 3 previous bytes + 0x55. Allows to detect if there is a ROM plugged in.</td></tr>
+	</tbody><tbody>
+<tr onclick="showhide(this)"><th colspan="2">Floppy functions</th><td>valid for all FDC ROMs, because the SWI table in monitor ROM is hardcoded to these values.</td></tr>
+<tr><td>0xA004</td><td>DKCONT</td><td>See SWI 26</td></tr>
+<tr><td>0xA007</td><td>DKBOOT</td><td>See SWI 28</td></tr>
+<tr><td>0xA00A</td><td>DKFMT</td><td>See SWI 2A</td></tr>
+<tr><td>0xA00D</td><td>LECFAT</td><td>See SWI 34</td></tr>
+<tr><td>0xA010</td><td>RECFI</td><td>See SWI 38</td></tr>
+<tr><td>0xA013</td><td>RECUP</td><td>See SWI 3A</td></tr>
+<tr><td>0xA016</td><td>ECRSE</td><td>See SWI 30</td></tr>
+<tr><td>0xA019</td><td>ALLOD</td><td>See SWI 2E</td></tr>
+<tr><td>0xA01C</td><td>ALLOB</td><td>See SWI 2C</td></tr>
+<tr><td>0xA01F</td><td>MAJCL</td><td>See SWI 36</td></tr>
+<tr><td>0xA022</td><td>FINTR</td><td>See SWI 32</td></tr>
+<tr><td>0xA025</td><td>QDDCONT</td><td>Same as DKCONT, but using QDD LBA sectors numbers</td></tr>
+<tr><td>0xA025</td><td>QDDSYS</td><td class="todo">System functions using QDD LBA sectors</td></tr>
+	</tbody><tbody>
+<tr onclick="showhide(this)"><th>0xA7C0..0xA7C3</th><th>System PIA</th></tr>
+<tr><td>0xA7C0</td><td>
+	PIA Port A
+	</td><td>
+	<p>bit0: /FORME: screen ram mapping (pixel or palette data) for 0x0000..0x1FFF</p>
+	<p>bit1: RT: red value for border</p>
+	<p>bit2: VT: green value for border</p>
+	<p>bit3: BT: blue value for border</p>
+	<p>bit4: PT: 'pastel' value for border</p>
+	<p>bit5: Lightpen interrupt (input)</p>
+	<p>bit6: Cassette OUT</p>
+	<p>bit7: Cassette input. when idle, the tape drive sets this to a logic 1, and the code checks for it.</p></td></tr>
+<tr><td>0xA7C1</td><td>
+		PIA Port B
+		</td><td>
+		<p>bit0: Buzzer</p>
+		<p>bits1..3: Keyboard column</p>
+		<p>bits4..6: Keyboard line</p>
+		<p>bit7: selected key status (in)</p></td></tr>
+<tr><td class="todo">0xA7C2</td><td>
+		PIA Control A</td><td>
+		</td></tr>
+<tr><td class="todo">0xA7C3</td><td>
+		PIA Control B</td><td>
+		</td></tr>
+	</tbody><tbody>
+<tr><th>0xA7C4*</th><th>unused</th></tr>
+<tr><th>0xA7C6*</th><th>MEA8000 techni musique ghost decoding. do not use</th></tr>
+<tr><th>0xA7C8-0xA7CA</th><th>unused</th></tr>
+	</tbody><tbody>
+<tr onclick="showhide(this)"><th>0xA7CB</th><th>Memory extension control (not compatible with gen 1 MO5)</th></tr>
+<tr><td>0xA7CB</td><td class="todo">page switch and write protect</td></tr>
+	</tbody><tbody>
+<tr onclick="showhide(this)"><th>0xA7CC..0xA7CF</th><th>Sound and Game PIA</th><td class="todo">(not on base machine)</td></tr>
+	</tbody><tbody>
+<tr onclick="showhide(this)"><th>0xA7CE*</th><th>Techni Musique MEA8000 Speech Synth extension (mirror port, do not use)</th></tr>
+<tr><td>0xA7CE</td><td>command and status port</td></tr>
+<tr><td>0xA7CF</td><td>data port</td></tr>
+	</tbody><tbody>
+<tr onclick="showhide(this)"><th>0xA7D0..0XA7D7</th><th>FDC</th><td>(not on base macine)</td></tr>
+<tr><td>0xA7D0</td><td>Command/status register</td></tr>
+<tr><td>0xA7D0</td><td>Track register</td></tr>
+<tr><td>0xA7D0</td><td>Sector register</td></tr>
+<tr><td>0xA7D0</td><td>Data register</td></tr>
+	</tbody><tbody>
+
+<tr onclick="showhide(this)"><th>0xA7D8</th><th>Expansion ROM control</th><td>(FDC, Nanoréseau, Lego-DACTA, ...)</td></tr>
+<tr><td>0xA7D8</td><td class="todo">Switch ROMbanks by reading.</td><td>b0..b4 : Nanoréseau computer address</td></tr>
+	</tbody><tbody>
+<tr><th>0xA7D9..0xA7DF</th><th>unused</th></tr>
+<tr><th>0xA7E0..0xA7E3</th><th>RS232 PIA</th><td>(not on base machine)</td></tr>
+	</tbody><tbody>
+<tr onclick="showhide(this)"><th>0xA7E4..0xA7E7</th><th>Gate Array</th></tr>
+<tr><td>0xA7E4*</td><td>SCRCLK</td><td>Lightpen position. This register is set when the lightpen detects the screen beam. It holds the value of the internal gate array counter at the time this hapenned. This allows to compute the lightpen position.
+</td></tr>
+<tr><td>0xA7E6</td><td>Line counter</td><td><ul>
+	<li>bit 7: TL3, mirror bit of the counter above.</li>
+	<li>bit 6: INILN: 0 when the GA is drawing vertical borders on the left and right of the screen.</li>
+</ul></td></tr>
+<tr><td>0xA7E7</td><td>INITN</td><td>bit 7: 0 when the GA is drawing horizontal borders above and below the screen. When both INITN and INILN are set, the GA is drawing pixels.</td></tr>
+	</tbody><tbody>
+<tr onclick="showhide(this)"><th>0xA7E8..0xA7EB</th><th>Serial port expansion</th></tr>
+<tr><td>0xA7E8</td><td>Data read/write</td></tr>
+<tr><td>0xA7E9</td><td>Status register
+	<ul><li>bit 0 : parity error (self clearing)</li>
+		<li>bit 1 : framing error (self clearing)</li>
+		<li>bit 2 : overrun (self clearing)</li>
+		<li>bit 3 : receive data register full (clear by reading data reg)</li>
+		<li>bit 4 : transmit data register empty (clear by writing data reg)</li>
+		<li>bit 5 : DCD state</li>
+		<li>bit 6 : DSR state</li>
+		<li>bit 7 : IRQ flag (clear by reading status reg)</li></ul>
+</td></tr>
+<tr><td>0xA7EA</td><td>Command register
+		<ul><li>bit 0 : enable receive (data terminal ready)</li>
+			<li>bit 1 : receive interrupt enable</li>
+			<li>bit 2-3 : transmit control. 00 offline ; 01 online ; 10 online with interrupt enabled ; 11 transmit BRK</li>
+			<li>bit 4 : enable echo mode (transmitter must be offline)</li>
+			<li>bit 5-7 : --0 no parity ; 001 odd parity ; 011 even parity ; 101 parity bit always set and not checked ; 111 parity bit always reset and not checked</li></ul>
+</td></tr>
+<tr><td>0xA7EB</td><td>Control register
+		<ul><li>bit 0-3 : baudrate {16x external ; 50; 75; 109.92; 134.58; 150; 300; 600; 1200; 1800; 2400; 3600; 4800; 7200; 9600; 19200}</li>
+			<li>bit 4 : set to use internal BRG, clear to use external clock</li>
+			<li>bit 5-6 : word length {8; 7; 6; 5}</li>
+			<li>bit 7 : 0 = 1 stop bit, 1 = 2 stop bits; 1 stop bit if WL=8bit and parity ; 1.5 stop bit if WL=5 bits and no parity</li></ul>
+</td></tr>
+	</tbody><tbody>
+<tr><th>0xA7EC..0xA7FF</th><th>Extension (?)</th></tr>
+<tr><th>0xA800..0XAFFF</th><th>extra chip select line on expansion port. Also chip select of unused expansion ROM slot on gen2 MO5.</th></tr>
+	</tbody><tbody>
+<tr><th>0xB000..0xEFFF</th><th>Cartridge ROM</th><td>If there is a cartridge you can't access the basic anymore.</td></tr>
+	</tbody><tbody>
+<tr onclick="showhide(this)"><th>0xC000..0xEFFF</th><th>BASIC ROM</th><td class="warning">Contents may be different accross ROM versions!</td></tr>
+<tr><td>0xCE2C</td><td>Print text pointer by X</td></tr>
+<tr><td>0xD83E</td><td>Print regD value in decimal</td></tr>
+<tr><td>0xE076</td><td>SETNAME</td><td>Set filename at 0x23FA (can be called from basic as EXEC &amp;HE076 "ESSAI.BAS")</td></tr>
+<tr><td>0xE079</td><td>SETEXT</td><td>Set default extension at 0x23FA. New extension pointed by U. 0xE460 holds "BASDATBIN" if you want so.</td></tr>
+<tr><td>0xE088</td><td>FILETYPE</td><td>Put 0xFF at 0x2179 then call this to set filesavemode to ASCII.</td></tr>
+<tr><td>0xE0B9</td><td>PROTEC</td><td>Call this to enable basic file protection
+	before saving.</td></tr>
+<tr><td>0xE12B</td><td>SAVEBAS</td><td>Save basic file using name at 0x23FA.</td></tr>
+<tr><td>0xE167</td><td>SAVEBIN</td><td><p>Save binary file using name at 0x23FA.</p><p>Input : start, end, and exec addresses on system stack.</p><p>Return address is read <strong>below</strong> "start", so you have to push it by hand then jmp to the routine.</p></td></th>
+<tr><td>0xE2B3</td><td>
+		LOADFILE</td><td>
+<p>input parameters</p>  
+		<p>0x2199 = 3 for autostart (load ...,R), 2 for run"", 0 else.</p>
+		<p>0x219A = FF for MERGE, 0 else.</p>
+		<p>0x219B = 1 for binary, 0 for basic.</p>
+		<p>0x219D may be used to offset destination address.</p>
+</td></tr>
+<tr><td>0xE460..0xE469</td><td>"BASDATBIN"</td><td> string used to select default extension.</td></tr>
+<tr><td>0xEA8A</td><td>"MO5 Basic copyright Microsoft"</td><td>startup message</td></tr>
+	</tbody><tbody>
+<tr onclick="showhide(this)"><th>0xF000..0xFFFF</th><th>Monitor ROM</th></tr>
+<tr><td>0xF003</td><td>Reset code</td></tr>
+<tr><td>0xFFFE*</td><td>Reset interrupt indirection</td></tr>
+	</tbody>
+</table>
+
+
+<!--#include virtual="footer.html" -->

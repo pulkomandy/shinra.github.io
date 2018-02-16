@@ -1,0 +1,47 @@
+<h2>Screen format</h2>
+<p>The screen is separated in two parts : border and actual pixel data.
+Both use the same color data format : 4 bits, P,B,G,R. P means 'Pastel'
+and is used to lighten the color, except for white which can't be lightened, you get orange instead. It does not work like on spectrum,
+however. Here is the palette :</p>
+
+<table>
+<tr><th>P</th><th>B</th><th>G</th><th>R</th><th>Color</th></tr>
+<tr><td>0</td><td>0</td><td>0</td><td>0</td>
+	<td style="color:white; background:#000">Black</td></tr>
+<tr><td>0</td><td>0</td><td>0</td><td>1</td>
+	<td style="background:#F55">Red</td></tr>
+<tr><td>0</td><td>0</td><td>1</td><td>0</td>
+	<td style="background:#0F0">Green</td></tr>
+<tr><td>0</td><td>0</td><td>1</td><td>1</td>
+	<td style="background:#FF0">Yellow</td></tr>
+<tr><td>0</td><td>1</td><td>0</td><td>0</td>
+	<td style="background:#55F">Blue</td></tr>
+<tr><td>0</td><td>1</td><td>0</td><td>1</td>
+	<td style="background:#F0F">Magenta</td></tr>
+<tr><td>0</td><td>1</td><td>1</td><td>0</td>
+	<td style="background:#5FF">Cyan</td></tr>
+<tr><td>0</td><td>1</td><td>1</td><td>1</td>
+	<td style="background:#FFF">White</td></tr>
+<tr><td>1</td><td>0</td><td>0</td><td>0</td>
+	<td style="background:#AAA">Grey</td></tr>
+<tr><td>1</td><td>0</td><td>0</td><td>1</td>
+	<td style="background:#FAA">Pink</td></tr>
+<tr><td>1</td><td>0</td><td>1</td><td>0</td>
+	<td style="background:#AFA">Light Green</td></tr>
+<tr><td>1</td><td>0</td><td>1</td><td>1</td>
+	<td style="background:#FFA">Chicken Yellow</td></tr>
+<tr><td>1</td><td>1</td><td>0</td><td>0</td>
+	<td style="background:#5AF">Light Blue</td></tr>
+<tr><td>1</td><td>1</td><td>0</td><td>1</td>
+	<td style="background:#FAF">Parma Pink</td></tr>
+<tr><td>1</td><td>1</td><td>1</td><td>0</td>
+	<td style="background:#AFF">Light Cyan</td></tr>
+<tr><td>1</td><td>1</td><td>1</td><td>1</td>
+	<td style="background:#FA5">Orange</td></tr>
+</table>
+
+<p>To set the border color, you have to use PIA port A, bits 4..1.</p>
+<p>The pixel data is mapped as two overleayed pages at address 0..1FFF. You must select color or pixel page by
+writing 0 or 1 to PIA port A, bit 0. Note there are some free bytes at the end of both pages (see the memory map
+for more details). In the color area, the data for each pixel is stored as two P,B,V,R nibbles, one for foreground, and the other for background. At the same adress, but switching to the other page, you can set the pixel data for the same position.</p>
+

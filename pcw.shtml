@@ -1,0 +1,54 @@
+<!--#include virtual="header.html" -->
+
+<h1>Shinra's PCW page</h1>
+
+<p>The information about the PCW is scarce and split around many websites.
+What better way to fix this than <a href="https://xkcd.com/927/">writing a new page</a> about it?</p>
+
+<h2>General information</h2>
+
+<p>If you don't remember what the PCW is, visit the Wikipedia page. I have no time for writing about the history.</p>
+
+<h3>PCW models and differences</h3>
+
+<p>A few things to remember...</p>
+<ul>
+	<li>The boot code in the PCW is stored in the printer controller.</li>
+	<li>There are two versions of the printer controller: one for the 9512 and 9512+ (daisywheel printer), and the other for all other machines (dot matrix printer)</li>
+	<li>The two controllers provide different boot code, making the boot disks
+	NOT interchangeable between the machines.</li>
+	<li>9512(+) runs versions 2.x of CP/M, other machines run 1.x. Don't worry, the only differences are the boot sector and the printer driver code.
+	<li>The machines are otherwise entirely identical and use the same gate array. I don't think the CPU runs faster on the 9xxx machines or the PCW10. But confirmation would be welcome.</li>
+</ul>
+
+<h2>Hardware modifications and expansions</h2>
+
+<h3>Video output buffering</h3>
+
+<p>Some people (including myself) tried to run a PCW motherboard out of its original monitor enclosure. The motherboard is easy to buy on ebay for a reasonable price, wastes less space and does everything. But most of these PCW motherboard stopped working after a few hours (or minutes) of uptime. What's going on?</p>
+
+<p style="color:red"><em>NEVER plug the PCW motherboard video output directly to a SCART connector or Amstrad CTM monitor!</em></p>
+
+<p>The video and sync output on the PCW motherboard comes directly from the ASIC.
+Unlike the CPC one, the PCW ASIC isn't designed for driving a CTM or TV directly.
+If you try this, the ASIC will get very hot, and will likely burn, making the whole motherboard unuseable. Fortunately, the fix is very simple.</p>
+
+<p>To avoid this issue, you need to buffer the video output. The PCW monitor chassis uses a 74HC00 chip. Run both the sync and video signals through 2 NAND gates (that will invert it twice, so the output is identical to the input). That's it. On the 8256, you can easily do this: the video signals run through 2 jumper wires just next to the video connector, and next to that is a logic IC used for the keyboard signals. You can piggy-back your 74HC00 chip on that one, remove the jumpers, and get the signal to run through the chip. This works well to drive an Amstrad CTM, but
+not very well with a standard TV. I'm not sure why.</p>
+
+<img src="pic/tech/pcw_videofix.gif" alt="schematic of the video fix."/>
+
+<p>You need the same buffering if you want to extract the video data from the
+expansion port.</p>
+
+<h3>PS/2 Keyboard adapter</h3>
+
+<p>Coming soon...</p>
+
+<h3>AY8930 interface</h3>
+
+<p>Coming soon...</p>
+
+<p>That's all for now. There will be more projects here, please be patient.</p>
+
+<!--#include virtual="footer.html" -->

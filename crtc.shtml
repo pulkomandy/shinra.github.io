@@ -1,0 +1,38 @@
+<!--#include virtual="header.html" -->
+<h1>Differences between CRTC types</h1>
+<p>This list was created to enable Caprice Reloaded to support all the CRTC
+types. It gathers infos from Quasar CPC 21, Amslive 16, 18 and 19 (Madram
+articles), Grimware, and should be completed with any other info (quasar 11, 12
+&amp; others). This list may or may not be correct, we're looking for advice,
+particularly for things marked (?).</p>
+
+<table>
+<tr><th>Type</th>										<th>0</th>					<th>1</th>							<th>2</th>				<th>3</th>						<th>4</th>					</tr>
+<tr><th colspan="6">BExx and BFxx ports</th></tr>
+<tr><td>Reg 12 and 13 readable on port BFxx</td>		<td>Yes</td>				<td>No (get 0)</td>					<td>No (get 0)</td>		<td>Yes</td>					<td>Yes</td>				</tr>
+<tr><td>Reg number on port BFxx is fully decoded</td>	<td>Yes (reg4 reads 0)</td>	<td>Yes</td>						<td>Yes</td>			<td>No (reg 4 reads reg 12)</td><td>No</td>					</tr>
+<tr><td>Reading reg31 on port BFxx</td>					<td>0</td>					<td>Hi-Z (unpredictable value)</td>	<td>0</td>				<td>reg 15</td>					<td>reg 15</td>				</tr>
+<tr><td>Read VBL end on REG10 bit 5 port BFxx</td>		<td>No</td>					<td>No</td>							<td>No</td>				<td>Yes</td>					<td>Yes</td>				</tr>
+<tr><td>Read block count on reg11 port BFxx</td>		<td>No</td>					<td>No</td>							<td>No</td>				<td>Yes</td>					<td>Yes</td>				</tr>
+<tr><td>Status info on port BExx (VBL, border)</td>		<td>No (Hi-Z)</td>			<td>Yes</td>						<td>No (Hi-Z)</td>		<td>No (mirrors BFXX)</td>		<td>No (mirrors BFxx)</td>	</tr>
+<tr><th colspan="6">Registers</th></tr>
+<tr><td>R1 &gt; R0 removes all border</td>				<td>No</td>					<td>Yes</td>						<td>No</td>				<td>No?</td>					<td>No?</td>				</tr>
+<tr><td>R2+R3=R0+1</td>									<td>Shift screen down</td>	<td>Shift screen down</td>			<td>No VBL</td>			<td>Ok?</td>					<td>Ok?</td>				</tr>
+<tr><td>R2+R3&gt;R0+1</td>								<td>Ok</td>					<td>Ok</td>							<td>Only border</td>	<td>Ok?</td>					<td>Ok?</td>				</tr>
+<tr><td>R2+R3=R0</td>									<td>Ok</td>					<td>Ok</td>							<td>No VBL</td>			<td>Shift screen down</td>		<td>Shift screen down</td>	</tr>
+<tr><td>R3 bit 7 changes VBL duration</td>				<td>Yes (1=normal, 2=double length)</td><td>No (always double)</td><td>No</td>			<td>Yes</td> 					<td>Yes</td>				</tr>
+<tr><td>R6=0 leaves artifacts on screen</td>			<td>Yes</td>				<td>No</td>							<td>No</td>				<td>No</td>						<td>No</td>					</tr>
+<tr><td>R8 allows interleave mode</td>					<td>Bad 100Hz screen</td>	<td>Good 100Hz screen</td>			<td>Ok</td>				<td>?</td>						<td>?</td>					</tr>
+<tr><td>R8 allows border shifting (bits 4 and 5)</td>	<td>Yes</td>				<td>No</td>							<td>No</td>				<td>Yes</td>					<td>Yes</td>				</tr>
+<tr><th colspan="6">Special demomakers tricks</th></tr>
+<tr><td>Split border</td>								<td>Reg 8</td>				<td>Reg 6</td>						<td>Not possible</td>	<td>Reg 6</td>					<td>Reg 6</td>				</tr>
+<tr><td>"Display enable" bug (?)</td>					<td>Yes</td>				<td>No</td>							<td>Yes</td>			<td>No</td>						<td>No</td>					</tr>
+<tr><td>Offset reg validation</td>						<td>Next screen</td>		<td>Immediate</td>					<td>Next screen</td>	<td>Next screen</td>			<td>Next screen</td>		</tr>
+<tr><td>R9 and R4 validation</td>						<td>Buffered</td>			<td>Immediate</td>					<td>Buffered</td>		<td>Buffered</td>				<td>Buffered</td>			</tr>
+<tr><td>Line to line splitting (R9=R4=0)</td>			<td>Yes</td>				<td>Yes</td>						<td>No</td>				<td>Yes</td>					<td>Yes</td>				</tr>
+<tr><td>R0 minimal value</td>							<td>1</td>					<td>0</td>							<td>0 (with C4&gt;0)</td><td>0</td>						<td>0</td>					</tr>
+<tr><th colspan="6">PPI (used in CRTC tests, but does not really belongs here otherwise)</th></tr>
+<tr><td>Setting up PPI resets port value</td>			<td>Yes</td>				<td>Yes</td>						<td>Yes</td>			<td>No</td>						<td>Yes</td>				</tr>
+<tr><td>PPI port B can be used as output</td>			<td>No</td>					<td>No</td>							<td>No</td>				<td>Yes</td>					<td>No</td>					</tr>
+</table>
+<!--#include virtual="footer.html" -->

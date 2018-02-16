@@ -1,0 +1,54 @@
+<!--#include virtual="header.html" -->
+<h1>La g&eacute;n&eacute;ration des couleurs par le Gate Array sur Amstrad CPC</h1>
+<p>Une bizarrerie de l'Amstrad CPC est sa palette de 27 couleurs. Bizarre pour un ordinateur qui ne comporte aucun circuit analogique, on aurait pu s'attendre &agrave; 16 ou &agrave; 32...</p>
+<p>Longtemps l'explication propos&eacute;e &agrave; &eacute;t&eacute; que le gate array g&eacute;n&eacute;rait un signal carr&eacute; tr&egrave;s rapide alternant entre une couleur en pleine intensit&eacute; (5 volts) et du noir (0 volts) pour cr&eacute;er une demi teinte, le flou de l'&eacute;cran faisant le reste.</p>
+<p>Si on r&eacute;fl&eacute;chit 2 minutes, ceci n'est pas possible. En effet en mode 2, on doit afficher &agrave; chaque seconde 15625 lignes de 1024 pixels mode 2 (en comptant le border et la HBL). Cela fait donc environ 16 millions de pixels par seconde, soit une fr&eacute;quence de 16MHz. Or c'est justement la fr&eacute;quence maximale du Gate Array ! Impossible donc de g&eacute;n&eacute;rer des demi-teintes par des alternances &agrave; 32MHz. Or les pixels sont eux parfaitement visibles.</p>
+<p>ce n'est que bien des ann&eacute;es plus tard que Grimmy s'est occup&eacute; de sch&eacute;matiser proprement les circuits de l'Amstrad sur son excellent site <a href="http://grimware.org">Grimware</a>. On y trouve notamment un sch&eacute;ma montrant clairement la sortie vid&eacute;o de la machine, et il n'y a que des r&eacute;sistances entre le Gate Array et le connecteur vid&eacute;o.</p>
+
+<p>L'astuce utilis&eacute;e par les ing&eacute;nieurs d'Amstrad fait appel &agrave; une possibilit&eacute;
+utilis&eacute;e tr&egrave;s souvent en &eacute;lectronique : la haute imp&eacute;dance.</p>
+<p>L'utilisation habituelle de la haute imp&eacute;dance est de faire cohabiter plusieurs circuits sur un bus en les laissant tous &eacute;crire.</p>
+<p>On vous a souvent fait croire que l'&eacute;lectronique ne comporte que des 0 et des 1. C'est faux. quand on relie ensembple plusieurs composants un peu complexes, comme par exemple dans un ordinateur, ils doivent tous s'&eacute;changer des informations. Pour cela, on utilise un bus. C'est un ensemble de pistes sur la carte m&egrave;re (ou de petits straps bleus) qui relient tous les composants ensemble. &Agrave;	un instant donn&eacute;, un seul des composants a le droit d'&eacute;crire une information sur le bus, tous les autres peuvent alors soit la lire, soit l'ignorer. On dit que les pattes des composants reli&eacute;es au bus sont des entr&eacute;es-sorties.</p>
+<p>Le probl&egrave;me est simple : quand une de ces pattes n'est pas utilis&eacute;e pour &eacute;crire
+une donn&eacute;e, il ne faut pas qu'elle envoie du 5 volt ou du 0 volt sur le bus, sans quoi la puce qui
+essaie d'&eacute;crire aura bien du mal &agrave; se faire entendre. Les &eacute;lectroniciens ont donc
+implant&eacute; un syst&egrave;me dans chaque puce qui permet de la d&eacute;connecter totalement du bus.
+La patte de la puce ne force alors rien du tout et laisse une autre puce utiliser le bus comme elle veut.</p>
+<p>Quand une autre puce utilise le bus, tout va bien, on voit toujours passer sagement des 1 et des 0. Mais que se passe-t-il si tous les composants reli&eacute;s au bus d&eacute;cident de se mettre en haute imp&eacute;dance ? C'est simple : le bus ne sera plus alors pilot&eacute; par personne et pourra flotter librement quelque part entre 0 et 5 volts. En pratique, plusieurs r&eacute;sistances sont &eacute;galement reli&eacute;es au bus pour &eacute;vacuer les &eacute;lectrons de la piste (cela &eacute;vite &agrave; ces derniers de traverser les puces pour sortir, ce qui provoquerait une surchauffe des puces en questions). Les r&eacute;sistances vont donc remettre le bus &agrave; sa valeur de repos, 0 ou bien 5 volts, selon le cas.</p>
+<p>L'astuce utilis&eacute;e chez Amstrad consiste &agrave; &eacute;quiper les sorties vid&eacute;o du
+Gate Array d'un syst&egrave;me de haute imp&eacute;dance. A priori, c'est inutile, puisque le 
+Gate Array sera le seul &agrave; envoyer des messages &agrave; l'&eacute;cran. Mais un assemblage
+habile de r&eacute;sistances vient compl&eacute;ter le tout. Chacune des sorties rouge, verte et bleue du 
+Gate Array est reli&eacute;e &agrave; deux r&eacute;sistances, l'une d'entre elle connect&eacute;e au +5v,
+l'autre au 0. Lorsque le Gate Array envoie du noir, les trois lignes sont forc&eacute;es &agrave; 0.</p>
+<img src="http://pagesperso-orange.fr/pulko.mandy/shinra/pic/tech/videooutputs.png" />
+<p>Image vol&eacute;e sur Grimware.org</p>
+<p>Les &eacute;lectrons sont alors &eacute;vacu&eacute;s en traversant les r&eacute;sistances vers le +5,
+pas de probl&egrave;me. Lorsqu'il g&eacute;n&egrave;re du blanc, les trois lignes sont forc&eacute;es
+&agrave; +5v, et pas de probl&egrave;me non plus. Le cas le plus int&eacute;ressant est celui ou on veut
+g&eacute;n&eacute;rer du gris. Dans ce cas, le Gate Array entre en &eacute;tat de haute imp&eacute;dance,
+et laisse les trois lignes flottantes. Il n'y a plus personne pour les controler, elles vont donc se
+stabiliser &agrave; une valeur d&eacute;finie par les 2 r&eacute;sistances. Les &eacute;lectrons arrivent
+par la masse, remontent une r&eacute;sistance, font un bref passage dans la ligne, et s'&eacute;chappent par
+le +5v en traversant la 2&egrave;me r&eacute;sistance. La tension dans la ligne d&eacute;pend donc de la
+valeur des deux r&eacute;sistances.</p>
+<img src="http://pagesperso-orange.fr/pulko.mandy/shinra/pic/tech/vid_example.png" />
+<p>On consid&eacute;re que l'&eacute;cran n'a aucun effet, en pratique ce n'est pas tout &agrave; fait exact.</p>
+<p>En pratique, il y a une petite subtilit&eacute; suppl&eacute;mentaire. La ligne marqu&eacute;e GND sur ce sch&eacute;ma est en fait la ligne Sync de la sortie vid&eacute;o. La cons&eacute;quence est que la tension &eacute;vacu&eacute; par cette ligne peut remonter &agrave; contre courant les autres r&eacute;sistances et perturber les autres couleurs.</p>
+
+<h2>Cons&eacute;quences utiles</h2>
+<p>En plus des r&eacute;sistances mentionn&eacute;es, d'autres sont pr&eacute;sentes pour g&eacute;n&eacute;rer la sortie en niveaux de verts. Elles introduisent des interf&eacute;rences entre les couleurs qui provoquent des niveaux de luminosit&eacute; variables. La demi teinte n'est donc non seulement pas &agrave; 50%, mais en plus, elle varie selon la couleur.</p>
+<p>Par exemple un vert fonc&eacute; (num&eacute;ro 9) est &agrave; 47.1154% de la pleine intensit&eacute;, alors que dans du gris (13), il est &agrave; 49.0385% (selon les mesures de grimware). Cela influe &eacute;galement sur les deux autres niveaux et on trouve des bleus &agrave; 5.2885% dans le jaune 24, par exemple.</p>
+<p>Les r&eacute;sistances sont diff&eacute;rentes entre le 464 et les autres machines. La haute
+imp&eacute;dence du Gate Array n'est pas parfaite, il y a un courant de fuite (certains &eacute;lectrons
+s'en vont par le Gate Array). Elle est probablement meilleure sur la r&eacute;vision 40010 et
+les r&eacute;sistances sont adapt&eacute;es pour compenser &ccedil;a.</p>
+<p>Une petite remarque : sur 664 et 6128, les sorties comportent des condensateurs. Ces ordinateurs ont donc une
+image plus floue que le 464. La fr&eacute;quence de coupure est de 2.67MHz (si nos calculs sont bons), ce qui
+n'est pas du tout n&eacute;gligeable... Cela dit, c'est peut-&ecirc;tre volontaire pour compenser un Gate  Array capable de g&eacute;n&eacute;rer des signaux plus nets. Pour information il s'agit des condensateurs C133, 134 et 135, plac&eacute;s entre les 3 sorties RGB et la masse.</p>
+<h2>Cons&eacute;quences amusantes</h2>
+<p>Il est donc possible de modifier la palette de couleur de l'amstrad en rempla&ccedil;ant ces r&eacute;sistances. On pourrait m&ecirc;me utiliser des convertisseurs num&eacute;riques analogiques de fa&ccedil;on &agrave; pouvoir changer la palette de fa&ccedil;on logicielle.</p>
+<p>Il est &eacute;galement important de se souvenir que lorsque le gate array affiche du gris, 
+le bus est en haute imp&eacute;dance, il est alors possible, sans risquer d'abimer quoi que 
+ce soit, d'en prendre le controle pour effectuer par exemple, une incrustation vid&eacute;o. Cela serait assez limit&eacute;: pour ne pas avoir d'interf&eacute;rences, la deuxi&egrave;me puce vid&eacute;o ne devrait g&eacute;n&eacute;rer une image que lorsque le Gate Array affiche du gris. Et il n'y a aucun moyen sur de savoir quand c'est le cas.</p>
+<!--#include virtual="footer.html" -->

@@ -1,0 +1,12 @@
+<!--#include virtual="mo5.shtml" -->
+
+<h2>Interrupts</h2>
+<p>All of the handlers point to the Monitor ROM so you can't play with them directly. However the monitor will forward them to vectors you can set in its ram page.</p>
+<p>Reset reads addr at FFFE-FFFF and jump to it. This will reinit the cartridge and is trigerred by the "init" button.</p>
+<p>SWI (software) access to the monitor routs. Can be redirected by playng with SWIPT, so you can chain your own handlers with the system ones (for different call ID) or override some of the system calls.</p>
+<p>SWI2, SWI3 are unusable (?)</p>
+<p>IRQ makes cursor blink, handle keyboard. Two overridable addresses IRQPT and TIMEPT (keyboard repeat&amp;cursor blink). This is triggered by the 50Hz ticker.</p>
+<p>FIRQ : lightpen interrupt (triggered when the electron beam is dected by the lightpen).</p>
+<p>NMI is unusable (?)</p>
+
+<!--#include virtual="footer.html" -->
