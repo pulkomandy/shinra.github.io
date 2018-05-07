@@ -1,4 +1,8 @@
-<!--#include virtual="header.html" -->
+---
+title: Shinra's Homepage
+---
+
+{% include_relative header.html %}
 
 <h1>USB interface for Amstrad CPC</h1>
 
@@ -58,4 +62,4 @@ LC Technology). This means the interface consists only of 3 extra chips for addr
 
 <p>The CH376 datasheets lists all the commands, and it should not be a problem to write a complete driver.</p>
 
-<!--#include virtual="footer.html" -->
+{% include_relative footer.html %}

@@ -1,4 +1,8 @@
-<!--#include virtual="header.html" -->
+---
+title: Shinra's Homepage
+---
+
+{% include_relative header.html %}
 <h1>USB disk and SD card file management control chip CH376</h1>
 <h2>Part 2: Auxiliary and low-level USB transmission commands</h2>
 
@@ -766,4 +770,4 @@ data is returned as a standard USB request GET_STATUS
 usually</h5>
  <p>The returned data length is 2 bytes.</p>
 
-<!--#include virtual="footer.html" -->
+{% include_relative footer.html %}

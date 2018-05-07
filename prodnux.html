@@ -1,5 +1,9 @@
-<!--#include virtual="header.html" -->
-<!--#include virtual="prodh.html" -->
+---
+title: Shinra's Homepage
+---
+
+{% include_relative header.html %}
+{% include_relative prodh.html %}
 <h1>GrafX2</h1>
 <p>Code: PulkoMandy</p>
 <img src="http://grafx2.googlecode.com/svn/wiki/pictures/sshot_svn693.gif" alt="GrafX2">
@@ -16,4 +20,4 @@ parts between other tools. So far it contains two tools :</p>
 format (for dcmo5)</li>
 </ul>
 <a href="prods/MO5_SDK.zip">download</a>
-<!--#include virtual="footer.html" -->
+{% include_relative footer.html %}

@@ -1,4 +1,8 @@
-<!--#include virtual="header.html" -->
+---
+title: Shinra's Homepage
+---
+
+{% include_relative header.html %}
 <h1>The MEA8000 speech synthetizer</h1>
 <p>This chip is meant for speech synthesis. but given the limited capabilities of Thomson computers, it's the less cpu-hungry method for making sound.</p>
 <p>It is available as an hardware extension on all Thomson machines. It is, unfortunately, not part of the default setup.</p>
@@ -43,4 +47,4 @@ That makes a bitrate of 4 bits per millisecond, or 4000 b/s. That's 500 bytes fo
 
 <p>That's it, you successfully encoded your music ! Of course, the synthetizer is made for speech encoding, so the results will not be very good with complex symphonic music.</p>
 
-<!--#include virtual="footer.html" -->
+{% include_relative footer.html %}

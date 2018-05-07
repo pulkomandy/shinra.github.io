@@ -1,4 +1,8 @@
-<!--#include virtual="header.html" -->
+---
+title: Shinra's Homepage
+---
+
+{% include_relative header.html %}
 
 <h1>Albireo - Programmer's manual</h1>
 
@@ -635,10 +639,10 @@ And that's it! We can send the command to get the next report and start over.
 
 <p>
 The datasheets of the chips used on the board may be useful:
-<ul><li>CH376: USB-Host and SD card controller (part 1 readily available as "CH376DS1.PDF", and <a href="CH376_ext.shtml">part 2</a>, with help from Google translate.</li>
+<ul><li>CH376: USB-Host and SD card controller (part 1 readily available as "CH376DS1.PDF", and <a href="CH376_ext.html">part 2</a>, with help from Google translate.</li>
 	<li>TL16C550D: UART for hi-speed link (also used for interrupts control)</li>
 	<li>FT231X: UART to USB converter for hi-speed link (also used for clock generation)</li>
 </ul>
 </p>
 
-<!--#include virtual="footer.html" -->
+{% include_relative footer.html %}

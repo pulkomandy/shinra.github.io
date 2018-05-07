@@ -1,4 +1,8 @@
-<!--#include virtual="header.html" -->
+---
+title: Shinra's Homepage
+---
+
+{% include_relative header.html %}
 <h1>La g&eacute;n&eacute;ration des couleurs par le Gate Array sur Amstrad CPC</h1>
 <p>Une bizarrerie de l'Amstrad CPC est sa palette de 27 couleurs. Bizarre pour un ordinateur qui ne comporte aucun circuit analogique, on aurait pu s'attendre &agrave; 16 ou &agrave; 32...</p>
 <p>Longtemps l'explication propos&eacute;e &agrave; &eacute;t&eacute; que le gate array g&eacute;n&eacute;rait un signal carr&eacute; tr&egrave;s rapide alternant entre une couleur en pleine intensit&eacute; (5 volts) et du noir (0 volts) pour cr&eacute;er une demi teinte, le flou de l'&eacute;cran faisant le reste.</p>
@@ -51,4 +55,4 @@ n'est pas du tout n&eacute;gligeable... Cela dit, c'est peut-&ecirc;tre volontai
 <p>Il est &eacute;galement important de se souvenir que lorsque le gate array affiche du gris, 
 le bus est en haute imp&eacute;dance, il est alors possible, sans risquer d'abimer quoi que 
 ce soit, d'en prendre le controle pour effectuer par exemple, une incrustation vid&eacute;o. Cela serait assez limit&eacute;: pour ne pas avoir d'interf&eacute;rences, la deuxi&egrave;me puce vid&eacute;o ne devrait g&eacute;n&eacute;rer une image que lorsque le Gate Array affiche du gris. Et il n'y a aucun moyen sur de savoir quand c'est le cas.</p>
-<!--#include virtual="footer.html" -->
+{% include_relative footer.html %}

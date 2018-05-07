@@ -1,4 +1,8 @@
-<!--#include virtual="header.html" -->
+---
+title: Shinra's Homepage
+---
+
+{% include_relative header.html %}
 <h1>Un condensateur, comment &ccedil;a marche ?</h1>
 <p>Cet article a &eacute;t&eacute; r&eacute;dig&eacute; sp&eacute;cialement pour Sylvestre du groupe <a href="http://sylvestre.cpcscene.com">Les sucres en morceaux</a>,
 qui a l'impression que les condensateurs font des choses un peu magiques dans un circuit &eacute;lectronique. Bien sur, c'est faux :).</p>
@@ -50,4 +54,4 @@ m&ecirc;me temps. Cela se produit &eacute;galement avec l'usure naturelle des co
 <p>Si on veut faire le contraire, c'est &agrave; dire garder les fr&eacute;quences rapides et supprimer les lentes, il suffit d'&eacute;changer la position du condensateur et celle de la r&eacute;sistance. En effet, la tension d'entr&eacute;e est &eacute;gale &agrave; la somme de la tension dans la r&eacute;sistance et de celle dans le condensateur. Quand le condensateur ne r&eacute;agit pas &agrave; un signal, la r&eacute;sistance se retrouve donc forc&eacute;e de le suivre &agrave; sa place.</p>
 <p>En effet, VC sur le sch&eacute;ma du filtre passe haut corresond &agrave; la sortie du filtre passe bas, et out correspond &agrave; VR du filtre passe bas.</p>
 <p>En fait, les deux filtres sont identiques, mais dans chaque cas on ne garde qu'une partie du signal. Tout ce que fait le filtre passe haut, c'est prendre le compl&eacute;mentaire du passe bas par rapport &agrave; l'entr&eacute;e.
-<!--#include virtual="footer.html" -->
+{% include_relative footer.html %}

@@ -1,4 +1,8 @@
-<!--#include virtual="header.html" -->
+---
+title: Shinra's Homepage
+---
+
+{% include_relative header.html %}
 <h1>Differences between CRTC types</h1>
 <p>This list was created to enable Caprice Reloaded to support all the CRTC
 types. It gathers infos from Quasar CPC 21, Amslive 16, 18 and 19 (Madram
@@ -35,4 +39,4 @@ particularly for things marked (?).</p>
 <tr><td>Setting up PPI resets port value</td>			<td>Yes</td>				<td>Yes</td>						<td>Yes</td>			<td>No</td>						<td>Yes</td>				</tr>
 <tr><td>PPI port B can be used as output</td>			<td>No</td>					<td>No</td>							<td>No</td>				<td>Yes</td>					<td>No</td>					</tr>
 </table>
-<!--#include virtual="footer.html" -->
+{% include_relative footer.html %}
