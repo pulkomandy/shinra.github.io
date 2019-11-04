@@ -45,11 +45,17 @@ Of course you can also write your own software.
 <h2>I/O ports</h2>
 
 <p>
-Albireo is largely built around two independant chips, the CH376 and the TL16C550D. Because of
+Albireo is largely built around two independant chips, the CH376 and the SC16C650B. Because of
 cost and chip count limitations in address decoding, they each have slightly separate address ranges.
 The decoding is clean, this means there aren't any mirror ports or undecoded address bits. Just the
 addresses listed below are used.
 </p>
+
+<p>The CH376 is in charge of the microSD card and the "host" USB port used to
+connect USB sticks or hard disks, mouses, or any USB device. The SC16C650B is in
+charge of the "device" port, and is used to communicate with other USB-enabled
+computers. It is also in charge of miscelaneous functions, such as handling
+interrupts, resetting the CPC when requested, and so on.</p>
 
 <p>The addresses are in the I/O range, which means you access them with the OUT and IN instructions.
 They are not memory mapped, and to match with the CPC address decoding, the address is decoded on
@@ -62,7 +68,7 @@ compatibility with the CPC.</p>
 	<li>FE81: "COMMAND" (write) and "STATUS" (read) port</li>
     </ul>
 
-    <h3>TL16C550D registers</h3>
+    <h3>SC16C650B registers</h3>
 
     <p>Some of the registers are sharing the same address. A register bit (DLAB) is used to switch between the two groups.</p>
 
@@ -150,7 +156,7 @@ CMD_CHECK_EXIST	EQU	0X06
 		; Here, we know that the CH376 is present!
 </pre>
 
-<h3>Detecting the TL16C550D</h3>
+<h3>Detecting the SC16C650B</h3>
 
 <p>The T16C550D can be detected using its scratch register. This is a read/write register with
 no effect on the chip. We can check that writing a value there and reading it back works.</p>
@@ -165,16 +171,16 @@ SCR	EQU	0xFEB7
 	CP	0x55
 	JP	NZ,	ERROR_NOT_DETECTED
 
-	; Here, we know the TL16C550D is present!
+	; Here, we know the SC16C650B is present!
 </pre>
 
 <h2>Interrupts</h2>
 
-<p>All interrupts on the board are handled by the TL16C550D. They can be configured to trigger either an INT or an NMI, or nothing at all.</p>
+<p>All interrupts on the board are handled by the SC16C650B. They can be configured to trigger either an INT or an NMI, or nothing at all.</p>
 
 <h3>Individual interrupts control</h3>
 
-<p>The TL16C550D manages several different interrupt sources. These can be individually configured using the interrupt enable register.</p>
+<p>The SC16C650B manages several different interrupt sources. These can be individually configured using the interrupt enable register.</p>
 
 <ul>
     <li>Bit 0: data receive interrupt, triggered whenever a byte is received on the serial line</li>
@@ -225,9 +231,9 @@ determine which interrupt it is.</p>
 
 <h4>Double acknowledge of interrupts</h4>
 
-<p>Due to the way the interrupts are wired, the TL16C550D will trigger an interrupt both when the
+<p>Due to the way the interrupts are wired, the SC16C650B will trigger an interrupt both when the
 CH376 triggers one, but also when it is cleared by software. This means after clearing the CH376
-interrupt, the interrupt flags of the TL16C550D should be checked again to make sure there isn't
+interrupt, the interrupt flags of the SC16C650B should be checked again to make sure there isn't
 any other pending interrupt.</p>
 <p>This is not a problem when using the INT pin, because everything will happen with interrupts masked
 by the z80. However, when using the NMI, there is no masking and this would trigger a new entry into the
@@ -238,7 +244,7 @@ all interrupts have been cleared (IIR bit 0 is set again), it is safe to enable 
 
 <p>The same applies for the remote control interrupt, when clearing it on the remote side a new interrupt
 will be triggered. A similar approach can be used: mask out the NMI, tell the remote side the interrupt is
-handled and let it clear the bit, acknowledge that with the TL16C550D, and finally enable the NMI again.</p>
+handled and let it clear the bit, acknowledge that with the SC16C650B, and finally enable the NMI again.</p>
 
 <p>The CURSOR interrupt is not subject to this, because it is edge triggered. You can use it as an
 NMI source without such problems. The interrupt is cleared simply by reading the MSR register.</p>
@@ -629,18 +635,88 @@ GOTO LOOP
 </pre><p>
 And that's it! We can send the command to get the next report and start over.
 </p>
+
+
+<h2>Using the serial link</h2>
+
+<h3>Overview</h3>
+
+<p>The SC16C650B is an UART (Universal Asynchronous Receiver/Transmitter),
+and is coupled with an FT231X which converts the serial signal to USB. This
+means Albireo appears to the remote computer as a standard USB to serial adapter,
+and no specific drivers are needed (use the "virtual COM port" driver from FTDI
+if your operating system does not automatically find one).</p>
+
+<p>The use of an on-board USB converter allows for extra features compared to
+other alternative devices for Amstrad machines. All of these are optional, and
+Albireo can also be run with settings more compatible with existing PC software.</p>
+
+<ul>
+	<li>Hardware flow control: if enabled, Albireo can signal the PC when its
+		internal buffers are full, so all transmissions are stopped. This allow
+		to stream data as fast as possible with much less management done in software.</li>
+	<li>On-board buffers: 536 bytes of data in either direction can be stored in
+		Albireo on-board buffers. This means the software on either side can safely
+		send a lot of data without worrying that the remote side might not be ready
+		to handle it.</li>
+	<li>High baudrate: Albireo can run at almost 10 times the usual baudrate of
+		115200 baud. It is in theory able to transfer data as fast as 150 kilobytes
+		per second, so for example, loading a full 128K snapshot would be done in
+		less than a second. The limiting factor to using this speed is the z80 CPU,
+		but thanks to the flow control and buffers, this is not a problem.</li>
+</ul>
+
+<h3>Configuring the device</h3>
+
+<p>Set the FCR register to 7 to enable the internal FIFO. You can set it to 6
+to disable it (but this should not be needed).</p>
+
+<p>Set the IER register to 0 to disable all interrupts</p>
+
+<h4>Setting the baudrate</h4>
+
+<p>You need to set the LCR register to the special value 0xBF to enable the
+baudrate configuration mode. Once this is done, you can use the DLL and DLM registers
+to set the baudrate. For example, set DLL to 13 and DLM to 0 for 115200 baud, or
+set DLL to 1 and DLM to 0 for 1500000 baud.</p>
+
+<p>While in configuration mode, set the EFR register to 0xC0 to enable hardware
+flow control if you want to use that.</p>
+
+<p>Set LCR to 0x03 to get out of configuration mode.</p>
+
+<h4>Testing in loopback mode</h4>
+
+<p>Set the MCR register to 0x10 to enable loopback mode. In this mode, the
+actual serial link is not used, instead, the CPC will receive an echo of what it
+sends. This allows to debug your sending and receiving routines without worrying about
+the software on the other side of the link.</p>
+
+<p>Set MCR to 0 for normal operation in all other cases.</p>
+
+<h4>Sending data</h4>
+
+<p>Write the data to send to the THR register.</p>
+
+<h4>Receiving data</h4>
+
+<p>Check bit 1 of LSR, which is set when there is data available. Then, read
+the incoming data from the RBR register.</p>
+
+
 <h2>Other resources</h2>
 
 <p>Test program I wrote to check that the Albireo boards are working fine:</p>
 <ul>
 	<li><a href="ch376.bas">Mass storage tests, for SD and USB (get disk capacity, read root directory).</a></li>
 	<li><a href="ch376_hid.bas">HID mouse test.</a></li>
+	<li><a href="16c650.bas">Serial link test.</a></li>
 </ul>
 
 <p>
 The datasheets of the chips used on the board may be useful:
 <ul><li>CH376: USB-Host and SD card controller (part 1 readily available as "CH376DS1.PDF", and <a href="CH376_ext.html">part 2</a>, with help from Google translate.</li>
-	<li>TL16C550D: UART for hi-speed link (also used for interrupts control)</li>
+	<li>SC16C650B: UART for hi-speed link (also used for interrupts control)</li>
 	<li>FT231X: UART to USB converter for hi-speed link (also used for clock generation)</li>
 </ul>
 </p>
