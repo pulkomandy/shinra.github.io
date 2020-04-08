@@ -1,0 +1,91 @@
+---
+title: FlashGordon ROM expansion
+---
+
+{% include_relative header.html %}
+
+<h1>FlashGordon - A 512K ROM expansion for the CPC</h1>
+
+<h2>A bit of backstory</h2>
+
+<p>When designing the CPC and its firmware, Amstrad and Locomotive Software planned for a way to
+expand the OS by adding extra ROMs. This allowed integration of the floppy controller ROM in a
+mostly transparent and user-friendly way, but it also allows much more. ROMs can register commands
+known as RSX (Resident System Extensions) and allow to have various tools immediately available
+at boot.</p>
+
+<p>Initially, the ROMs were actually ROMs. You could either buy devices that came with a single
+expansion ROM inside them (the Hacker is an example of that). But a somewhat popular expansion for
+the CPC is to add a "ROM Board", which is a device that connects to the expansion port and allows
+to add extra ROMs. There are some commercial ones as well as DIY projects, of which the Inicron
+ROMBox is one of the most known.</p>
+
+<p>However, the use of ROM is a bit unconvenient. Programming ROMs require dedicated hardware,
+making updates annoying, and, maybe more importantly, making development of such ROMs quite
+difficult. The first device to solve this was Ram7's RAMCard. Instead of ROM, it used a battery-backed
+static RAM that would keep its content when the CPC was turned off. An hardware switch allows to
+enable write access to the "ROM" space and update the software stored there very easily. For full details,
+check <a href="ramcard.html">our page about the RAMCard</a>.</p>
+
+<p>The RAMCard enabled easy development of many ROM-based tools for the CPC, being a very popular
+expansion for many users. However, it came with its own problems. The battery could run out, and
+plugging, unplugging or moving the RAMCard around (when travelling to a CPC users meeting, for
+example), would often lead to corrupt ROMs and an unbootable system.</p>
+
+<p>The next step was to use Flash memory instead. Flash memory does not need a battery backup,
+and the data is secured by a specific access sequence to avoid accidental writes. This makes
+moving the device around a lot more secure. This idea was implemented by Bryce in the MegaFlash
+board. The FlashGordon is largely a clone of the MegaFlash, with the following changes:
+<ul>
+	<li>A different flash chip, which is still manufactured, while the one used on the original MegaFlash is obsolete. This result in minor differences in the software programming procedure.</li>
+	<li>The ability to disable all ROMs altogether. This was a popular mod to the MegaFlash, as if you ever manage to corrupt a ROM (maybe flashing a non-working test version of some tool to it), there would otherwise be no way to recover your system.</li>
+	<li>Optionally, a reset button, which is something severely lacking on the CPC.</li>
+</ul>
+</p>
+
+<h2>Features</h2>
+
+<ul>
+	<li>512KB of Flash storage for up to 32 ROMs of 16KB each</li>
+	<li>Switches to disable ROMs 7 and 0 (used by the internal AMSDOS and BASIC ROMs on the CPC) if not needed</li>
+	<li>Write enable LED indicator</li>
+	<li>Compact MotherX4 compatible form factor</li>
+</ul>
+
+<h2>Software</h2>
+
+<p>FlashGordon comes pre-loaded with ROMAN in ROM slot 15. ROMAN includes a ROM booster that will
+automatically initialize ROMs 31 to 16 at boot (the CPC firmware only initializes ROMs 15 to 0).
+ROMAN allows program ROMs in the different slots, temporarily disable them, save them back to disk,
+and list the RSXs provided by each installed ROM.</p>
+
+<a href="prods/Roman2.0.zip">Download ROMAN 2.0 (dsk and user manual)</a>
+
+<h2>Installing the card</h2>
+
+<p>FlashGordon connects to the expansion port using an adapter cable. On the computer side, you need either an HE-902 edge connector (for Amstrad CPC) or a Centronics connector (Amstrad Plus, Schneider CPC). On the other side, you need a female HE10 connector. Try to keep the cable as short as possible (no more than 20cm), else you can get into some problems with the system reliability.</p>
+
+<p>Take the board with the components facing up, and the HE10 connector towards the computer expansion port. When holding the board this way, the connection cable is wired straight. Pin 1 is on the left, as indicated by the arrow on the board. Notice that the 50-pin HE10 connector is wired backwards (pin 1 should be on the right to match the standard), but this allows for easier connection with the CPC.</p>
+
+<p>Alternatively, you can connect the board on a MotherX4 in the usual orientation (components side facing you).</p>
+
+<p>Power up the computer. It should boot at usual, but show the welcome message of the ROM manager. If something does not go as expected, unplug everything and start over. The hardware is tested before shipping, so problems come from either your cable, a dirty expansion port, or something plugged the wrong way.</p>
+
+<h2>Configuring the jumpers and switches</h2>
+
+<p>There are 2 jumpers and a push switch on the board. The push switch enables write mode, and
+the jumpers allow configuration of ROMs 0 and 7 as well as a global disable mode.</p>
+
+<p>The write switch is used to completely prevent write access to the Flash memory. When the light
+is on, write is allowed. When the light is off, write is not allowed. Note that due to the use of
+flash memory, normal software should not accidentally write to the ROMs, even if you leave the
+switch on. It is safe to leave it enabled all the time.</p>
+
+<p>Warning: because of an hardware design limitation, when in write mode, the flash memory will see anything written to both the 8000-BFFF and the C000-FFFF RAM areas. This could lead to unexpected results.</p>
+<p>Note: the Flash chip used requires a special programming algorithm, which makes it incompatible with the Megaflash and Ramcard software in write mode.</p>
+
+<p>The two jumpers are used to control the state of ROMs 0 and 7. These need special care because they are the internal ROMs in the computer. ROM 0 is the BASIC, and ROM 7 is the AMSDOS. Most of the time, you want to keep these useable. This is the factory setting: both jumpers are placed near the connector, so the internal ROMs are used.</p>
+<p>The top jumper is for ROM 0, and the bottom one is for ROM 7. On CPC 6128 and DDI-1, the internal ROM 7 can't be cleanly disabled (it works on some machines, but it means the internal ROM and the flash chip both use the memory bus at the same time, and it happens that the flash chip is stronger in this fight. But it could eventually damage the hardware), so you should always leave the ROM 7 jumper down. On Plus and machines without disk drives, you can enable it. ROM 0 can always be overloaded, but remember that you will not boot to the BASIC in that case (the Hacker ROM is a popular replacement ROM 0, for example).</p>
+<p>If you completely remove the ROM 0 jumper, all the ROMs will be disabled. This is useful if you messed up one of the ROM and it makes the computer unable to boot with the ROMs enabled. Once booted, you can load the recovery program and then enable the board again when it asks you to turn the write switch on. This is the only case where you're allowed to change the jumper settings while the CPC is running.</p>
+
+{% include_relative footer.html %}
