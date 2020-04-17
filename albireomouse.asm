@@ -25,7 +25,7 @@ InitializeAlbireo:
         out (c),a
         in a,(c)
         xor ACE_MAGIC_NUMBER            ;Clears carry flag.
-        jp nz,.error  ; Not found!               
+        jr nz,.error  ; Not found!               
 
         ; Configure an USB device. We need to switch to USB mode 7 (this resets the USB bus),
         ; then mode 6 (USB host mode) which allows us to send USB commands to the mouse directly.
@@ -68,11 +68,37 @@ InitializeAlbireo:
         ; are only dealing with a simple mouse here, so we just pick the first configuration
         ld a,#49 : call AlbireoCmd
         ld a,#1 : call AlbireoDat
-        ; Again this is ca command that can take some time to complete...
+        ; Again this is a command that can take some time to complete...
         call AlbireoWaitForCommandEnd
 
         ; OK, all of the above was quite generic USB setup code. It would look similar for any
         ; other USB device. Now on to the mouse specific bits!
+
+
+        ; This example uses the mouse in normal HID mode. In this mode, the mouse can send a
+        ; "descriptor" telling the computer how the report is structured: how many buttons,
+        ; wheels, axes, ...
+        ; However, this is complicated to parse and most mouse use a similar layout anyway. So we
+        ; just go ahead and read the report and assume something close to the usual thing.
+        ; This may not work with very advanced mouses (more than 8 buttons, more than 1 mouse
+        ; wheel, etc). But, we could switch the mouse to "boot mode" instead. In that case all
+        ; mouses will use th same report format: 2 buttons and 2 axes. No 3rd button and no
+        ; mousewheel, unfortunately. It's up to you, either universal but limited compatibility
+        ; with all mouses, or support for wheels and extra buttons, but only the simpler mouses
+        ; will work.
+        ; Here is the sequence to switch to boot mode:
+        ; OUT CMD,&2C ' For WRITE commands, you first send the data to Albireo, then trigger the transfer. It's symetrical to READ. 
+        ; OUT DAT,8 ' Size of the data we're going to send
+        ; The CH376 is now waiting for our 8 data bytes. We will now write the HID command to enter boot mode:
+        ; OUT DAT,&21 ' (because all HID commands start with &21) 
+        ; OUT DAT,&0B ' (this is the HID SET PROTOCOL command) 
+        ; OUT DAT,&00:OUT DAT,&00 ' (protocol number 0 - on 16 bits - is the BOOT protocol) 
+        ; OUT DAT,&00:OUT DAT,&00:OUT DAT,&00:OUT DAT,&00
+        ; All USB commands must also include an index and a data length, 16 bits each. Both are set to 0 for the SET PROTOCOL command.
+        ; The bytes are now loaded in the CH376. We can request it to perform the USB transaction:
+        ; OUT CMD,&4E:OUT DAT,&80:OUT DAT,&0D ' The &80 here must match the "token" sequence as for the read commands
+        ; call AlbireoWaitForCommandEnd
+
 
         ; The way an USB mouse works is that there is nothing to "read" from it as long as the
         ; mouse does not move or a button isn't clicked. Albireo takes care of watching for that,
@@ -100,12 +126,7 @@ InitializeAlbireo:
         or a
         ret
 
-;Sends a byte to the CMD port.
-;IN:    A = the byte to send.
-AlbireoCmd:
-        ld bc,ACE_CMD
-        out (c),a
-        ret
+
         
 ;Sends a byte to the DAT port.
 ;IN:    A = the byte to send.
@@ -121,16 +142,13 @@ AlbireoDat:
 ;Reads the mouse and updates the cursor X/Y accordingly.
 ;Screen limits are not tested here.
 AlbireoManageMouse:
-        ; This is for CPU time measurement. How many rasterlines will we need?
-        call Border26
-
         ; First of all, check if the mouse has anything to say at the moment. We check this in
         ; bit 7 of the status register
         ld bc,ACE_CMD
         in a,(c)
         rla
-        ; Nothing to do? cool!
-        jp c,Border0 ; Restore border and return
+        ; Nothing to do? Exit.
+        ret c
         
         ; If we get here, there is data waiting for us, so we need to read it
         ; Command 27 is used to read the data.
@@ -152,19 +170,29 @@ AlbireoManageMouse:
         ;Reads Buttons.
         call AlbireoReadDat
         ld c,a
-        and %00000010           ;In doc, was bit 0?!
-        ld (ButtonLeft),a
+        and %00000001           ;Button 0.
+        ld (MouseButton0),a
         ld a,c
-        and %00000100           ;In doc, was bit 1?!
-        ld (ButtonRight),a
+        and %00000010           ;Button 1.
+        ld (MouseButton1),a
+        ld a,c
+        and %00000100
+        ld (MouseButton2),a     ;Button 2.
+        ; ... and so on for extra buttons
         ;Reads deltaX.
         call AlbireoReadDat
-        call ByteToWord
+        or a
+        jr z,.endXMotion
+        call SignedByteToWord
         call CursorMoveHorizontally
+.endXMotion
         ;Reads deltaY.
         call AlbireoReadDat
-        call ByteToWord
+        or a
+        jr z,.endYMotion
+        call SignedByteToWord
         call CursorMoveVertically
+.endYMotion
         ;Reads Wheel.
         call AlbireoReadDat
         
@@ -180,27 +208,21 @@ Token:  ld a,0
         xor #80
         ld (Token + 1),a
         
-        ld a,#19 : call AlbireoDat
-        
-        ; That's all for this time!
-        jp Border0
+        ld a,#19
+        jp AlbireoDat
         
 
+;Sends a byte to the CMD port.
+;IN:    A = the byte to send.
+AlbireoCmd
+        ld bc,ACE_CMD
+        out (c),a
+        ret
+        
 ;OUT:   A = the byte read from the DAT.
 AlbireoReadDat:
         ld bc,ACE_DAT
         in a,(c)
-        rre
-
-;Converts a signed byte to a signed word.
-;IN:    A  = a signed number.
-;OUT:   DE = The signed number, stretched to 16 bits.
-ByteToWord:
-        ld e,a
-        ld d,0
-        rla
-        ret nc
-        ld d,#ff
         ret
         
 ; Waits for a command to end by polling the status register. There is no timeout.
@@ -213,6 +235,4 @@ AlbireoWaitForCommandEnd:
         jr c,.waitLoop
         
         ld a,#22
-        call AlbireoCmd
-        
-        ret
+        jp AlbireoCmd
