@@ -96,7 +96,7 @@ schematics (<a href="https://github.com/pulkomandy/avrstuff">complete schematics
 
 <h3>The CPC expansion port</h3>
 
-<img src="pics/tech/flash/cpcexp.png" alt="CPC Expansion port pinout"/>
+<img src="pic/tech/flash/cpcexp.png" alt="CPC Expansion port pinout"/>
 
 <p>The expansion port is mostly signals coming directly from the Z80 CPU, but there are also a few
 additional things.</p>
@@ -128,8 +128,8 @@ are used in the FlashGordon, here they are:</p>
 
 <h3>Storing the ROM number</h3>
 
-<img src="pics/tech/flash/romsel.png" alt="Detecting change of ROM number"/>
-<img src="pics/tech/flash/register.png" alt="Register to store ROM number"/>
+<img src="pic/tech/flash/romsel.png" alt="Detecting change of ROM number"/>
+<img src="pic/tech/flash/register.png" alt="Register to store ROM number"/>
 
 <p>So, to start with, we need to know which ROM is currently active. The ROM number selection is done
 with an out to register DF00, but in fact, any address with bit 13 = 0 will do.</p>
@@ -151,7 +151,7 @@ bits Q0 to Q7 in the schematics.</p>
 
 <h3>Detecting access to our ROMs</h3>
 
-<img src="pics/tech/flash/access.png" alt="Detecting ROM area"/>
+<img src="pic/tech/flash/access.png" alt="Detecting ROM area"/>
 
 <p>First of all, we need to know if the CPC is trying to access a ROM at all. Normally, we would use
 the ROMEN pin on the expansion port for this, but there is a problem: since we use flash memory,
@@ -164,7 +164,7 @@ this. So, we need to perform some checking on our own.</p>
 <p>We can detect this address range by looking at A15 and A14, if they are both 1, it's an access in
 the ROM area.</p>
 
-<img src="pics/tech/flash/rom7rom0.png" alt="Disabling ROMs 0 and 7"/>
+<img src="pic/tech/flash/rom7rom0.png" alt="Disabling ROMs 0 and 7"/>
 
 <p>Two ROMs are already built into the CPC: ROM 0 and 7. ROM 0 can be disabled (using the ROMDIS pin),
 but ROM 7 usually can't (except on Plus machines). So, the FlashGordon provides a way to skip
@@ -180,7 +180,7 @@ useful if the ROM content is corrupt or you flashed a broken ROM, making it impo
 the FlashGordon connected to the CPC. You can then boot the CPC with ROMs disabled, run a ROM
 flashing tool, and then put the jumper back and reflash your ROM with a fixed version.</p>
 
-<img src="pics/tech/flash/romdis.png" alt="Finalizing ROM decoding"/>
+<img src="pic/tech/flash/romdis.png" alt="Finalizing ROM decoding"/>
 
 <p>We are not done yet: we need to check that the ROM access was in our range at all by checking bits
 Q5-Q7 which were missing from the previous comparison. A solder point on the FlashGordon allows to
@@ -196,7 +196,7 @@ let other devices on the expansion bus decide if they want to handle other ROM a
 
 <h3>Write protection switch</h3>
 
-<img src="pics/tech/flash/switch.png" alt="Write protect switch"/>
+<img src="pic/tech/flash/switch.png" alt="Write protect switch"/>
 
 <p>While it is not really needed on the FlashGordon, there is a write protection switch. Accidental
 writes should not be a problem, as the Flash memory chip itself already provides some write protection
@@ -209,7 +209,7 @@ reaching the Flash ROM chip. Finally, a LED turns on when writes are enabled.</p
 
 <h3>The ROM itself</h3>
 
-<img src="pics/tech/flash/flash.png" alt="ROM device"/>
+<img src="pic/tech/flash/flash.png" alt="ROM device"/>
 
 <p>Finally we have all the signals we need to use our ROM chip. We find a part of the address bus
 (A0 to A13, allowing to access the 16K of a ROM slot) and the complete data bus (D0 to D7). The
