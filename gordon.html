@@ -88,4 +88,136 @@ switch on. It is safe to leave it enabled all the time.</p>
 <p>The top jumper is for ROM 0, and the bottom one is for ROM 7. On CPC 6128 and DDI-1, the internal ROM 7 can't be cleanly disabled (it works on some machines, but it means the internal ROM and the flash chip both use the memory bus at the same time, and it happens that the flash chip is stronger in this fight. But it could eventually damage the hardware), so you should always leave the ROM 7 jumper down. On Plus and machines without disk drives, you can enable it. ROM 0 can always be overloaded, but remember that you will not boot to the BASIC in that case (the Hacker ROM is a popular replacement ROM 0, for example).</p>
 <p>If you completely remove the ROM 0 jumper, all the ROMs will be disabled. This is useful if you messed up one of the ROM and it makes the computer unable to boot with the ROMs enabled. Once booted, you can load the recovery program and then enable the board again when it asks you to turn the write switch on. This is the only case where you're allowed to change the jumper settings while the CPC is running.</p>
 
+<h2>Detailed hardware details</h2>
+
+<p>If you are interested in making your own ROM expansion for the CPC, the information below might
+be useful. Or if you are just curious how this all works. This section will walk you through the
+schematics (<a href="https://github.com/pulkomandy/avrstuff">complete schematics and PCB design files are available</a>).</p>
+
+<h3>The CPC expansion port</h3>
+
+<img src="pics/tech/flash/cpcexp.png" alt="CPC Expansion port pinout"/>
+
+<p>The expansion port is mostly signals coming directly from the Z80 CPU, but there are also a few
+additional things.</p>
+
+<h4>Data and address busses</h4>
+
+<p>These are the pins D0 to D7 and A0 to A15.</p>
+
+<p>The data bus is 8 bits and is used by the Z80 to send and receive data. Whenever any memory or
+I/O device is read or written, these 8 pins are used to carry the value around.</p>
+
+<p>The address bus is 16 bits and allows to select which memory address or which device is being used.</p>
+
+<h4>Control signals</h4>
+
+<p>Several other signals ensure cooperation and synchronization between the different devices on the
+bus (expansion cards, but also internal RAM, ROM and peripherals in the CPC). Only a few of them
+are used in the FlashGordon, here they are:</p>
+
+<ul>
+	<li>BUSRESET: forcing this to 0 makes the CPC reset. This is used for the reset button.</li>
+	<li>IORQ and MREQ: they signal the type of access that the z80 is doing. Both signals are at
+		1 (+5V) when the CPU is not using the bus. MREQ goes to 0 when accessing memory. IORQ goes
+		to 0 when accessing I/O devices (with IN and OUT instructions and their increment/repeat versions)</li>
+	<li>WR: goes to 0 when the Z80 wants to write (OUT, or LD to memory, for example). There is a matching RD signal for read access, but in the FlashGordon, it is not used.</li>
+	<li>ROMEN: signal from the Gate Array, goes to 0 when the CPC needs to read data from a ROM.</li>
+	<li>ROMDIS: input signal, allows a device on the expansion port to disable the internal ROMs.</li>
+</ul>
+
+<h3>Storing the ROM number</h3>
+
+<img src="pics/tech/flash/romsel.png" alt="Detecting change of ROM number"/>
+<img src="pics/tech/flash/register.png" alt="Register to store ROM number"/>
+
+<p>So, to start with, we need to know which ROM is currently active. The ROM number selection is done
+with an out to register DF00, but in fact, any address with bit 13 = 0 will do.</p>
+
+<p>We need to check 2 things to detect this:</p>
+<ul>
+	<li>The Z80 is doing an OUT instruction or similar (WR and IORQ will both be 0)</li>
+	<li>The A13 bit is 0 as well</li>
+</ul>
+
+<p>We can check this easily with an OR gate (part number 74HCT32), which conveniently outputs 0 if
+all inputs are 0 at the same time, and 1 otherwise.</p>
+
+<p>When we detect this, we know that the data bus is currently giving us the ROM number to activate.
+We don't need it immediately, but we need to remember it for later when ROM access happens. So, we
+have to store it somewhere. Conveniently, the 74HCT574 chip does just that: when an input pin is
+0, it stores an 8bit value. It then remembers it until a new one is written. We note this rom number
+bits Q0 to Q7 in the schematics.</p>
+
+<h3>Detecting access to our ROMs</h3>
+
+<img src="pics/tech/flash/access.png" alt="Detecting ROM area"/>
+
+<p>First of all, we need to know if the CPC is trying to access a ROM at all. Normally, we would use
+the ROMEN pin on the expansion port for this, but there is a problem: since we use flash memory,
+we want to also detect writes to the ROM, so they can be reprogrammed, and ROMEN doesn't work for
+this. So, we need to perform some checking on our own.</p>
+
+<p>The first thing is to decide if the access is in the ROM area. On the CPC, this is C000 to FFFF
+(other parts of the memory space are used for RAM, firmware ROM, and the ASIC on Plus machines).</p>
+
+<p>We can detect this address range by looking at A15 and A14, if they are both 1, it's an access in
+the ROM area.</p>
+
+<img src="pics/tech/flash/rom7rom0.png" alt="Disabling ROMs 0 and 7"/>
+
+<p>Two ROMs are already built into the CPC: ROM 0 and 7. ROM 0 can be disabled (using the ROMDIS pin),
+but ROM 7 usually can't (except on Plus machines). So, the FlashGordon provides a way to skip
+either of these. This is done using bits Q0 to Q3 of the ROM number. If Q3 and Q4 are 0, and Q0-Q2 are all 0 or all 1, one of these ROMs is being accessed. We use a 74HCT138 chip which can check both cases
+at the same time and put one of its output pins (O0 or O7) to 0 in case of a match.</p>
+
+<p>Then there are the two jumpers which allow to enable these ROMs (by not using the output of this check)
+or disable them (by using the output). This results in the signals R0EN and R7EN (ROM 0 enable, ROM 7 enable).</p>
+
+<p>There is an additional trick here: when the jumper for ROM 0 is left unconnected, there is a pull
+down resistor (R5). This forces the signal to 0, and the result is always disabling all ROMs. This is
+useful if the ROM content is corrupt or you flashed a broken ROM, making it impossible to boot with
+the FlashGordon connected to the CPC. You can then boot the CPC with ROMs disabled, run a ROM
+flashing tool, and then put the jumper back and reflash your ROM with a fixed version.</p>
+
+<img src="pics/tech/flash/romdis.png" alt="Finalizing ROM decoding"/>
+
+<p>We are not done yet: we need to check that the ROM access was in our range at all by checking bits
+Q5-Q7 which were missing from the previous comparison. A solder point on the FlashGordon allows to
+easily modify it to expect Q5=1, in which case it would provide ROMs 32 to 63 instead of 0 to 31.</p>
+
+<p>At this stage, we also put in the check for A14 and A15 mentionned earlier, and the RDWR signal
+(more on that later). The result of all this is a CE signal (Chip Enable) that goes low whenever there
+is an access to one of our active ROMs. When that is the case, we also have to tell the CPC internal
+ROMs to not handle the access (the BASIC ROM in the CPC acts as a backup and always activates if no other
+ROM is active). This is done using the ROMDIS pin. Unlike CE, it has to go to 1 when we handle a ROM
+access. Moreover, we need to use a diode, because we only want to force it to 1, and otherwise
+let other devices on the expansion bus decide if they want to handle other ROM accesses.</p>
+
+<h3>Write protection switch</h3>
+
+<img src="pics/tech/flash/switch.png" alt="Write protect switch"/>
+
+<p>While it is not really needed on the FlashGordon, there is a write protection switch. Accidental
+writes should not be a problem, as the Flash memory chip itself already provides some write protection
+by requiring a very specific access pattern to unlock itself. However, it's better to be safe and
+have extra protection, just in case.</p>
+
+<p>The switch does two things. It routes either ROMEN (for read-only mode) or MREQ (for read/write)
+to the RDWR signal (already mentionned above). And, it also can prevent the WR signal from ever
+reaching the Flash ROM chip. Finally, a LED turns on when writes are enabled.</p>
+
+<h3>The ROM itself</h3>
+
+<img src="pics/tech/flash/flash.png" alt="ROM device"/>
+
+<p>Finally we have all the signals we need to use our ROM chip. We find a part of the address bus
+(A0 to A13, allowing to access the 16K of a ROM slot) and the complete data bus (D0 to D7). The
+ROM selection bits Q0 to Q4 are connected to the additional address pins on the chip, allowing to
+select the correct data for the ROM slot being accessed.</p>
+
+<p>There are 3 more signals: CE which enable the chip, WE to trigger a write (connected to WR of
+the expansion port, unless the write switch is off), and OE which triggers reads from the chip and
+is simply wired to ROMEN from the expansion port.</p>
+
 {% include_relative footer.html %}
