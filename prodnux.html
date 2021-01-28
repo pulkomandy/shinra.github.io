@@ -4,15 +4,35 @@ title: Shinra's Homepage
 
 {% include_relative header.html %}
 {% include_relative prodh.html %}
+
+<h1>BeNICCC</h1>
+<p>Code: PulkoMandy</p>
+<img src="pic/beniccc.png" alt="BeNICCC">
+
+<p>Our entry to the ST-NICCC 2000 challenge, which is about displaying a 2D
+polygon animation on many different platforms. Not much technical merit in
+this version, and it comes late because, of course, getting things to work
+on Haiku was a challenge:
+<ul>
+	<li> we now have a way to play MOD files with standard OS APIs,</li>
+	<li>we can now play media files from executable resources easily,</li>
+	<li>there is still a memory corruption somewhere but I reorganized the code until it worked.</li>
+</ul>
+Sadly this version will not run on the original BeOS. But I'm too lazy to work
+on that.
+</p>
+
+<a href="prods/BeNICCC.zip">Download BeNICCC for 32bit Haiku</a>
+
 <h1>GrafX2</h1>
 <p>Code: PulkoMandy</p>
 <img src="http://grafx2.tk/data/medias/screenshots/01-splash.png" alt="GrafX2">
-<p>GrafX2 is an old pixel painting program from the DOS era. The original authors, Sunset Design, stopped developping it and released the sourcecode into the wild. We did a port to linux and windows and we are now adding some features to the program.</p>
-<p>Will run on Linux, Windows, and somewhat on AmigaOS 4 and Mac OS X. May be compiled on any platform with SDL available.</p>
+<p>GrafX2 is an old pixel painting program from the DOS era. The original authors, Sunset Design, stopped developping it and released the sourcecode into the wild. We did a port to modern systems and we are now adding some features to the program.</p>
+<p>Will run on Haiku, Linux, Windows, and many other platforms. May be compiled on any platform with SDL available.</p>
 <a href="http://grafx2.tk">GrafX2 homepage</a>
 
 <h1>MO5 SDK</h1>
-<p>Code : PulkoMandy & Cloudstrife</p>
+<p>Code : PulkoMandy &amp; Cloudstrife</p>
 <p>This is a set of tools for developping on MO5. It only fills the missing
 parts between other tools. So far it contains two tools :</p>
 <ul><li>gfx2mo5 : converts png pictures to the mo5 fileformat.</li>
