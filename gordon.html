@@ -52,6 +52,16 @@ board. The FlashGordon is largely a clone of the MegaFlash, with the following c
 	<li>Compact MotherX4 compatible form factor</li>
 </ul>
 
+<h2>Version history</h2>
+
+<p>The FlashGordon hardware went through several iterations:</p>
+
+<ul>
+	<li>2012: First version based on Bryce MegaFlash with a patch to disable all ROMs, and a reset button.</li>
+	<li>2013: Fix a missing trace on the PCB (2012 version has a blue strap on the back), replace 74HC components with 74HCT to fix compatibility issues with some CPC and expansions.</li>
+	<li>2020: Use surface mounted components to make the interface smaller and easier to assemble and change the decoding logic a bit.</li>
+	<li>2021: Replace the jumpers woth DIP switches.</li>
+
 <h2>Software</h2>
 
 <p>FlashGordon comes pre-loaded with ROMAN in ROM slot 15. ROMAN includes a ROM booster that will
@@ -81,6 +91,8 @@ and things, and there could be long delays. I don't want to be owing you money f
 
 <h2>Configuring the jumpers and switches</h2>
 
+<h3>First generation (2012 and 2013) cards</h3>
+
 <p>There are 2 jumpers and a push switch on the board. The push switch enables write mode, and
 the jumpers allow configuration of ROMs 0 and 7 as well as a global disable mode.</p>
 
@@ -93,10 +105,28 @@ switch on. It is safe to leave it enabled all the time.</p>
 <p>Note: the Flash chip used requires a special programming algorithm, which makes it incompatible with the Megaflash and Ramcard software in write mode.</p>
 
 <p>The two jumpers are used to control the state of ROMs 0 and 7. These need special care because they are the internal ROMs in the computer. ROM 0 is the BASIC, and ROM 7 is the AMSDOS. Most of the time, you want to keep these useable. This is the factory setting: both jumpers are placed near the connector, so the internal ROMs are used.</p>
-<p>The top jumper is for ROM 0, and the bottom one is for ROM 7. On CPC 6128 and DDI-1, the internal ROM 7 can't be cleanly disabled (it works on some machines, but it means the internal ROM and the flash chip both use the memory bus at the same time, and it happens that the flash chip is stronger in this fight. But it could eventually damage the hardware), so you should always leave the ROM 7 jumper down. On Plus and machines without disk drives, you can enable it. ROM 0 can always be overloaded, but remember that you will not boot to the BASIC in that case (the Hacker ROM is a popular replacement ROM 0, for example).</p>
+<p>The top jumper is for ROM 0, and the bottom one is for ROM 7.</p>
 <p>If you completely remove the ROM 0 jumper, all the ROMs will be disabled. This is useful if you messed up one of the ROM and it makes the computer unable to boot with the ROMs enabled. Once booted, you can load the recovery program and then enable the board again when it asks you to turn the write switch on. This is the only case where you're allowed to change the jumper settings while the CPC is running.</p>
 
-<h2>Detailed hardware details</h2>
+<h3>Second generation (2020 and 2021) cards</h3>
+
+<p>There is a write switch in the middle and 4 DIP switches at the top of the card.</p>
+
+<p>The write switch is used to completely prevent write access to the Flash memory. When the light
+is on, write is allowed. When the light is off, write is not allowed. Note that due to the use of
+flash memory, normal software should not accidentally write to the ROMs, even if you leave the
+switch on. It is safe to leave it enabled all the time.</p>
+
+<p>This version of the card provides full decoding, so the problem mentioned above about addresses 8000-BFFF does not exist anymore.</p>
+
+<p>DIP switch number 2 is used to enable (right) or disable (left) all ROMs.</p>
+<p>Switches number 3 and 4 are used to disable (right) or enable (left) ROMs 0 and 7. When disabled, the CPC internal ROMs are used. When enabled, the ROM flashed in the MegaFlash is used.</p>
+
+<h3>Warning for both versions of the card</h3>
+
+<p>On CPC 6128 and DDI-1, the internal ROM 7 can't be cleanly disabled (it works on some machines, but it means the internal ROM and the flash chip both use the memory bus at the same time, and it happens that the flash chip is stronger in this fight. But it could eventually damage the hardware), so you should always leave the ROM 7 jumper down. On Plus and machines without disk drives, you can enable it. ROM 0 can always be overloaded, but remember that you will not boot to the BASIC in that case (the Hacker ROM is a popular replacement ROM 0, for example).</p>
+
+<h2>In-depth hardware details</h2>
 
 <p>If you are interested in making your own ROM expansion for the CPC, the information below might
 be useful. Or if you are just curious how this all works. This section will walk you through the

@@ -1,0 +1,105 @@
+---
+title: Shinra's Homepage
+---
+
+{% include_relative header.html %}
+
+<h1>Albireo - Programmer's manual</h1>
+
+<div id="generated-toc" class="generate_from_h2"></div>
+
+<h2>Introduction</h2>
+
+<p>Nova provides a real-time clock and non-volatile (battery backed up) RAM for the CPC.</p>
+
+<p>There are two main uses identified for it, but it can be used to do many things.</p>
+
+<p>The real-time clock can be used by filesystem/mass storage ROMs to set the correct file
+creation or modification dates.</p>
+
+<p>The NVRAM can be used to store settings from ROMs and other software (but in a lot of cases,
+it is just as easy to store that on disk).</p>
+
+<p>The RAM is accessed as normal RAM, in 8K pages. The scheme is intentionally not compatible with
+standard memory expansions. This allow mapping the RAM in and out as needed, which can be very
+useful if you use it as a debugging tool or a temporary buffer for something that should not use
+the main RAM for whatever reason.</p>
+
+<h2>Ordering information</h2>
+
+<p>The card costs 35€ (it is a bit more expensive than other cards due to the price of the NVRAM
+chip and battery)</p>
+
+<p>Orders are closed for now, as I am waiting on the first batch of circuit boards to validate the
+design.</p>
+
+<p>Orders should be sent to pulkomandy by email or on the cpcwiki forum. Payments are preferred by
+PayPal but other methods can be discussed. Or of course you can ask me directly if we meet at some
+demoscene gathering, I may have some hardware available for sale.</p>
+
+<h2>Usage documentation</h2>
+
+<p>The interface uses port FE82 for mapping the NVRAM in and out. It is possible to map it at any
+address multiple of &amp;2000.</p>
+
+<p>The high 4 bits determine the base address.</p>
+
+<p>For example:</p>
+
+<pre>
+OUT &amp;FE82,&amp;0x ' to map at 0000-1FFF
+OUT &amp;FE82,&amp;2x ' to map at 2000-3FFF
+...
+OUT &amp;FE82,&amp;Ex ' to map at E000-FFFF
+</pre>
+
+<p>The NVRAM, when it is enabled, masks 8K of RAM or ROM and replaces it with its own contents.</p>
+
+<p>The low 4 bits determine what is mapped:</p>
+
+<pre>
+OUT &amp;FE82,x8 ' map the first 8K page
+OUT &amp;FE82,x9 ' map the second 8K page
+OUT &amp;FE82,xA ' map the third 8K page
+OUT &amp;FE82,xB ' map the fourth 8K page
+</pre>
+
+<p>For the 8K version, only page 4 is available.</p>
+
+<p>Any other value for the 4 low bits unmaps the NVRAM and restores the normal RAM or ROM behavior.</p>
+
+<p>In the fourth page, the last 8 bytes are not normal RAM, but can be used to read and write the
+time from the realtime clock. So your CPC can know which day and time it is. In the other pages
+(if available) there is only RAM.</p>
+
+<p>Access to the RTC works this way (assuming the interface is mapped at 6000-7FFF):</p>
+
+<pre>
+OUT &amp;FE82,&amp;6B
+POKE &amp;7FF8,&amp;40
+year = PEEK(&amp;7FFF)
+month = PEEK(&amp;7FFE)
+day = PEEK(&amp;7FFD)
+weekday = PEEK(&amp;7FFC)
+hour = PEEK(&amp;7FFB)
+minute = PEEK(&amp;7FFA)
+second = PEEK(&amp;7FF9)
+POKE &amp;7FF8,&amp;00
+OUT &amp;FE82,&amp;00
+</pre>
+
+<p>All values are in BCD format (4 bits for tenths, 4 bits for units)</p>
+
+<p>To set the time:</p>
+
+<pre>
+OUT &amp;FE82,&amp;6B
+POKE &amp;7FF8,&amp;80
+POKE &amp;7FFF,&amp;21 ' for 2021
+POKE &amp;7FFE,&amp;02 ' february
+' ... and so on ...
+POKE &amp;7FF8,&amp;00
+OUT &amp;FE82,&amp;00
+</pre>
+
+{% include_relative footer.html %}
