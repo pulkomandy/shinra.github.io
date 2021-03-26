@@ -27,15 +27,11 @@ the main RAM for whatever reason.</p>
 
 <h2>Ordering information</h2>
 
-<p>The card costs 35€ (it is a bit more expensive than other cards due to the price of the NVRAM
-chip and battery)</p>
+<p>The card costs 35€ including shipping (it is a bit more expensive than other cards due to the
+price of the NVRAM chip and battery)</p>
 
-<p>Orders are closed for now, as I am waiting on the first batch of circuit boards to validate the
-design.</p>
-
-<p>Orders should be sent to pulkomandy by email or on the cpcwiki forum. Payments are preferred by
-PayPal but other methods can be discussed. Or of course you can ask me directly if we meet at some
-demoscene gathering, I may have some hardware available for sale.</p>
+<p>Orders are open. Contact PulkoMandy by email, by IRC (#CPC on freenode) or on the cpcwiki forum
+for more information and to select a payment method.</p>
 
 <h2>Usage documentation</h2>
 
@@ -75,8 +71,8 @@ time from the realtime clock. So your CPC can know which day and time it is. In 
 <p>Access to the RTC works this way (assuming the interface is mapped at 6000-7FFF):</p>
 
 <pre>
-OUT &amp;FE82,&amp;6B
-POKE &amp;7FF8,&amp;40
+OUT &amp;FE82,&amp;6B ' Map page 4 at 6000-7FFF
+POKE &amp;7FF8,&amp;40 ' Put the card in RTC read mode (7FF8-7FFF will stop updating)
 year = PEEK(&amp;7FFF)
 month = PEEK(&amp;7FFE)
 day = PEEK(&amp;7FFD)
@@ -84,7 +80,7 @@ weekday = PEEK(&amp;7FFC)
 hour = PEEK(&amp;7FFB)
 minute = PEEK(&amp;7FFA)
 second = PEEK(&amp;7FF9)
-POKE &amp;7FF8,&amp;00
+POKE &amp;7FF8,&amp;00 ' Put the card in running mode (7FF8-7FFF start updating every second again)
 OUT &amp;FE82,&amp;00
 </pre>
 
@@ -94,7 +90,7 @@ OUT &amp;FE82,&amp;00
 
 <pre>
 OUT &amp;FE82,&amp;6B
-POKE &amp;7FF8,&amp;80
+POKE &amp;7FF8,&amp;80 ' Put the card in RTC write mode
 POKE &amp;7FFF,&amp;21 ' for 2021
 POKE &amp;7FFE,&amp;02 ' february
 ' ... and so on ...
