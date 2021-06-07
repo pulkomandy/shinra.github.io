@@ -60,6 +60,7 @@ OPL3LPT in other situations. You can see the wire in the pictures below.</p>
 
 <ul>
 	<li>SA2 Surprise! Adlib Tracker <a href="https://framagit.org/shinra/sa2play">player by Madram</a></li>
+	<li>VGM player<a href="https://framagit.org/shinra/playvgm"> by PulkoMandy (work in progress)</a></li>
 </ul>
 
 <h3>S2P</h3>
@@ -68,16 +69,13 @@ Nothing yet.
 
 <h2>Getting the card</h2>
 
-<p>PulkoMandy manages the manufacturing and shipping of the cards. For now only a limited run of 10
-prototypes was built. The goal is to get them in the hands of people who plan to write software
-for it first (there is no point in users buying the card and letting it sit in a drawer for years).</p>
+<p>PulkoMandy manages the manufacturing and shipping of the cards. Contact me on IRC (#cpc-fr on libera.chat on the cpcwiki forums or by email.</p>
 
-<p>Contact me if you are interested in getting one (or more? if you work on a multi-chip player maybe?)
-of these cards. Later on a larger batch will be produced when there is some software available.</p>
+<p>Cards are in production and orders are opened for everyone now. The cost for Willy is 10€. This does not include any soundcard, you have to buy those separately.</p>
 
 <h2>Installing the card</h2>
 
-<p>Willy connects to the expansion port using an adapter cable. On the computer side, you need either an HE-902 edge connector (for Amstrad CPC) or a Centronics connector (Amstrad Plus, Schneider CPC). On the other side, you need a female HE10 connector. Try to keep the cable as short as possible (no more than 20cm), else you can get into some problems with the system reliability.</p>
+<p>Willy connects to the expansion port using an adapter cable. On the computer side, you need either an HE-902 edge connector (for Amstrad CPC) or a Centronics connector (Amstrad Plus, Schneider CPC). On the other side, you need a female HE10 connector. Try to keep the cable as short as possible (no more than 20cm), else you can get into some problems with the system reliability (this is not specific to this card, just good advice in general for hardware expansions).</p>
 
 <p>Take the board with the connectors facing up, and the HE10 connector towards the computer expansion port. When holding the board this way, the connection cable is wired straight. Pin 1 is on the left, as indicated by the arrow on the board. Notice that the 50-pin HE10 connector is wired backwards (pin 1 should be on the right to match the standard), but this allows for easier connection with the CPC.</p>
 
@@ -152,5 +150,6 @@ in the OPL3 chip. So they are split apart in two banks.</p>
 
 <p>You can find various resources online about programming the OPL3. For example <a href="http://www.shipbrook.net/jeff/sb.html">this one</a>, which has an example of registers to set to make a simple sound at the end.</p>
 
+<p>The OPL3 is also register compatible with older chips like the OPL2 and the OPL1. However it is not register compatible with other Yamaha chips (OPLL, OPN, ...). Since the OPL3 is quite flexible, music written for other chips (AY3, SID, ...) can usually be converted in more or less automated way, which is a cheap way to adapt your existing music to this new soundchip. But of course, only original compositions will use the chip to its maximal capacities.</p>
 
 {% include_relative footer.html %}
