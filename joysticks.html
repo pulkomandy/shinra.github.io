@@ -1,0 +1,75 @@
+---
+title: Shinra's Homepage
+---
+
+{% include_relative header.html %}
+
+<h1>Everything you wanted to know about Joystick ports</h1>
+
+<p>The de facto standard for joysticks on 8bit (and 16bit) machines is a DE-9
+connector, first introduced on the Atari VCS console. Unfortunatly, some
+machines implemented it with some variations, resulting in compatibility issues
+and confusion. This page attempts to summarize the main problems that you may
+encounter.</p>
+
+<h1>The original port on the Atari VCS</h1>
+
+The original port has 5 digital inputs and two analogue ones. The digital inputs
+are up, down, left, right and trigger (button) on pins 1, 2, 3, 4, and 6.
+
+Pins 5 and 9 are analogue inputs, wired to potentiometers.
+
+Pin 7 is a +5V power supply, and pin 8 is ground.
+
+All Commodore machines also fully implement this standard (complete with
+analogue ports).
+
+<h2>Amstrad CPC and Sam Coupé</h2>
+
+These machines manage to handle two joysticks with only one connector. Support
+for analogue input is missing.
+
+The joysticks inputs are wired as part of the keyboard matrix. It's expected
+that joystick 1 will connect the input pins (up, down, left, right, or button)
+to the COM1 line (pin 8), and joystick 2 will connect them to the COM2 line
+(pin 9). These lines are forced to 0 by the computer when scanning the respective
+joystick, and left floating (with pull-up resistors) otherwise.
+
+On the Sam Coupé, pin 7 is still a +5V supply, and a real ground is found on
+pin 5. You can use this to power up some electronics in the Joystick.
+
+The Amstrad CPC, however, wanted more buttons, so pins 5 and 7 are used for
+two extra buttons. As a result, there is no ground and no +5V signal. This
+makes it difficult to have "intelligent" electronics in the joystick, as there
+is no simple way to power it. All the input and output lines are connected to
+the PPI and AY chips IO pins in the CPC.
+
+The idea for this port is that the first joystick would have a connector on
+its base to connect the second one. This connector would swap pins 8 and 9,
+so the second joystick would work without any specific changes.
+
+To avoid any problems with keyboard scanning, the input pins should be forced
+to 0 only when the respective COM pin for the joystick is 0, and left floating
+otherwise (or directly connected to the COM pin).
+
+<h2>Thomson machines</h2>
+
+The situation on Thomson machines is yet again a bit different. This time there
+are two ports on the machine. However, their up/down/left/right pins are also
+wired to other devices. On the MO6, they are used as outputs for the printer
+port. On the TO8, they are used for the audio output. To avoid interferences,
+similarly to the Amstrad and Sam Coupé ports, pin 8 is not an actual ground,
+but is forced to 0 only when the joystick is being scanned (and pulled up with
+a resistor otherwise). Take care of the fact that the pins are used for output
+by the computer, and make sure this will not damage your controller.
+
+Note that Thomson's own mouse does not do this properly, and it will interfere
+with sound output, if you move it, or even if you don't move it but left it in
+a position where it's forcing one of the lines to 0. Nice work, Thomson!
+
+There is a +5V supply on pin 5, and a ground this time on pin 9.
+
+Pins 6 and 7 are used for two button joysticks (in a way compatible with the
+Amstrad CPC ones).
+
+{% include_relative footer.html %}
