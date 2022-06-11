@@ -123,6 +123,8 @@ switch on. It is safe to leave it enabled all the time.</p>
 <p>DIP switch number 2 is used to enable (right) or disable (left) all ROMs.</p>
 <p>Switches number 3 and 4 are used to disable (right) or enable (left) ROMs 0 and 7. When disabled, the CPC internal ROMs are used. When enabled, the ROM flashed in the MegaFlash is used.</p>
 
+<img src="pic/tech/flash/switches.png" alt="FlashGordon configuration"/>
+
 <h3>Warning for both versions of the card</h3>
 
 <p>On CPC 6128 and DDI-1, the internal ROM 7 can't be cleanly disabled (it works on some machines, but it means the internal ROM and the flash chip both use the memory bus at the same time, and it happens that the flash chip is stronger in this fight. But it could eventually damage the hardware), so you should always leave the ROM 7 jumper down. On Plus and machines without disk drives, you can enable it. ROM 0 can always be overloaded, but remember that you will not boot to the BASIC in that case (the Hacker ROM is a popular replacement ROM 0, for example).</p>
