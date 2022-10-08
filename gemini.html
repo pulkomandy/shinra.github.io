@@ -1,0 +1,77 @@
+---
+title: Gemini RAM expansion for Amstrad Plus
+---
+
+{% include_relative header.html %}
+
+<h1>Gemini - A 1MB RAM expansion for Amstrad Plus</h1>
+
+<h2>Why yet another RAM expansion?</h2>
+
+<p>Lately there has been a large development in hardware for the Amstrad CPC series. This is great!
+You now can chose from several design and manufacturers if you are looking for extra hardware for
+your machine. I thought I could retire from hardware manufacturing and find better ways to waste my
+time. Unfortunately, that time has not come yet, as the existing expansions all had a problem.</p>
+
+<p>The issue was identified by Zik while developping and testing the Soundtracker DMA (it's possible
+it was known before, but, at least, this is how I became aware of it). The issue is specific to the
+Amstrad Plus machines which add yet another complication to the memory mapping handling on CPC
+machines. Basically, the ASIC can be memory mapped and hide a part of the RAM. This works well for
+the main RAM bank, and on the CPC, it also works for the internal extra 64K of RAM, which can be
+mapped at the same address. If you try to map both the RAM and the ASIC there, the ASIC is mapped
+and the RAM is not accessible until the ASIC is moved out of the way.</p>
+
+<p>Unfortunately, memory expansions designed for the classic CPC does not take this into account.
+For some of them, because they were designed before the Amstrad Plus ASIC existed, and for some,
+the designers didn't think of it or decided it was not important. As a result, these extensions
+can enter in conflict with the ASIC, which will result, at best, in software crashes, and at worst,
+in damage to the hardware.</p>
+
+<p>The other problem is some expansions use old chips that may be out of production, and, who still
+uses DIP through-hole packages in 2022 anyway? In my case I picked much smaller surface mounted
+components. Also, all the needed design files are available and the board can be assembled without
+expansive hardware. You'll need a GAL programmer if you want to build one yourself, but that's
+easy to hand assemble if you don't want to buy one (that's what I did). So this should make sure
+this design remains available even when I'm not able to manufacture it anymore.</p>
+
+<h2>How does it work</h2>
+
+<p>The board uses two ATF22V10 GALs, one mostly replicating the role of the internal PAL in the
+classic CPC, and the other reproducing the logic used for the ASIC lock and unlock sequence
+(it was almost, but not completely, possible to fit all this in just two chips, unfortunately
+some extra glue logic had to be added). The board internally tracks the unlock sequence and the
+status of the RMR2 register to know if the ASIC is mapped to the CPU. When that's the case, it will
+automatically disable the RAM page that may be accessible at the same address. Gemini also provides
+two LEDs to tell you when it thinks the ASIC is unlocked, and mapped into memory. You can watch
+these light up and blink as you run software using Plus features.</p>
+
+<p>There is a switch to select if you want to enable the full 1MB of RAM, or, in case some software
+has problems with that, restrict it to 512K instead. If that still causes problems and you need
+64 or 128K of RAM, just unplug the card from the computer.</p>
+
+<p>This card can also be used on the CPC 6128, but it will still hide one of its pages if some
+software attempts to unlock and map the ASIC. It is possible to remove some components from the
+board and make a version for the 6128, but maybe you can get one of the existing expansions from
+other places instead?</p>
+
+<p>The card is NOT compatible with the CPC 464 and 664. These machines require special handling
+due to limitations in their memory mapping support, which I did not want to mess with, in part
+because I don't own any of these machines. So, if you have a CPC 464 or CPC 664, <strong>don't buy this
+device</strong>. You will find other people who are willing to help you. The 464 Plus has no such
+problems, and this card can be used as designed there.</p>
+
+<h2>Where to get it?</h2>
+
+<p>The Gemini is manufactured by PulkoMandy. A board costs 35€ including worldwide shipping.
+Contact me by email to make sure I have boards in stock, and we can arrange payment and shipping.</p>
+
+<h2>Software</h2>
+
+<p>For once I don't need to write any software to accompany this hardware! It is compatible with
+anything that uses the DKTronics memory expansion scheme as well as the Yarek/RAM7 further extensions
+to that to go past the 512K memory limit.</p>
+
+<p>So, you can run SymbOS, FutureOS, ParaDOS, ... and any software that knows how to use all this
+RAM. Or write your own. Have fun with it!</p>
+
+{% include_relative footer.html %}

@@ -8,6 +8,27 @@ title: Shinra's Homepage
 
 <div id="generated-toc" class="generate_from_h2"></div>
 
+<h2>Introduction to the hardware</h2>
+
+<p>There are multiple versions of the Albireo hardware. The first was designed by PulkoMandy and
+included both a CH376 USB host controller and an UART chip to enable communication with another
+computer. This is version 1. There was a small run of prototypes numbered 0.9, which had a lot of
+patch wires and a non working UART chip. Version 1.0 removed the patches, but retained the non
+working UART. After someone finally tried to write code to use the UART and the problem was
+discovered, a new chip was used as a drp-in replacement for the old one, and the boards were
+reworked to version 1.1. There also exists a version 1.1b which uses a slightly different PCB,
+manufactured by CloudStrife.</p>
+
+<p>The currently available version is Albireo 2.0. This completely removes the UART part in order
+to simplify the design, and retains only the feature that was used most: the USB host port and
+SD card for use as mass storage. This version can also be configured (with a soldering iron) to
+be mapped at a different address, which allows to connect two Albireo boards on the same machine.
+This will allow to, for example, use one board for mass storage, and the other to connect various
+USB devices: mouse, MIDI controller, printer, whatever you need (as long as you find someone to
+write a driver).</p>
+
+<p>The Albireo 2.0 card is manufactured by Zik. Contact him for pricing and ordering information.</p>
+
 <h2>Getting started</h2>
 
 <p>
