@@ -15,8 +15,7 @@ You now can chose from several design and manufacturers if you are looking for e
 your machine. I thought I could retire from hardware manufacturing and find better ways to waste my
 time. Unfortunately, that time has not come yet, as the existing expansions all had a problem.</p>
 
-<p>The issue was identified by Zik while developping and testing the Soundtracker DMA (it's possible
-it was known before, but, at least, this is how I became aware of it). The issue is specific to the
+<p>The issue is specific to the
 Amstrad Plus machines which add yet another complication to the memory mapping handling on CPC
 machines. Basically, the ASIC can be memory mapped and hide a part of the RAM. This works well for
 the main RAM bank, and on the CPC, it also works for the internal extra 64K of RAM, which can be
@@ -28,6 +27,12 @@ For some of them, because they were designed before the Amstrad Plus ASIC existe
 the designers didn't think of it or decided it was not important. As a result, these extensions
 can enter in conflict with the ASIC, which will result, at best, in software crashes, and at worst,
 in damage to the hardware.</p>
+
+<p>Software that is known to hit this problem with existing memory expansions:</p>
+<ul>
+  <li><a href="https://www.pouet.net/prod.php?which=72279">CRTC3 demo</a></li>
+  <li>< a href="http://soundtrackerdma.cpcscene.net">Soundtracker DMA</a></li>
+</ul>
 
 <p>The other problem is some expansions use old chips that may be out of production, and, who still
 uses DIP through-hole packages in 2022 anyway? In my case I picked much smaller surface mounted
