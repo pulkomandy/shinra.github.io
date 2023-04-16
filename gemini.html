@@ -1,10 +1,10 @@
 ---
-title: Gemini RAM expansion for Amstrad Plus
+title: Gemini RAM expansion for Amstrad Plus and CPC 6128
 ---
 
 {% include_relative header.html %}
 
-<h1>Gemini - A 1MB RAM expansion for Amstrad Plus</h1>
+<h1>Gemini - A 1MB or 2MB RAM expansion for Amstrad Plus</h1>
 
 <img src="pic/gemini.jpeg" alt="picture of the Gemini hardware"/>
 
@@ -52,25 +52,46 @@ automatically disable the RAM page that may be accessible at the same address. G
 two LEDs to tell you when it thinks the ASIC is unlocked, and mapped into memory. You can watch
 these light up and blink as you run software using Plus features.</p>
 
-<p>There is a switch to select if you want to enable the full 1MB of RAM, or, in case some software
-has problems with that, restrict it to 512K instead. If that still causes problems and you need
-64 or 128K of RAM, just unplug the card from the computer.</p>
+<p>The Plus version of the card can also be used on the CPC 6128, but it will still hide one of its pages if some
+software attempts to unlock and map the ASIC. So, a CPC 6128 version of the expansion is also available.
+It is exactly the same board, but with the ASIC unlock detection chips removed.</p>
 
-<p>This card can also be used on the CPC 6128, but it will still hide one of its pages if some
-software attempts to unlock and map the ASIC. It is possible to remove some components from the
-board and make a version for the 6128, but maybe you can get one of the existing expansions from
-other places instead?</p>
-
-<p>The card is NOT compatible with the CPC 464 and 664. These machines require special handling
+<p><strong>The card is NOT compatible with the CPC 464 and 664</strong>. These machines require special handling
 due to limitations in their memory mapping support, which I did not want to mess with, in part
-because I don't own any of these machines. So, if you have a CPC 464 or CPC 664, <strong>don't buy this
+because I don't own any of these machines. So, <strong>if you have a CPC 464 or CPC 664, don't buy this
 device</strong>. You will find other people who are willing to help you. The 464 Plus has no such
 problems, and this card can be used as designed there.</p>
 
+<h2>Using more than 512K of expansion RAM on the CPC/Plus</h2>
+
+<p>The original design of the CPC 6128 leaves 3 unused bits in the MMR register. These
+bits are used by other memory expansions (for example the DkTronics ones) to allow mapping in more
+memory banks in a similar way to the internal 64KiB of bank memory in the CPC. With these, we can
+get access to 8 banks of 64KiB, or a total of 512KiB of bank memory (in addition to 64KiB of
+central RAM, of course).</p>
+
+<p>To go past this 512KiB limit, this extension uses the scheme introduced in Ram7's MEMCARD, that
+is, when accessing the MMR, two additionnal address bits are decoded. Accessing the MMR at its
+usual 7Fxx address allows access to the first 512K of memory, using addresses 7Exx, 7Dxx and 7Cxx
+allow to access more memory for a total of 2MiB.</p>
+
+<p>There is a switch to select if you want to enable the full 1MB/2MB of RAM, or, in case some software
+has problems with that, restrict it to 512K instead. If that still causes problems and you need
+64 or 128K of RAM, just unplug the card from the computer.</p>
+
 <h2>Where to get it?</h2>
 
-<p>The Gemini is manufactured by PulkoMandy. A board costs 35€ including worldwide shipping.
+<p>The Gemini is manufactured by PulkoMandy.
 Contact me by email to make sure I have boards in stock, and we can arrange payment and shipping.</p>
+
+<p>Costs (including worldwide shipping) for each version:</p>
+
+<ul>
+	<li>2MB Gemini for Amstrad 6128 Plus or 464 Plus - 45€</li>
+	<li>1MB Gemini for Amstrad 6128 Plus or 464 Plus - 35€</li>
+	<li>2MB Gemini for Amstrad CPC 6128 - 42€</li>
+	<li>1MB Gemini for Amstrad CPC 6128 - 32€</li>
+</ul>
 
 <h2>Software</h2>
 
