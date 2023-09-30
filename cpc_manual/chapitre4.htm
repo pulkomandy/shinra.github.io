@@ -1,0 +1,1320 @@
+<HTML>
+<HEAD>
+   <TITLE>Chapitre 4</TITLE>
+<script type="text/javascript">
+//<![CDATA[
+var gs_d=new Date,DoW=gs_d.getDay();gs_d.setDate(gs_d.getDate()-(DoW+6)%7+3);
+var ms=gs_d.valueOf();gs_d.setMonth(0);gs_d.setDate(4);
+var gs_r=(Math.round((ms-gs_d.valueOf())/6048E5)+1)*gs_d.getFullYear();
+var gs_p = (("https:" == document.location.protocol) ? "https://" : "http://");
+document.write(unescape("%3Cscript src='" + gs_p + "s.gstat.orange.fr/lib/gs.js?"+gs_r+"' type='text/javascript'%3E%3C/script%3E"));
+//]]>
+</script>
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<P><FONT SIZE="+3">Chapitre 4</FONT></P>
+
+<P><FONT SIZE="+3">Utilisation des disquettes et des cassettes
+
+<HR>
+
+</FONT><FONT SIZE="+2"><B>Partie 1 : Disquettes</B></FONT></P>
+
+<P><FONT SIZE="+1">Pr&eacute;paration des disquettes de
+travail</FONT></P>
+
+<P>Ce chapitre traite de la fa&ccedil;on de g&eacute;rer vos
+disquettes pour un usage quotidien et pr&eacute;sente quelques-uns
+des utilitaires CP/M.</P>
+
+<P>Sujets abord&eacute;s</P>
+
+<UL>
+   <LI>Duplication des disquettes syst&egrave;me</LI>
+   
+   <LI>Introduction au CP/M Plus</LI>
+   
+   <LI>Utilisation des fichiers Help</LI>
+   
+   <LI>Fonctionnement du syst&egrave;me avec une ou plusieurs
+   unit&eacute;s</LI>
+   
+   <LI>Copie de fichiers avec PI P</LI>
+   
+   <LI>Utilisation d'une disquette pour un travail en BASIC
+   uniquement</LI>
+   
+   <LI>Progiciel en BASIC AMSTRAD</LI>
+   
+   <LI>Installation d'un progiciel CP/M PLus</LI>
+   
+   <LI>Introduction aux extensions graphiques GSX</LI>
+   
+   <LI>Exploitation sous CP/M 2.2</LI>
+</UL>
+
+<P>La partie 7 du Cours El&eacute;mentaire montrait comment formater
+une disquette vierge destin&eacute;e &agrave; la sauvegarde des
+programmes en BASIC des jeux. ou de CP/M. La partie 10 du Cours
+&Eacute;l&eacute;mentaire montrait comment faire des duplications
+fid&egrave;les de disquettes &agrave; l'aide du programme DISCKIT 3
+(face 1 de l'une des disquettes syst&egrave;me). Ce chapitre concerne
+la fa&ccedil;on de pr&eacute;parer une disquette destin&eacute;e
+&agrave; recevoir des programmes et des utilitaires de votre
+choix.</P>
+
+<P>&nbsp;</P>
+
+<P><FONT SIZE="+1">La duplication de la Disquette
+Syst&egrave;me</FONT></P>
+
+<P>Il est tr&egrave;s important de faire une copie de la disquette
+syst&egrave;me fournie avec votre ordinateur et de garder l'original
+en lieu s&ucirc;r. Il vous en co&ucirc;terait beaucoup pour la
+remplacer !</P>
+
+<P>Rappeler-vous que chacune des disquettes fournies avec le CPC6128
+poss&egrave;de deux faces. Vous axez donc quatre faces au total.</P>
+
+<P>La face I est la plus importante car elle contient la copie du
+syst&egrave;me d'exploitation CP/M Plus et un ensemble d'utilitaires
+servant au traitement des disquettes. La face 2 comprend des fichier
+destin&eacute;s aux programmeurs-assembleurs et la face 3. le Dr.
+LOGO, les fichiers &#171; Help &#187; et les extensions graphiques
+GSX (nous y reviendrons plus tard). Quant &agrave; la face 4. elle
+contient le syst&egrave;me CP M2.2 et la version du Dr. LOGO
+disponible pr&eacute;c&eacute;demment pour les ordinateurs AMSTRAD
+CPC664 et CPC464+ DDI1: ces programmes vous sont fournis pour des
+raisons de compatibilit&eacute;. Ils ne vous serviront que
+rarement.</P>
+
+<P>Vous devez conserver ces copies sous forme de &#171;
+biblioth&egrave;que &#187; de programmes. Vous s&eacute;lectionnerez
+le programme qui vous int&eacute;resse en prenant une des disquettes
+de cette biblioth&egrave;que plut&ocirc;t qu'en effectuant une copie
+du dit programme sur une disquette vierge pour le lancer ensuite.</P>
+
+<P>Nous insistons bien sur le fait que les disquette que vous
+utiliserez DOIVENT &Ecirc;TRE DES COPIES effectu&eacute;e &agrave;
+partir des disquettes syst&egrave;me fournies avec l'ordinateur.</P>
+
+<P>Si vous prenez une disquette vierge pour y faire une copie, le
+programme <B>DISCKIT3</B> (face I) la formatera avant
+d'ex&eacute;cuter la copie.</P>
+
+<P>&nbsp;</P>
+
+<P><FONT SIZE="+1">Introduction au CP/M Plus</FONT></P>
+
+<P>Le BASIC AMSTRAD entre en jeu d&egrave;s la mise sous tension de
+votre ordinateur. II se charge des op&eacute;rations jusqu'&agrave;
+ce que vous lanciez un programme BINaire &agrave; partir de l'AMSDOS
+(ou d'une cassette) ou que vous chargiez le CP/M Plus &agrave; l'aide
+de la commande |<B>CPM.</B></P>
+
+<P>Apr&egrave;s chargement de CP/M Plus, le CPC6128 n'a plus besoin
+de la face I de la disquette syst&egrave;me, &agrave; moins, bien
+s&ucirc;r, que vous ne d&eacute;siriez exploiter l'un des utilitaires
+stock&eacute;s sur cette face de la disquette. Seule la disquette
+d'amor&ccedil;age du syst&egrave;me doit &ecirc;tre une disquette
+syst&egrave;me ; par la suite, vous pouvez ins&eacute;rer des
+disquettes de donn&eacute;es &agrave; plus grande capacit&eacute; de
+stockage.</P>
+
+<P>Pour lancer un programme. il suffit d'ins&eacute;rer la disquette
+contenant le programme d&eacute;sir&eacute; et de taper son nom. Les
+donn&eacute;es utilis&eacute;es par le programme peuvent se trouver
+sur la m&ecirc;me disquette que celui-ci, ou sur une autre. CP/M Plus
+autorise la permutation des disquettes tout comme l'AMSDOS. Si
+plusieurs programmes et quelques utilitaires doivent se trouver sur
+la m&ecirc;me disquette pour des raisons de commodit&eacute;,
+utilisez le programme <B>PIP</B> sur la face I d'une des disquettes
+syst&egrave;me (voir plus loin, dans ce chapitre, et chapitre 5).</P>
+
+<P>&nbsp;</P>
+
+<P><FONT SIZE="+1">Cr&eacute;ation de profils</FONT></P>
+
+<P>L'une des disquettes syst&egrave;me fournit un fichier
+sp&eacute;cial appel&eacute; <B>PROFILE.SUB</B> contenant une liste
+de commandes ex&eacute;cut&eacute;es automatiquement d&egrave;s le
+lancement de CP/M Plus. Vous pouvez alors (si ce n'est pas
+d&eacute;j&agrave; fait) ins&eacute;rer une copie de la face I des
+disquettes syst&egrave;me et taper &agrave; la suite du message
+<B>A:</B></P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">REN PROFILE.SUB=PROF1LE.ENG</FONT></BLOCKQUOTE>
+
+<P>Vous cr&eacute;ez ainsi le fichier <B>PROFILE.SUB</B> &agrave;
+partir de <B>PROFILE.ENG</B>. Ce profil, qui sera
+ex&eacute;cut&eacute; au prochain lancement de CP/M Plus, contient
+les commandes:</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">SETKEYS KEYS.CCP</FONT>
+   
+   <P><FONT FACE="Fixedsys">LANGUAGE 3</FONT></P></BLOCKQUOTE>
+
+<P>Elles permettent d'adapter les touches du clavier &agrave; la
+frappe des commandes CP/M et convertir certains caract&egrave;res
+(pour l'obtention du signe <B>&#171; &#163; &#187;</B>, par exemple,
+en tapant <B>&#91;SHIFT&#93;3</B>.</P>
+
+<P>Apr&egrave;s utilisation de la commande <B>SET KEYS.CCP</B>, les
+lignes de commandes CP/M sont &eacute;dit&eacute;es au clavier de la
+m&ecirc;me fa&ccedil;on qu'en BASIC. Pour plus de d&eacute;tails,
+consultez la partie 2 du chapitre 5.</P>
+
+<P>&nbsp;</P>
+
+<P><FONT SIZE="+1">Une main tendue</FONT></P>
+
+<P>La face 3 d'une des disquettes syst&egrave;me comporte un
+programme sp&eacute;cial appel&eacute; &#171; Help &#187;,
+con&ccedil;u comme un manuel didactique &eacute;lectronique pour les
+utilitaires CP/M Plus. Pour activer cette fonction. ins&eacute;rez la
+face 3 et taper &agrave; la suite de <B>A&gt;</B> :</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">HELP</FONT></BLOCKQUOTE>
+
+<P>Le programme &#171; Help &#187; vous pr&eacute;sente alors une
+s&eacute;rie de questions pour vous fournir les informations d'aide
+requises.</P>
+
+<P>&nbsp;</P>
+
+<P><FONT SIZE="+1">Une ou deux unit&eacute;s?</FONT></P>
+
+<P>Au premier chargement de CP/M Plus, le syst&egrave;me
+d&eacute;tecte le nombre d'unit&eacute;s de disquettes reli&eacute;es
+&agrave; l'ordinateur et l'affiche &agrave; la suite du message
+d'identification. Ce proc&eacute;d&eacute; risque d'&ecirc;tre
+fauss&eacute; si la disquette de la seconde unit&eacute; n'est pas
+enti&egrave;rement ins&eacute;r&eacute;e.</P>
+
+<P>Tous les messages d'erreur sont affich&eacute;s sous forme de
+banni&egrave;re &agrave; la vingt-cinqui&egrave;me ligne de
+l'&eacute;cran, les 24 premi&egrave;re lignes &eacute;tant
+utilis&eacute;es par les programmes.</P>
+
+<P>M&ecirc;me si votre syst&egrave;me ne poss&egrave;de qu'une
+unit&eacute;, le message &#171; <B>Drive is A:</B> &#187; ou &#171;
+<B>Drive is B:</B> &#187; sera affich&eacute; sur la derni&egrave;re
+ligne de l'&eacute;cran: en effet. CP/M Plus vous permet de
+travailler avec une seule unit&eacute; physique comme si vous en
+poss&eacute;diez deux. Vous pourrez alors alterner entre deux
+disquettes. et la banni&egrave;re de message vous indiquera quand
+ins&eacute;rer la bonne disquette, suivant les besoins Cette
+fa&ccedil;on de proc&eacute;der vous &eacute;vite l'achat d'une
+seconde unit&eacute; mais elle exige une permutation fr&eacute;quente
+des disquettes; elle se r&eacute;v&egrave;le donc fastidieuse et
+g&eacute;n&eacute;ratrice d'erreurs.</P>
+
+<P>&nbsp;&nbsp;</P>
+
+<P><FONT SIZE="+1">Copie de fichiers d'une disquette sur une
+autre</FONT></P>
+
+<P>Pour copier des fichiers d'une disquette sur une autre, vous
+disposez d'un utilitaire standard <B>PIP</B> (Peripheral Interchange
+Program/Programme d'Interconnexion aux
+P&eacute;riph&eacute;riques).</P>
+
+<P>Chargez le <B>PIP</B> &agrave; partir de la face 1 et tapez
+&agrave; la suite de<B> A&gt;</B> :</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">PIP</FONT></BLOCKQUOTE>
+
+<P>Un nouveau message,*, vous indique le chargement correct du
+<B>PIP</B>. Normalement, vous copiez des fichiers d'une disquette
+source (unit&eacute; <B>A</B>) sur une disquette cible (unit&eacute;
+<B>B</B>). Nous avons vu que dans un syst&egrave;me &agrave; une
+seule unit&eacute; le proc&eacute;d&eacute; est le m&ecirc;me.</P>
+
+<P>Pour copier un fichier, par exemple <B>SUBMIT.COM</B>, tapez
+&agrave; la suite du message *:</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">B:=A:SUBMIT.COM</FONT></BLOCKQUOTE>
+
+<P>Pour copier la totalit&eacute; des fichiers d'une disquette source
+sur une disquette cible, la commande sera:</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">B: =*.*</FONT></BLOCKQUOTE>
+
+<P>Pour sortir du programme <B>PIP</B>, appuyez sur
+<B>&#91;RETURN&#93;</B> &agrave; l'apparition du message *.</P>
+
+<P><B>PIP</B> est un programme tr&egrave;s perfectionn&eacute;, son
+fonctionnement sera approfondi au chapitre 5.</P>
+
+<P>&nbsp;</P>
+
+<P><FONT SIZE="+1">Une disquette r&eacute;serv&eacute;e au
+BASIC</FONT></P>
+
+<P>Comme nous l'avons d&eacute;j&agrave; vu, les disquettes
+syst&egrave;me ne servent qu'&agrave; l'amor&ccedil;age du
+syst&egrave;me CP/M Plus. Les disquettes destin&eacute;es au BASIC
+peuvent donc ne contenir que des donn&eacute;es et offrir une
+capacit&eacute; de stockage l&eacute;g&egrave;rement
+sup&eacute;rieure.</P>
+
+<P>La disquette doit &ecirc;tre format&eacute;e &agrave; l'aide du
+programme <B>DISCKIT3</B>. Pour copier des programmes sur cette
+disquette, vous devez utiliser <B>PIP</B> (charg&eacute; &agrave;
+partir de la face I) ou<B> LOAD</B> suivi de<B> SAVE</B> sous
+BASIC.</P>
+
+<P>&nbsp;</P>
+
+<P><FONT SIZE="+1">Progiciel en BASIC AMSTRAD</FONT></P>
+
+<P>Si vous acheter un programme d'application &eacute;crit en BASIC
+AMSTRAD pour le 6128, son ex&eacute;cution commencera d&egrave;s la
+mise sous tension. Il ne vous reste qu'&agrave; le recopier sur une
+disquette de travail.</P>
+
+<P>&nbsp;</P>
+
+<P><FONT SIZE="+1">Progiciel sous CP/M</FONT></P>
+
+<P>Le syst&egrave;me d'exploitation CP/M vous donne acc&egrave;s
+&agrave; une immense librairie de logiciels, &eacute;crits pour des
+micro-ordinateurs travaillant sous CP/M. La &#171; logique &#187;
+fondamentale de ces programmes &eacute;tant d&eacute;j&agrave;
+d&eacute;finie, la seule chose qui vous reste &agrave; faire est de
+les transf&eacute;rer sur une disquette correcte de votre 6128 et de
+les informer sur sa mani&egrave;re particuli&egrave;re de
+g&eacute;rer l'&eacute;cran.</P>
+
+<P>Un ensemble de programmes sur une disquette ayant pour objet une
+application sp&eacute;cifique est appel&eacute; un &#171; progiciel
+&#187;. Ces progiciels sont habituellement con&ccedil;us pour
+&ecirc;tre utilis&eacute;s sur un bon nombre d'ordinateurs diffrents,
+ayant chacun leur taille d'&eacute;cran particuli&egrave;re et leur
+propre syst&egrave;me de d&eacute;placement de curseur.</P>
+
+<P>Le 6128 dispose d'un &#171; &eacute;mulateur de terminaux &#187;
+int&eacute;gr&eacute; pour l'exploitation des programmes CP/M Plus,
+dont les caract&eacute;ristiques diff&egrave;rent des codes de
+contr&ocirc;le g&eacute;r&eacute;s par le BASIC.</P>
+
+<P>Le progiciel pourra avoir &eacute;t&eacute; d&eacute;fini pour le
+syst&egrave;me AMSTRAD ou pour son adaptation au 6128. Le cas
+&eacute;ch&eacute;ant, suivez les instructions fournies avec le
+logiciel pour un protocole Z&eacute;nith Z19/Z29. S'il n'a pas
+&eacute;t&eacute; pr&eacute;vu de variante pour le syst&egrave;me
+AMSTRAD. le paragraphe &#171; Configuration d'un programme CP/M
+&#187;. un peu plus loin, vous indiquera les commandes de gestion
+d'&eacute;cran permettant d'adapter le progiciel au CPC6128. Cette
+proc&eacute;dure s'effectue normalement en entrant au clavier des
+codes sp&eacute;cifiques. Encore une fois, suivez les instructions
+fournies avec le progiciel.</P>
+
+<P>La disquette contenant le logiciel que vous avez achet&eacute;
+doit &ecirc;tre utilisable par le syst&egrave;me. La majorit&eacute;
+des ordinateurs utilisant leur propre format, l'identit&eacute; de
+taille des disquettes ne signifie pas qu'elles soient compatibles.
+Demandez &agrave; votre fournisseur la version 3 pouces
+d'AMSTRAD.</P>
+
+<P>&nbsp;</P>
+
+<P><FONT SIZE="+1">Cr&eacute;ation d'un progiciel sous CP/M sur
+disquette</FONT></P>
+
+<P>Il est souvent utile d'avoir sur une disquette de progiciel. avec
+le programme d'application. les utilitaires <B>SETKEYS.COM</B> et
+<B>SUBMIT.COM</B> (ainsi que leurs fichiers d'instructions).</P>
+
+<P><B>PIP</B> peut servir &agrave; transf&eacute;rer les fichiers
+<B>COM</B> et &agrave; cr&eacute;er le fichier d'instructions pour
+<B>SUBMIT. PIP</B>, dans ce dernier cas. se r&eacute;v&egrave;le
+&ecirc;tre en effet un &eacute;diteur ligne &agrave; ligne efficace.
+Par exemple, le fichier <B>LOGO3.SUB</B> sur la face 3 aurait pu
+&ecirc;tre cr&eacute;&eacute; avec ces commandes:</P>
+
+<P>(ins&egrave;re, la disquette syst&egrave;me dans l'unit&eacute;
+<B>A</B>. face 1 vers le haut) Tapez:</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">PIP</FONT></BLOCKQUOTE>
+
+<P>(retirez la disquette et ins&eacute;rez la disquette cible),
+tapez:</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">LOGO3.SUB=CON:</FONT>
+   
+   <P><FONT FACE="Fixedsys">SETKEYS KEYS.DRL</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">&#91;CONTROL&#93;J LOGO3</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">&#91;CONTROL&#93;Z</FONT></P></BLOCKQUOTE>
+
+<P>&nbsp;</P>
+
+<P><FONT SIZE="+1">La configuration d'un programme CP/M</FONT></P>
+
+<P>Le 6128 poss&egrave;de une gamme &eacute;tendue de codes de
+r&eacute;f&eacute;rence pour l'adaptation de progiciels sous CP/M. La
+plupart de ces prologiciels ont besoin d'afficher et de lire des
+messages n'importe o&ugrave; sur l'&eacute;cran ainsi que de
+comprendre les commandes de gestion du curseur.</P>
+
+<P>Si votre logiciel a d&eacute;j&agrave; &eacute;t&eacute;
+adapt&eacute; pour le syst&egrave;me AMSTRAD, ce qui suit ne vous
+concerne pas.</P>
+
+<P>&nbsp;</P>
+
+<P><FONT SIZE="+1">Adaptation de votre progiciel : les sorties
+(Output)</FONT></P>
+
+<P>La proc&eacute;dure de mise en service d'un progiciel consiste
+&agrave; ex&eacute;cuter un programme sp&eacute;cial (souvent
+appel&eacute; <B>INSTAL</B>) qui vous pose un certain nombre de
+questions concernant les param&egrave;tres de l'&eacute;cran du 6128
+s'il ne g&egrave;re pas un terminal de type Z19/Z29 ou le 6128 en
+particulier. Inspirez-vous des r&eacute;ponses du tableau ci-dessous
+(extrait de la partie 15 du chapitre 7).</P>
+
+<P><TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0>
+   <TR>
+      <TD WIDTH=166>
+         <P><B>Codes de contr&ocirc;le</B></P>
+      </TD>
+      <TD WIDTH=113>
+         <P><B>Hexa</B></P>
+      </TD>
+      <TD WIDTH=110>
+         <P><B>D&eacute;cimal</B></P>
+      </TD>
+      <TD>
+         <P><B>Op&eacute;rtion effectu&eacute;e</B></P>
+      </TD>
+   </TR>
+   <TR>
+      <TD WIDTH=166>
+         <P>&#91;BEL&#93;</P>
+      </TD>
+      <TD WIDTH=113>
+         <P>&amp;07</P>
+      </TD>
+      <TD WIDTH=110>
+         <P>7</P>
+      </TD>
+      <TD>
+         <P>Cloche</P>
+      </TD>
+   </TR>
+   <TR>
+      <TD WIDTH=166>
+         <P>&#91;BS&#93;</P>
+      </TD>
+      <TD WIDTH=113>
+         <P>&amp;08</P>
+      </TD>
+      <TD WIDTH=110>
+         <P>8</P>
+      </TD>
+      <TD>
+         <P>D&eacute;placement curseur-gauche</P>
+      </TD>
+   </TR>
+   <TR>
+      <TD WIDTH=166>
+         <P>&#91;LF&#93;</P>
+      </TD>
+      <TD WIDTH=113>
+         <P>&amp;0A</P>
+      </TD>
+      <TD WIDTH=110>
+         <P>10</P>
+      </TD>
+      <TD>
+         <P>D&eacute;placement curseur-bas</P>
+      </TD>
+   </TR>
+   <TR>
+      <TD WIDTH=166>
+         <P>&#91;CR&#93;</P>
+      </TD>
+      <TD WIDTH=113>
+         <P>&amp;0D</P>
+      </TD>
+      <TD WIDTH=110>
+         <P>13</P>
+      </TD>
+      <TD>
+         <P>Retour chariot</P>
+      </TD>
+   </TR>
+   <TR>
+      <TD WIDTH=166>
+         <P>&#91;ESC&#93;A</P>
+      </TD>
+      <TD WIDTH=113>
+         <P>&amp;1B &amp;41</P>
+      </TD>
+      <TD WIDTH=110>
+         <P>27 65</P>
+      </TD>
+      <TD>
+         <P>D&eacute;placement curseur-haut</P>
+      </TD>
+   </TR>
+   <TR>
+      <TD WIDTH=166>
+         <P>&#91;ESC&#93;C</P>
+      </TD>
+      <TD WIDTH=113>
+         <P>&amp;1B &amp;43</P>
+      </TD>
+      <TD WIDTH=110>
+         <P>27 67</P>
+      </TD>
+      <TD>
+         <P>D&eacute;placement curseur-droite</P>
+      </TD>
+   </TR>
+   <TR>
+      <TD WIDTH=166>
+         <P>&#91;ESC&#93;E</P>
+      </TD>
+      <TD WIDTH=113>
+         <P>&amp;1B &amp;45</P>
+      </TD>
+      <TD WIDTH=110>
+         <P>27 69</P>
+      </TD>
+      <TD>
+         <P>Effacement &eacute;cran</P>
+      </TD>
+   </TR>
+   <TR>
+      <TD WIDTH=166>
+         <P>&#91;ESC&#93;H</P>
+      </TD>
+      <TD WIDTH=113>
+         <P>&amp;1B &amp;48</P>
+      </TD>
+      <TD WIDTH=110>
+         <P>27 72</P>
+      </TD>
+      <TD>
+         <P>Retour curseur en haut &agrave; gauche</P>
+      </TD>
+   </TR>
+   <TR>
+      <TD WIDTH=166>
+         <P>&#91;ESC&#93;J</P>
+      </TD>
+      <TD WIDTH=113>
+         <P>&amp;1B &amp;4A</P>
+      </TD>
+      <TD WIDTH=110>
+         <P>27 74</P>
+      </TD>
+      <TD>
+         <P>Effacement de l'&eacute;cran depuis le curseur (inclus)
+         jusqu'&agrave; la fin</P>
+      </TD>
+   </TR>
+   <TR>
+      <TD WIDTH=166>
+         <P>&#91;ESC&#93;K</P>
+      </TD>
+      <TD WIDTH=113>
+         <P>&amp;1B &amp;4B</P>
+      </TD>
+      <TD WIDTH=110>
+         <P>27 75</P>
+      </TD>
+      <TD>
+         <P>Effacement de l'&eacute;cran depuis le curseur (inclus)
+         jusqu'au bord droit</P>
+      </TD>
+   </TR>
+   <TR>
+      <TD WIDTH=166>
+         <P>&#91;ESC&#93;L</P>
+      </TD>
+      <TD WIDTH=113>
+         <P>&amp;1B &amp;4C</P>
+      </TD>
+      <TD WIDTH=110>
+         <P>27 76</P>
+      </TD>
+      <TD>
+         <P>Insertion de ligne</P>
+      </TD>
+   </TR>
+   <TR>
+      <TD WIDTH=166>
+         <P>&#91;ESC&#93;M</P>
+      </TD>
+      <TD WIDTH=113>
+         <P>&amp;1B &amp;4D</P>
+      </TD>
+      <TD WIDTH=110>
+         <P>27 77</P>
+      </TD>
+      <TD>
+         <P>Suppression de ligne</P>
+      </TD>
+   </TR>
+   <TR>
+      <TD WIDTH=166>
+         <P>&#91;ESC&#93;N</P>
+      </TD>
+      <TD WIDTH=113>
+         <P>&amp;1B &amp;4E</P>
+      </TD>
+      <TD WIDTH=110>
+         <P>27 78</P>
+      </TD>
+      <TD>
+         <P>Effacement du caract&egrave;re sous le curseur</P>
+      </TD>
+   </TR>
+   <TR>
+      <TD WIDTH=166>
+         <P>&#91;ESC&#93;Y</P>
+      </TD>
+      <TD WIDTH=113>
+         <P>&amp;1B &amp;59</P>
+      </TD>
+      <TD WIDTH=110>
+         <P>27 89</P>
+      </TD>
+      <TD>
+         <P>D&eacute;placement curseur &agrave; une position
+         d&eacute;finie de l'&eacute;cran.&nbsp;c=colonne+32,
+         r=ligne+32</P>
+      </TD>
+   </TR>
+   <TR>
+      <TD WIDTH=166>
+         <P>&#91;ESC&#93;d</P>
+      </TD>
+      <TD WIDTH=113>
+         <P>&amp;1B &amp;64</P>
+      </TD>
+      <TD WIDTH=110>
+         <P>27 100</P>
+      </TD>
+      <TD>
+         <P>Effacement de l'&eacute;cran depuis le d&eacute;but
+         jusqu'au curseur (inclus)</P>
+      </TD>
+   </TR>
+   <TR>
+      <TD WIDTH=166>
+         <P>&#91;ESC&#93;o</P>
+      </TD>
+      <TD WIDTH=113>
+         <P>&amp;1B &amp;6F</P>
+      </TD>
+      <TD WIDTH=110>
+         <P>27 111</P>
+      </TD>
+      <TD>
+         <P>Effacement de l'&eacute;cran depuis le bord gauche
+         jusqu'au curseur (inclus)</P>
+      </TD>
+   </TR>
+   <TR>
+      <TD WIDTH=166>
+         <P>&#91;ESC&#93;p</P>
+      </TD>
+      <TD WIDTH=113>
+         <P>&amp;1B &amp;70</P>
+      </TD>
+      <TD WIDTH=110>
+         <P>27 112</P>
+      </TD>
+      <TD>
+         <P>Entr&eacute;e en vid&eacute;o inverse</P>
+      </TD>
+   </TR>
+   <TR>
+      <TD WIDTH=166>
+         <P>&#91;ESC&#93;q</P>
+      </TD>
+      <TD WIDTH=113>
+         <P>&amp;1B &amp;71</P>
+      </TD>
+      <TD WIDTH=110>
+         <P>27 113</P>
+      </TD>
+      <TD>
+         <P>Sortie en vid&eacute;o inverse</P>
+      </TD>
+   </TR>
+</TABLE>
+</P>
+
+<P><FONT SIZE="+1">Adaptation du progiciel : les entr&eacute;es
+(Input)</FONT></P>
+
+<P>Les programmes du progiciel doivent avoir la possibilit&eacute;
+d'interroger le clavier. A l'exception des d&eacute;placements
+curseur, la plupart des touches du clavier du 6128 ont des valeurs
+standard. Bien qu'il soit pr&eacute;f&eacute;rable de faire en sorte
+que le progiciel accepte les valeurs standard par d&eacute;faut, il
+est possible d'utiliser SETKEYS pour red&eacute;finir les codes
+donn&eacute;s par le clavier.</P>
+
+<P>Malheureusement. il n'y a pas d'uniformit&eacute; d'un logiciel
+&agrave; l'autre, pour les touches d'activation des fonctions de
+contr&ocirc;le par exemple. Les touches de caract&egrave;res, la
+barre d'espacement, les touches <B>&#91;TAB&#93;</B> et
+<B>&#91;RETURN&#93;</B> sont g&eacute;n&eacute;ralement les
+m&ecirc;mes, mais pour l'espace arri&egrave;re et bien d'autres
+fonctions les choses se compliquent. En effet, comparez par exemple
+les codes de d&eacute;placement du curseur en d&eacute;but de
+ligne:</P>
+
+<P>Pour le CP/M: <B>&#91;CONTROL&#93;B</B></P>
+
+<P>Pour Dr.LOGO: <B>&#91;CONTROL&#93;A</B></P>
+
+<P>et pour un autre traitement de texte ce sera <B>&#91;CONTROL&#93;Q
+S</B></P>
+
+<P>Trois jeux de codes clavier sont fournis en standard. Chaque
+configuration peut s'obtenir &agrave; partir des fichiers
+stock&eacute;s sur la face 1 d'une des disquettes syst&egrave;me:</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">SETKEYS KEYS.CCP</FONT></BLOCKQUOTE>
+
+<P>Cette commande envoy&eacute;e automatiquement par
+<B>PROFILE.SUB</B> d&eacute;finira le clavier correspondant aux
+commandes CP/M.</P>
+
+<P>&nbsp;</P>
+
+<P><FONT SIZE="+1">D&eacute;marrage d'un progiciel CP/M pr&ecirc;t
+&agrave; l'emploi</FONT></P>
+
+<P>Normalement, vous n'avez qu'&agrave; entrer le nom du progiciel
+apr&egrave;s l'apparition du <B>A&gt;</B>. Ainsi, pour lancer un
+programme de traitement de bulletins de paye appel&eacute;
+<B>SALAIRE.COM</B>, tapez simplement :</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">PAYROLL</FONT></BLOCKQUOTE>
+
+<P>Si vous devez d&eacute;finir une configuration, un fichier
+<B>SUB</B>mit pourra &ecirc;tre fourni. Le fichier <B>LOGO3.SUB</B>,
+sur la face 3 d'une des disquette syst&egrave;me, en est un exemple.
+Vous l'appelerez par la commande:</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">SUBMIT LOGO3</FONT></BLOCKQUOTE>
+
+<P>Vous pourrez voir le contenu de ce fichier en tapant:</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">TYPE LOGO3.SUB</FONT></BLOCKQUOTE>
+
+<P>Ce qui vous donne:</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">SETKEYS KEYS. DRS</FONT> pour
+   changer dc clavier
+   
+   <P><FONT FACE="Fixedsys">LOGO3</FONT> pour lancer le programme Dr.
+   LOGO</P>
+   
+   <P><FONT FACE="Fixedsys">SETKEYS KEYS.CCP</FONT> pour revenir au
+   clavier</P></BLOCKQUOTE>
+
+<P>&nbsp;</P>
+
+<P><FONT SIZE="+1">D&eacute;marrage automatique des progiciels CP/M
+pr&ecirc;ts &agrave; l'emploi</FONT></P>
+
+<P>Le syst&egrave;me d'exploitation CP/M Plus permet un
+d&eacute;marrage automatique de n'importe quel programme chaque fois
+que l'on charge le CP/M Plus. Cette fonction est
+r&eacute;alis&eacute;e par l'une des options <B>PROFILE.SUB</B>.
+(Voir la partie 2 du chapitre &#171; AMSDOS et CP/M &#187; pour de
+plus amples informations).</P>
+
+<P>&nbsp;</P>
+
+<P><FONT SIZE="+1">Introduction aux extensions graphiques
+GSX</FONT></P>
+
+<P>GSX est une extension graphique du syst&egrave;me qui permet aux
+programmes CP/M d'exploiter d&egrave;s graphiques. en plus des
+textes. Vous pouvez ainsi dessiner des graphiques &agrave; barres et
+&agrave; secteurs ainsi que mettre vos en-t&egrave;tes en
+&eacute;vidence en combinant diff&eacute;rents styles de
+caract&egrave;res en plusieurs tailles. Une reproduction, page
+suivante, illustre cette fonction. Avec GSX. vous pouvez recevoir vos
+donn&eacute;es sur &eacute;cran, imprimante ou table
+tra&ccedil;ante.</P>
+
+<P>GSX employ&eacute; seul ne permet pas de dessiner des graphiques.
+pas plus que CP/M ne peut effectuer du traitement de texte sans
+programme d'application sp&eacute;cifique. L'exemple fourni a
+&eacute;t&eacute; obtenu &agrave; partir du programme &#171; DR Graph
+&#187; de Digital Research. GSX, pour sa part. apporte les fonctions
+de gestion d'&eacute;cran, d'imprimante et de table tra&ccedil;ante
+permettant de d&eacute;placer les programmes d'un ordinateur &agrave;
+l'autre en r&eacute;duisant au minimum les proc&eacute;dures de
+r&eacute;installation.</P>
+
+<P>Pour cr&eacute;er une disquette adapt&eacute;e &agrave;
+l'exploitation de programmes GSX, copiez. &agrave; partir de la face
+3 de la disquette syst&egrave;me. les fichiers <B>GSX.SYS</B>,
+<B>ASSIGN.SYS</B> et les gestionnaires de p&eacute;riph&eacute;rique
+(ainsi que le programme d'application lui-m&ecirc;me) sur une
+disquette vierge format&eacute;e. Le fichier <B>ASSIGN.SYS</B>
+contient un &#171; cocktail &#187; d'un maximum de trois
+gestionnaires de p&eacute;riph&eacute;riques de sortie.
+class&eacute;s par taille d&eacute;croissante:</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">21a:ddfxlr7</FONT> :imprimante
+   Epson 7 bit
+   
+   <P><FONT FACE="Fixedsys">11a:ddho7470</FONT> :table
+   tra&ccedil;ante</P>
+   
+   <P><FONT FACE="Fixedsys">01a:ddmode2</FONT> :&eacute;cran en mode
+   2</P>
+   
+   <P><FONT FACE="Fixedsys">02a:ddmode1</FONT> :&eacute;cran en mode
+   1</P>
+   
+   <P><FONT FACE="Fixedsys">03a:ddmode0</FONT> :&eacute;cran en mode
+   0</P></BLOCKQUOTE>
+
+<P>Les nombres indiquent au GSX le type de chaque gestionnaire de
+p&eacute;riph&eacute;rique (imprimante/ table tra&ccedil;ante/
+&eacute;cran). Les gestionnaires ne peuvent &ecirc;tre charg&eacute;s
+qu'un par un dans la m&ecirc;me zone m&eacute;moire. c'est pourquoi
+GSX doit commencer par le plus important pour pouvoir allouer un
+espace m&eacute;moire suffisant.</P>
+
+<P>Une s&eacute;lection de gestionnaires est disponible pour les
+diff&eacute;rents modes &eacute;cran du 6128 et pour les imprimantes
+standard. Le fichier <B>DRIVERS.GSX</B> contient un
+r&eacute;capitulatif des gestionnaires fournis avec le 6128. Vous
+devez le consulter en ins&eacute;rant la face 3 de la disquette
+syst&egrave;me et en tapant &agrave; la suite du message <B>A&gt;</B>
+:</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">TYPE DRIVERS.GSX</FONT></BLOCKQUOTE>
+
+<P>afin de s&eacute;lectionner les gestionnaires de
+p&eacute;riph&eacute;rique appropri&eacute;s.</P>
+
+<P>La plupart des programmes d'application comportent un chargeur de
+GSX; il vous suffit donc de taper le nom du programme &agrave; la
+suite de <B>A &gt;</B> . Si votre application ne poss&egrave;de pas
+de chargeur de GSX install&eacute;. copiez le fichier
+<B>GENGRAF.COM</B> (face 3 d'une des disquettes syst&egrave;me) sur
+votre disquette de travail sous GSX et tapez:</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">GENGRAF TONFICHI</FONT></BLOCKQUOTE>
+
+<P><B>YOURFILE.COM</B> &eacute;tant ici l'application non
+install&eacute;e. Le fichier <B>GENGRAF.COM</B> pourra alors
+&ecirc;tre effac&eacute; (commande <B>ERA</B>), puisque
+<B>YOURFILE.COM</B> est d&eacute;sormais muni du chargeur de GSX.</P>
+
+<P>&nbsp;</P>
+
+<CENTER><IMG SRC="Images/c4/Budget.gif" WIDTH=583 HEIGHT=611 ALIGN=bottom>
+
+<P>Exemple de graphique &agrave; secteurs imprim&eacute; &agrave;
+partir de GSX</P></CENTER>
+
+<P>&nbsp;</P>
+
+<P><FONT SIZE="+1">Exploitation sous CP/M2.2</FONT></P>
+
+<P>Contrairement au CP/M Plus, le CP/M2.2 (version
+pr&eacute;c&eacute;dente du syst&egrave;me d'exploitation CP M).
+tr&egrave;s rigoureux quant aux changements de disquettes, exige
+souvent le rechargement de certaines parties du syst&egrave;me
+d'exploitation &agrave; partir d'une disquette syst&egrave;me
+ins&eacute;r&eacute;e dans l'unit&eacute;<B>A</B>, surtout &agrave;
+la fin de l'exploitation d'un programme, lorsque <B>A&gt;</B>
+r&eacute;apparait &agrave; l'&eacute;cran. Si vous ne poss&eacute;dez
+qu'une seule unit&eacute; de disquette, vous devez utiliser
+<B>FILECOPY</B> &agrave; la place de PIP pour copier vos
+fichiers.</P>
+
+<P>L'emploi du CP/M2.2 doit se limiter aux logiciels tournant sur les
+ordinateurs AMSTRAD CPC664 et CPC464+ DDI1 , uniquement dans le cas
+o&ugrave; ceux-ci ne sont pas compatibles avec le CP/M Plus.</P>
+
+<P><TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0>
+   <TR>
+      <TD>
+         <P><B>ATTENTION</B> : Certains logiciels d'application
+         fonctionnant sous CP/M2.2, sur CPC464 et CPC464/DDI1.
+         contiennent des instructions d'installation
+         sp&eacute;cifiques et ne peuvent pas s'exploiter sous CP/M
+         Plus. Dans ces cas l&agrave;, vous devrez faire appel au
+         syst&egrave;me CP/M2.2 r&eacute;sidant sur la face 4 d'une
+         des disquettes syst&egrave;me.</P>
+      </TD>
+   </TR>
+</TABLE>
+
+<HR>
+
+<FONT SIZE="+2"><B>Partie 2 : Les cassettes</B></FONT></P>
+
+<P>Lorsque vous connectez un lecteur de cassettes au syst&egrave;me
+(voir la partie 2 du Cours El&eacute;mentaire). un certain nombre de
+commandes BASIC fonctionnent diff&eacute;remment apr&egrave;s
+l'entr&eacute;e de la commande <B>|TAPE</B>. Cette instruction
+configure l'ordinateur pour une utilisation avec cassettes et les
+messages apparaissant &agrave; l'&eacute;cran sont alors
+diff&eacute;rents de ceux vus lors de l'exploitation des
+disquettes.</P>
+
+<P>REMARQUE: Si les commandes ENROULEMENT RAPIDE et RETOUR
+ARRI&Egrave;RE de votre lecteur sont sous t&eacute;l&eacute;commande,
+vous devez -pour ces op&eacute;rations- retirer la fiche REM de votre
+lecteur (t&eacute;l&eacute;commande) ou taper |TAPE:CAT pour activer
+le moteur du lecteur. Appuyez sur <B>&#91;ESC&#93;</B> pour revenir
+au mode t&eacute;l&eacute;commande.</P>
+
+<P>Contrairement aux noms de fichiers sur disquettes. les noms de
+fichiers sur cassettes n'ob&eacute;issent pas &agrave; des
+r&egrave;gles tr&egrave;s strictes quant &agrave; leur forme. Ils
+peuvent comporter jusqu'&agrave; 16 caract&egrave;res incluant des
+espaces et des signes de ponctuation, ou peuvent m&ecirc;me
+&ecirc;tre omis.</P>
+
+<P>La liste ci-apr&egrave;s d&eacute;crit les DIFFERENCES de
+fonctionnement de ces commandes BASIC. Les commandes
+elles-m&ecirc;mes sont d&eacute;crites dans le chapitre &#171; Liste
+compl&egrave;te des mots cl&eacute;s du BASIC AMSTRAD CPC6128
+&#187;.</P>
+
+<P>&nbsp;</P>
+
+<P><FONT SIZE="+1">CAT</FONT></P>
+
+<P>Le message ci-dessous appara&icirc;t</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">Press PLAY Then any key:</FONT></BLOCKQUOTE>
+
+<P>Vous devez alors appuyer sur le bouton <B>PLAY</B> de votre
+lecteur de cassette puis sur l'une des touches de l'ordinateur. La
+cassette commence &agrave; se d&eacute;rouler et l'ordinateur charge
+le fichier &agrave; traiter.</P>
+
+<P>Chacun des blocs constituant un fichier va s'afficher, suivi d'un
+caract&egrave;re d&eacute;finissant son type :</P>
+
+<P>$ fichier BASIC standard</P>
+
+<P>% fichier BASIC prot&eacute;g&eacute;</P>
+
+<P>* fichier ASCII</P>
+
+<P>&amp; fichier binaire</P>
+
+<P>L'ordinateur affiche</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">Ok</FONT></BLOCKQUOTE>
+
+<P>... &agrave; la fin de la ligne si la lecture du fichier a abouti,
+indiquant qu'un chargement du fichier aurait &eacute;t&eacute;
+effectu&eacute; avec succ&egrave;s si la commande ad&eacute;quate
+avait &eacute;t&eacute; lanc&eacute;e.</P>
+
+<P>La fonction <B>CAT</B> n'agit pas sur le programme en cours
+stock&eacute; dans la m&eacute;moire.</P>
+
+<P>Si un fichier sur cassette est sauvegard&eacute; sans
+sp&eacute;cification de nom, CAT l'affiche comme :</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">Unnamed file</FONT></BLOCKQUOTE>
+
+<P>Pour arr&ecirc;ter CAT, appuyez sur la touche
+<B>&#91;ESC&#93;</B>.</P>
+
+<P>&nbsp;</P>
+
+<P><FONT SIZE="+1">Erreurs de lecture</FONT></P>
+
+<P>Si le message ci-dessus indiquant la lecture du fichier
+n'appara&icirc;t pas, ou si vous obtenez :</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">Read error a</FONT></BLOCKQUOTE>
+
+<P>... ou</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">Read error b</FONT></BLOCKQUOTE>
+
+<P>Cela signifie que :</P>
+
+<P>1. Votre lecteur de cassettes n'est pas correctement
+connect&eacute; &agrave; la prise TAPE de l'ordinateur (voir alors la
+partie 2 du Cours &Eacute;l&eacute;mentaire).</P>
+
+<P>2. Les commandes<B> VOLUME</B> ou<B> LEVEL</B> de votre lecteur de
+cassette ne sont pas bien r&eacute;gl&eacute;es.</P>
+
+<P>3. La cassette est de mauvaise qualit&eacute; ou
+usag&eacute;e.</P>
+
+<P>4. La cassette a &eacute;t&eacute; soumise &agrave; un champ
+magn&eacute;tique provenant d'un haut-parleur, d'un
+t&eacute;l&eacute;viseur, ou d'une autre source.</P>
+
+<P>5. Le type de votre cassette ne convient pas aux syst&egrave;mes
+informatiques AMSTRAD.</P>
+
+<P>&nbsp;</P>
+
+<P><FONT SIZE="+1">CHAIN</FONT></P>
+
+<P><FONT SIZE="+1">CHAIN MERGE</FONT></P>
+
+<P><FONT SIZE="+1">LOAD</FONT></P>
+
+<P><FONT SIZE="+1">MERGE</FONT></P>
+
+<P><FONT SIZE="+1">RUN</FONT></P>
+
+<P>Vous n'avez pas &agrave; sp&eacute;cifier de nom de fichier si
+vous d&eacute;sirez charger le premier fichier de la cassette.
+Examples de commandes</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">CHAIN ""</FONT>
+   
+   <P><FONT FACE="Fixedsys">CHAIN "",100</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">CHAIN MERGE ""</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">CHAIN MERGE "",100</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">CHAIN MERGE "",100,DELETE
+   30-70</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">LOAD ""</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">LOAD "",&amp;1F40</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">MERGE ""</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">run ""</FONT> (En maintenant la touche
+   <B>&#91;CONTROL&#93; </B>et en appuyant sur la touche<B>
+   &#91;ENTER&#93; </B>du clavier num&eacute;rique, vous
+   ex&eacute;cutez cette commande. S'emploie avec les logiciels sur
+   cassette apr&egrave;s l'entr&eacute;e de |TAPE).</P></BLOCKQUOTE>
+
+<P>Le BASIC vous r&eacute;pond :</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">Press PLAY then any key:</FONT></BLOCKQUOTE>
+
+<P>Vous devez alors appuyer sur le bouton PLAY de votre lecteur de
+cassettes puis sur l'une des touches de l'ordinateur. La cassette
+commence &agrave; se d&eacute;rouler et l'ordinateur charge le
+fichier &agrave; traiter.</P>
+
+<P>Les messages de chargement apparaissent &agrave;
+l'&eacute;cran.-.</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">Loading NOMFICH block 1</FONT></BLOCKQUOTE>
+
+<P>... accompagn&eacute;s d'autant de num&eacute;ros de blocs qu'en
+contient le fichier.</P>
+
+<P>Si le nom de fichier commence par !, les messages ci-dessus sont
+supprim&eacute;s et vous n'avez pas &agrave; actionner de touche pour
+charger le fichier (assurez-vous toutefois que le bouton PLAY de
+votre lecteur de cassette est bien enfonc&eacute;). Si vos programmes
+font appel au point d'exclamation ! et doivent aussi tourner sur
+disquette, le ! est ignor&eacute; lors de l'exploitation sur
+disquette). Le ! n'occupe pas un caract&egrave;re dans les noms de
+fichiers sur cassette ou disquette.</P>
+
+<P>A l'abandon de cette commande par la touche <B>&#91;ESC&#93;</B>,
+le message d'erreur ci-dessous s'affiche :</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">Broken in</FONT></BLOCKQUOTE>
+
+<P>Si le chargement du fichier n'a pas abouti, reportez-vous au
+paragraphe &#171; Erreurs de lecture &#187;.</P>
+
+<P><TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0>
+   <TR>
+      <TD>
+         <P><B>ATTENTION</B> : L'interface interne de la disquette
+         occupe une petite partie de la m&eacute;moire qui dans
+         certains cas est exploit&eacute;e par les programmeurs
+         professionnels de logiciels sur cassette destin&eacute;s au
+         CPC464. Ces cassettes ne fonctionnent pas correctement sur
+         le syst&egrave;me 6128 + lecteur de cassettes.</P>
+      </TD>
+   </TR>
+</TABLE>
+</P>
+
+<P>&nbsp;</P>
+
+<P><FONT SIZE="+1">EOF</FONT></P>
+
+<P><FONT SIZE="+1">POS (#9)</FONT></P>
+
+<P>Ces fonctions op&egrave;rent de mani&egrave;re identique sur
+disquette et sur cassette.</P>
+
+<P>&nbsp;</P>
+
+<P><FONT SIZE="+1">INPUT # 9</FONT></P>
+
+<P><FONT SIZE="+1">LINE INPUT # 9</FONT></P>
+
+<P><FONT SIZE="+1">OPEN IN et CLOSEIN</FONT></P>
+
+<P>Vous n'avez pas &agrave; sp&eacute;cifier de nom de fichier pour
+charger le premier fichier sur cassette. Exemple de commande</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">OPENIN ""</FONT></BLOCKQUOTE>
+
+<P>Vous obtenez le message :</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">Press PLAY then any key:</FONT></BLOCKQUOTE>
+
+<P>Vous devez alors appuyer sur le bouton <B>PLAY</B> de votre
+lecteur de cassettes puis sur l'une des touches grises de
+l'ordinateur. La bande commence &agrave; se d&eacute;rouler et
+l'ordinateur charge les 2 premiers Koctets du fichier dans la zone
+m&eacute;moire appel&eacute;e &#171; tampon de fichiers &#187;. Les
+informations sont entr&eacute;es jusqu'&agrave; ce que le tampon soit
+vide. L'ordinateur envoie alors &agrave; nouveau un message :</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">Press PLAY then any key:</FONT></BLOCKQUOTE>
+
+<P>...puis charge les 2 Koctets suivants. Les messages de chargement
+s'affichent :</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">Loading NOMFICH block 1</FONT></BLOCKQUOTE>
+
+<P>...ainsi que les autres num&eacute;ros de bloc, au fur et &agrave;
+mesure du chargement.</P>
+
+<P>Si le premier caract&egrave;re du nom de fichier dans la commande
+<B>OPENIN</B> est un point d'exclamation (!), les messages ci-dessus
+sont supprim&eacute;s , vous n'avez &agrave; appuyer sur aucune
+touche pour charger le fichier. (Vous devez alors vous assurer que le
+bouton <B>PLAY</B> de votre lecteur de cassette est bien
+enfonc&eacute;). Si vos programmes font appel au signe ! et doivent
+&eacute;galement fonctionner sur disquette, le ! est ignor&eacute;
+lors de l'exploitation de la disquette (au cours de la lecture du nom
+de fichier sur disquette). Le ! n'occupe pas de caract&egrave;re dans
+les noms de fichiers sur disquette ou cassette.</P>
+
+<P>Lorsque vous interrompez l'entr&eacute;e du fichier &agrave;
+l'aide de la touche <B>&#91;ESC&#93;</B>, le message suivant
+s'affiche :</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">Broken in</FONT></BLOCKQUOTE>
+
+<P>Si le chargement du fichier n'a pas abouti, consultez le
+paragraphe ant&eacute;rieur &#171; Erreurs de lecture &#187;.</P>
+
+<P>&nbsp;</P>
+
+<P><FONT SIZE="+1">LIST #9</FONT></P>
+
+<P><FONT SIZE="+1">OPENOUT et CLOSEOUT</FONT></P>
+
+<P><FONT SIZE="+1">PRINT #9</FONT></P>
+
+<P><FONT SIZE="+1">WRITE #9</FONT></P>
+
+<P>Si vous d&eacute;sirez sauvegarder un fichier sans nom, vous
+n'avez pas &agrave; en sp&eacute;cifier le nom. Exemple de
+commande:</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">OPENOUT ""</FONT></BLOCKQUOTE>
+
+<P>Les premiers 2 Koctets du fichier &agrave; sauvegarder vont
+s'inscrire dans la partie de la m&eacute;moire appel&eacute;e &#171;
+tampon de fichiers &#187;. Lorsque ce tampon est plein, le message
+ci-dessous appara&icirc;t</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">Press REC and PLAY then any
+   key:</FONT></BLOCKQUOTE>
+
+<P>Vous devez alors appuyer sur les boutons<B> RECORD</B> et
+<B>PLAY</B> de votre lecteur de cassettes puis sur l'une des touches
+de l'ordinateur. La bande se d&eacute;roule et l'ordinateur
+sauvegarde le contenu du tampon. L'ordinateur remplit ensuite
+&agrave; nouveau le tampon, avec les 2 Ko suivants puis envoie le
+message:</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">Press REC and PLAY then any
+   key:</FONT></BLOCKQUOTE>
+
+<P>Les 2 Ko suivants sont alors sauvegard&eacute;s sur la
+cassette.</P>
+
+<P>Si le tampon est partiellement plein et que la commande
+<B>CLOSEOUT</B> intervient, l'ordinateur sauvegarde sur la cassette
+cc qui reste dans le tampon, affichant le message :</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">Press REC and PLAY then any
+   key:</FONT></BLOCKQUOTE>
+
+<P>Le message de sauvegarde s'affiche:</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">Saving NOMFICH block x</FONT></BLOCKQUOTE>
+
+<P>Si le nom de fichier de la commande <B>OPENOUT</B> commence par!,
+les messages ci-dessous n'apparaissent pas et vous n'avez &agrave;
+appuyer sur aucune touche pour sauvegarder le fichier. (Vous devez
+alors vous assurer que les boutons <B>RECORD</B> et <B>PLAY</B> de
+votre lecteur sont bien enfonc&eacute;s). Si vos programmes font
+appel &agrave; ! et doivent aussi &ecirc;tre exploit&eacute;s sur
+disquette, le ! est ignor&eacute; lors de l'exploitation de la
+disquette (pendant la lecture du nom de fichier sur disquette). Le !
+n'occupe pas de caract&egrave;re dans les noms de fichiers sur
+disquette ou cassette.</P>
+
+<P>Lorsque vous interrompez la sortie des fichiers en appuyant sur
+<B>&#91;ESC&#93;</B>, le message d'erreur ci-dessous appara&icirc;t
+:</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">Broken in</FONT></BLOCKQUOTE>
+
+<P>&nbsp;</P>
+
+<P><B>Pour r&eacute;ussir une sauvegarde...</B></P>
+
+<P>1. V&eacute;rifiez que votre lecteur de cassettes est bien
+connect&eacute; &agrave; la prise TAPE de l'ordinateur (voir la
+partie 2 du Cours &eacute;l&eacute;mentaire).</P>
+
+<P>2. V&eacute;rifiez que les commandes <B>RECORD</B> et<B> LEVEL</B>
+de votre lecteur sont correctement r&eacute;gl&eacute;es.</P>
+
+<P>3. V&eacute;rifiez que vos cassettes ne sont pas de mauvaise
+qualit&eacute; ou de 120 mn (C120). I1 est pr&eacute;f&eacute;rable
+d'utiliser des cassettes AMSOFT C15.</P>
+
+<P>4. N'exposez vos cassettes &agrave; aucun champ magn&eacute;tique
+: haut-parleurs, t&eacute;l&eacute;viseur, etc...</P>
+
+<P>5. Avant de d&eacute;truire un programme de la m&eacute;moire
+apr&egrave;s sauvegarde, assurez-vous, par la commande
+<B>CAT</B>alog, que la sauvegarde a effectivement abouti.</P>
+
+<P>6. Veillez &agrave; l'entretien r&eacute;gulier de votre lecteur
+de cassettes et &agrave; la propret&eacute; des t&egrave;tes de
+lecture.</P>
+
+<P>&nbsp;</P>
+
+<P><FONT SIZE="+1">SAVE</FONT></P>
+
+<P>Si vous d&eacute;sirez sauvegarder un programme comme fichier sans
+nom, vous n'avez pas &agrave; sp&eacute;cifier de nom de fichier.
+Exemple de commande:</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">SAVE ""</FONT></BLOCKQUOTE>
+
+<P>Le message ci-dessous s'affiche :</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">Press REC and PLAY then any
+   key:</FONT></BLOCKQUOTE>
+
+<P>Vous devez alors appuyer sur les boutons <B>RECORD</B> et
+<B>PLAY</B> de votre lecteur de cassettes puis sur l'une des touches
+de votre ordinateur. La bande se d&eacute;roule et l'ordinateur
+sauvegarde le programme.</P>
+
+<P>Les messages de sauvegarde apparaissent :</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">Saving NOMFICH block 1</FONT></BLOCKQUOTE>
+
+<P>...accompagn&eacute;s d'autant de num&eacute;ros de blocs que le
+fichier en contient, jusqu'&agrave; la fin de la sauvegarde.</P>
+
+<P>Si le nom de fichier commence par !, les messages ci-dessus
+n'apparaissent pas et vous n'avez &agrave; appuyer sur aucune touche
+pour sauvegarder le fichier. (Vous devez alors vous assurer que les
+boutons <B>RECORD</B> et<B> PLAY </B>de votre lecteur sont bien
+enfonc&eacute;s). Si vos programmes font appel &agrave; ! et doivent
+aussi &ecirc;tre exploit&eacute;s sur disquette, le ! est
+ignor&eacute; lors de l'exploitation de la disquette (pendant la
+lecture du nom de fichier sur disquette). Le ! n'occupe pas de
+caract&egrave;re dans les noms de fichiers sur disquette ou
+cassette.</P>
+
+<P>Lorsque vous interrompez cette commande &agrave; l'aide de la
+touche <B>&#91;ESC&#93;</B>, le message d'erreur ci-dessous s'affiche
+:</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">Broken in</FONT></BLOCKQUOTE>
+
+<P>Reportez-vous au paragraphe &#171; Pour r&eacute;ussir une
+sauvegarde &#187; plus haut dans ce chapitre.</P>
+
+<P>&nbsp;</P>
+
+<P><FONT SIZE="+1">SPEED WRITE</FONT></P>
+
+<P>Cette commande ne fonctionne que sur cassette et peut &ecirc;tre
+exploit&eacute;e lorsque l'ordinateur fonctionne sur disquette.</P>
+
+<P>&nbsp;</P>
+
+<P><B>Messages d'erreur</B></P>
+
+<P>Les messages d'erreur 7, 21, 24, 25, 27 et 32 (voir partie 6 du
+chapitre &#171; Pour information &#187;) s'affichent, le cas
+&eacute;ch&eacute;ant, lors du fonctionnement sur cassette.</P>
+
+<P>&nbsp;</P>
+
+<P><B>Commandes externes de l'AMSDOS</B></P>
+
+<P>Les commandes ci-dessous permettent d'acheminer les
+entr&eacute;es/sorties vers la disquette ou la cassette:</P>
+
+<P><B>|TAPE</B> (pouvant se subdiviser en <B>|TAPE.IN</B> et <B>|TAPE
+OUT</B>)</P>
+
+<P><B>|DISC</B> (pouvant se subdiviser en <B>|DISC.IN</B> et<B>
+|DISC.OUT</B>)</P>
+
+<P>Toutes les commandes externes</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">|A</FONT>
+   
+   <P><FONT FACE="Fixedsys">|B</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">|CPM</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">|DIR</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">|DRIVE</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">|ERA</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">|REN</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">|USER</FONT></P></BLOCKQUOTE>
+
+<P>...sont exploit&eacute;es sur disquette m&ecirc;me si le
+fonctionnement sur cassette a &eacute;t&eacute;
+s&eacute;lectionn&eacute;.</P>
+
+<CENTER><A HREF="chapitre3.htm">&lt;&lt;Chapitre 3</A> <A HREF="index.htm">&#91;Index&#93;</A>
+<A HREF="chapitre5.htm">Chapitre 5&gt;&gt;</A></CENTER>
+<script type="text/javascript">
+//<![CDATA[
+if (typeof _gstat != "undefined") _gstat.audience('','pagesperso-orange.fr');
+//]]>
+</script>
+</BODY>
+</HTML>

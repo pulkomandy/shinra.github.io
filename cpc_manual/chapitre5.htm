@@ -1,0 +1,3101 @@
+<HTML>
+<HEAD>
+   <TITLE>Chapitre 5</TITLE>
+<script type="text/javascript">
+//<![CDATA[
+var gs_d=new Date,DoW=gs_d.getDay();gs_d.setDate(gs_d.getDate()-(DoW+6)%7+3);
+var ms=gs_d.valueOf();gs_d.setMonth(0);gs_d.setDate(4);
+var gs_r=(Math.round((ms-gs_d.valueOf())/6048E5)+1)*gs_d.getFullYear();
+var gs_p = (("https:" == document.location.protocol) ? "https://" : "http://");
+document.write(unescape("%3Cscript src='" + gs_p + "s.gstat.orange.fr/lib/gs.js?"+gs_r+"' type='text/javascript'%3E%3C/script%3E"));
+//]]>
+</script>
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<P><FONT SIZE="+3">Chapitre 5</FONT></P>
+
+<P><FONT SIZE="+3">Les &eacute;l&eacute;ments de l'AMSDOS et du CP/M
+
+<HR>
+
+</FONT><FONT SIZE="+2"><B>Partie 1 : AMSDOS</B></FONT></P>
+
+<P>Sujets abord&eacute;s:</P>
+
+<UL>
+   <LI>Introduction &agrave; AMSDOS</LI>
+   
+   <LI>Le catalogue de la disquette</LI>
+   
+   <LI>Changement des disquettes</LI>
+   
+   <LI>Noms et genres des fichiers AMSDOS</LI>
+   
+   <LI>Les en-t&ecirc;tes des fichiers AMSOS</LI>
+   
+   <LI>Noms de fichiers avec deux unit&eacute;s</LI>
+   
+   <LI>Les jokers</LI>
+   
+   <LI>Un exemple de programme constitu&eacute; de commandes
+   AMSDOS</LI>
+   
+   <LI>R&eacute;capitulatif des commandes d'AMSDOS</LI>
+   
+   <LI>Copie de fichiers</LI>
+   
+   <LI>Guide de r&eacute;f&eacute;rence des messages d'erreur</LI>
+</UL>
+
+<P>&nbsp;</P>
+
+<P><FONT SIZE="+1">Introduction</FONT></P>
+
+<P>AMSDOS est une extension du BASIC AMSTRAD de votre ordinateur,
+ajoutant des commandes externes suppl&eacute;mentaires et
+red&eacute;finissant certaines instructions existantes. Les nouvelles
+commandes externes sont identifi&eacute;es par le symbole |
+(barre).</P>
+
+<P>AMSDOS permet &agrave; l'utilisateur de changer librement de
+disquette (&agrave; condition toutefois qu'il n'y ait pas de fichiers
+ouverts en &eacute;criture, auquel cas un message d'erreur
+appara&icirc;t).</P>
+
+<P>&nbsp;</P>
+
+<P><FONT SIZE="+1">Le catalogue de la disquette</FONT></P>
+
+<P>Chaque disquette est divis&eacute;e en 2 parties, une pour le
+catalogue et une pour les donn&eacute;es. Le catalogue est la liste
+des noms de fichiers que contient la disquette, accompagn&eacute;e
+d'un 'plan' de leur positionnement sur la disquette. AMSDOS et CP/M
+peuvent calculer la taille de chaque fichier apr&egrave;s
+consultation de cette position dans le catalogue. Le calcul de
+l'espace disponible se fait par l'addition des fichiers existants
+puis la soustraction du r&eacute;sultat de l'espace disponible du
+total.</P>
+
+<P>Chaque fois qu'un fichier est lu, il y a d'abord examen de sa
+position dans le catalogue, d&eacute;terminant son emplacement sur la
+disquette. Lorsqu'un nouveau fichier est cr&eacute;&eacute;, un
+espace vacant lui est attribu&eacute;. Une fois effac&eacute;, cet
+espace est lib&eacute;r&eacute;. Le catalogue comptabilise par
+unit&eacute; de 1K (un kilo-octet) et peut contenir jusqu'&agrave; 64
+positions diff&eacute;rentes. Les longs fichiers sont dot&eacute;s
+d'une position pour chaque groupe de 16K utilis&eacute;, cette
+manoeuvre n'apparaissant normalement pas &agrave; l'utilisateur.</P>
+
+<P>&nbsp;</P>
+
+<P><FONT SIZE="+1">Changement des disquettes</FONT></P>
+
+<P>AMSDOS et CP/M Plus vous permettent de remplacer ou de retirer une
+disquette &agrave; tout moment, en dehors des temps d'acc&egrave;s et
+si aucun fichier n'est ouvert sur l'unit&eacute; concern&eacute;e.
+Contrairement &agrave; CP/M 2.2, AMSDOS autorise cette
+op&eacute;ration sans proc&eacute;dure d'entr&eacute;e dans la
+disquette.</P>
+
+<P>Remplacer une disquette en cours d'&eacute;criture risque
+d'endommager les donn&eacute;es qu'elle contient. Lorsque vous
+remplacez une disquette contenant des fichiers ouverts, ceux-ci sont
+&#171; abandonn&eacute;s &#187; d&egrave;s qu'AMSDOS d&eacute;tecte
+le remplacement et un message d'erreur s'affiche. Toutes les
+donn&eacute;es &agrave; venir sont alors perdues et la
+derni&egrave;re position dans le catalogue ne s'inscrit pas sur la
+disquette. AMSDOS ne d&eacute;tecte le remplacement qu'en lisant le
+catalogue, c'est-&agrave;-dire tous les 16K du fichier (ou lors de
+toute ouverture ou fermeture d'un fichier). Vous risquez ainsi de
+perdre 16K de donn&eacute;es lorsque vous remplacez une disquette
+contenant des fichiers ouverts.</P>
+
+<P>&nbsp;</P>
+
+<P><FONT SIZE="+1">Noms et genres des fichiers AMSDOS</FONT></P>
+
+<P>Il est d'usage d'ajouter une extension aux noms des fichiers
+disques. Cette extension, simple convention indiquant le type du
+fichier, ne joue aucun r&ocirc;le pr&eacute;cis. Certains programmes
+n'acceptent toutefois un fichier que suivi d'une extension
+particuli&egrave;re. AMSDOS admet n'importe quel type de nom mais
+cherche de pr&eacute;f&eacute;rence les fichiers d'un certain type,
+sauf sp&eacute;cification particuli&egrave;re. (Voir &#171; Les
+en-t&ecirc;tes des fichiers AMSDOS &#187;).</P>
+
+<P>&nbsp;</P>
+
+<P><FONT SIZE="+1">Construction des noms de fichiers</FONT></P>
+
+<P>Le nom est constitu&eacute; de deux parties s&eacute;par&eacute;es
+par un point, la premi&egrave;re partie de 8 lettres maximum et la
+seconde, de 3. Ainsi, &#171;<B>ROINTIME.DEM&gt;&gt;,</B>
+&#171;<B>DISC.BAS</B>&gt;&gt; et &#171;<B>DISCKIT.COM</B>&gt;&gt;
+sont des noms de fichiers corrects.</P>
+
+<P>La deuxi&egrave;me partie repr&eacute;sente l'indicateur de type.
+Les noms de fichiers et leurs indicateurs peuvent &ecirc;tre
+compos&eacute;s d'un m&eacute;lange de lettres et de nombres mais ne
+peuvent contenir ni espaces blancs, ni signes de ponctuation. Les
+indicateurs les plus communs sont:</P>
+
+<P>.&lt;espace&gt; Type non sp&eacute;cifi&eacute;. Peut &ecirc;tre
+un fichier de donn&eacute;es cr&eacute;&eacute; par l'instruction
+<B>OPENOUT</B> &#171; &lt; nomfich &gt; &#187; (nom de fichier) ou un
+programme BASIC sauvegard&eacute; en utilisant une commande AMSDOS du
+style <B>SAVE</B> &#171; &lt; nomich &gt; &#187;<B>,A.</B></P>
+
+<P><B>.BAS</B> Programme BASIC sauvegard&eacute; &agrave; l'aide de
+commandes AMSDOS du style <B>SAVE</B> &#171; &lt; nomfich &gt;
+&#187;<B>,P</B> ou <B>SAVE</B> &#171; &lt; nomfich &gt;<B>.BAS</B>
+&#187;<B>,A</B>.</P>
+
+<P><B>.BIN</B> Programme ou zone de m&eacute;moire sauvegard&eacute;e
+par une commande AMSDOS du style <B>SAVE</B> &#171; &lt; nomfich &gt;
+&#187;,<B>B</B> (&lt; param&egrave;tres binaires&gt; ).</P>
+
+<P><B>.BAK</B> Ancienne version d'un fichier sauvegard&eacute;e lors
+de la configuration d'une nouvelle version par AMSDOS ou un
+utilitaire. L'utilisateur est ainsi &agrave; m&ecirc;me de
+r&eacute;utiliser l'ancienne version (<B>BAcK</B>-up) si besoin
+est.</P>
+
+<P><B>.COM</B> C'est une commande. Tous les utilitaires du CP/M ont
+cette extension</P>
+
+<P><B>.SUB</B> Fichier d'instruction du programme SUBMIT sous
+CP/M.</P>
+
+<P>&nbsp;</P>
+
+<P><FONT SIZE="+1">Les en-t&ecirc;tes des fichiers AMSDOS</FONT></P>
+
+<P>AMSDOS dote automatiquement chaque fichier d'un indicateur de
+type. Si les indicateurs (par d&eacute;faut) ne vous satisfont pas,
+vous avez la possibilit&eacute; d'en sp&eacute;cifier un &agrave;
+votre convenance. L'indicateur de type peut correspondre pour le
+syst&egrave;me &agrave; un certain en-t&ecirc;te. Les programmes
+BASIC AMSDOS, les programmes compil&eacute;s et les fichiers binaires
+sont sauvegard&eacute;s sur disquette avec un en-t&egrave;te (le
+m&ecirc;me que sur une cassette) permettant &agrave; la commande
+AMSDOS :</P>
+
+<P><B>LOAD </B>&#171;&lt;nomfich&gt;&#187;</P>
+
+<P>...de les reconna&icirc;tre et d'agir en cons&eacute;quence. Si
+<B>LOAD</B> ne trouve pas d'en-t&egrave;te, il consid&egrave;re avoir
+affaire &agrave; un fichier en codes ASCII.</P>
+
+<P>Lors du chargement d'un fichier d&eacute;pourvu d'indicateur de
+type, la commande LOAD AMSDOS, ind&eacute;pendamment du contenu de
+l'en-t&ecirc;te, cherche d'abord ce fichier sous le type</P>
+
+<P>.&lt;espace&gt;</P>
+
+<P>...puis, si elle ne trouve rien:</P>
+
+<P><B>.BAS&nbsp;</B></P>
+
+<P>...et enfin</P>
+
+<P><B>.BIN</B></P>
+
+<P>L'utilisateur a ainsi le loisir d'abr&eacute;ger ses noms de
+fichiers en omettant, le plus souvent, de sp&eacute;cifier le
+type.&nbsp;</P>
+
+<P>Un fichier de donn&eacute;es sur disquette rempli apr&egrave;s
+ouverture &agrave; l'aide de la commande <B>OPENOUT</B>, n'aura pas
+d'en-t&ecirc;te, et son contenu, venu des commandes <B>BASIC
+WRITE</B>, <B>PRINT</B>. <B>LIST</B>, sera constitu&eacute; de codes
+ASCII. En l'absence d'indicateur, la commande <B>OPENIN</B> cherchera
+un fichier de ce type.</P>
+
+<P>&nbsp;</P>
+
+<P><FONT SIZE="+1">Noms de fichiers avec deux
+unit&eacute;s</FONT></P>
+
+<P>Dans le cas d'un syst&egrave;me &agrave; deux unit&eacute;s de
+diquettes, une FD-1 &eacute;tant connect&eacute;e &agrave;
+l'ordinateur, les fichiers peuvent se trouver sur l'une ou l'autre
+des deux unit&eacute;s. L'ordinateur n'allant pas chercher sur les
+deux, vous devrez sp&eacute;cifier l'unit&eacute; concern&eacute;e.
+Pour cela, vous disposez soit de <B>|A</B>, soit de <B>|B</B>, soit
+encore de <B>|DRIVE</B> suivi d'un nom de fichier normal. Vous pouvez
+supplanter le choix de l'unit&eacute; par d&eacute;faut en adjoignant
+un pr&eacute;fixe (<B>A:</B> ou <B>B:</B>) au nom.</P>
+
+<P>Ainsi :</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">|B</FONT>
+   
+   <P><FONT FACE="Fixedsys">SAVE "PROG.BAS"</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">|A</FONT></P></BLOCKQUOTE>
+
+<P>...et :</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">|A</FONT>
+   
+   <P><FONT FACE="Fixedsys">SAVE "B:PROG.BAS"</FONT></P></BLOCKQUOTE>
+
+<P>...sauvegardent le programme sur l'unit&eacute; B.</P>
+
+<P>De m&ecirc;me, vous pouvez supplanter l'affectation num&eacute;ro
+USER (les num&eacute;ros d'utilisation permettent le d&eacute;coupage
+du r&eacute;pertoire) par d&eacute;faut en sp&eacute;cifiant un
+num&eacute;ro d'utilisateur. compris entre 0 et 15, qui servira de
+pr&eacute;fixe au nom de fichier. Ainsi, les commandes:</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">LOAD "15:PROG.BAS"</FONT></BLOCKQUOTE>
+
+<P>...et :</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">SAVE "15:PROG.PAS"</FONT></BLOCKQUOTE>
+
+<P>...chargent et sauvegardent le programme sur la section de la
+disquette affect&eacute;e &agrave; l'utilisateur 15. quel que soit le
+num&eacute;ro par d&eacute;faut (voir commande , USER, dans la suite
+du manuel).&nbsp;</P>
+
+<P>Enfin, il est possible de supplanter &agrave; la fois la valeur
+par d&eacute;faut de l'utilisateur (USER) et celle de l'unit&eacute;
+(DRIVE) (dans cet ordre) en les indiquant dans le pr&eacute;fixe du
+nom de fichier, comme par exemple :</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">RUN "15B:PROG.BAS"</FONT></BLOCKQUOTE>
+
+<P>&nbsp;</P>
+
+<P><FONT SIZE="+1">Les jokers</FONT></P>
+
+<P>On a souvent besoin d'op&eacute;rer (copie, effacement, etc.) sur
+plusieurs fichiers &agrave; la fois. Lorsqu'un nom de fichier est
+sp&eacute;cifi&eacute; pour telle ou telle op&eacute;ration, le
+syst&egrave;me recherche le nom donn&eacute; dans le catalogue. Il
+est possible dans certains cas de demander &agrave; ce que
+l'op&eacute;ration soit effectu&eacute;e sur plusieurs fichiers ayant
+des lettres communes, les autres lettres &eacute;tant alors
+remplac&eacute;es par des ? (signifiant 'ne pas tenir compte de'). On
+peut abr&eacute;ger une s&eacute;rie de ? en la rempla&ccedil;ant par
+le symbole * Ainsi, FRED.* est le raccourci de FRED.??? et F*,BAS
+celui de F???????.BAS.</P>
+
+<P>Dans cet esprit, *.* signifie 'n'importe quel fichier'.
+Exemples:</P>
+
+<P><TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0>
+   <TR>
+      <TD>
+         <P>Catalogue</P>
+      </TD>
+      <TD>
+         <P>Convient &agrave; *.BAS</P>
+      </TD>
+      <TD>
+         <P>Convient &agrave; FRED?.BAS</P>
+      </TD>
+      <TD>
+         <P>Convient &agrave; F*.BAS</P>
+      </TD>
+   </TR>
+   <TR>
+      <TD>
+         <P>BERT.BAS</P>
+      </TD>
+      <TD>
+         <P>BERT.BAS</P>
+      </TD>
+      <TD>
+         <P></P>
+      </TD>
+      <TD>
+         <P></P>
+      </TD>
+   </TR>
+   <TR>
+      <TD>
+         <P>FRED1.BAS</P>
+      </TD>
+      <TD>
+         <P>FRED1.BAS</P>
+      </TD>
+      <TD>
+         <P>FRED1.BAS</P>
+      </TD>
+      <TD>
+         <P>FRED1.BAS</P>
+      </TD>
+   </TR>
+   <TR>
+      <TD>
+         <P>FRED2.BAS</P>
+      </TD>
+      <TD>
+         <P>FRED2.BAS</P>
+      </TD>
+      <TD>
+         <P>FRED.BAS</P>
+      </TD>
+      <TD>
+         <P>FRED2.BAS</P>
+      </TD>
+   </TR>
+   <TR>
+      <TD>
+         <P>FRED3.BAK</P>
+      </TD>
+      <TD>
+         <P></P>
+      </TD>
+      <TD>
+         <P></P>
+      </TD>
+      <TD>
+         <P>FRED3.BAK</P>
+      </TD>
+   </TR>
+   <TR>
+      <TD>
+         <P>FRED3.BAS</P>
+      </TD>
+      <TD>
+         <P>FRED3.BAS</P>
+      </TD>
+      <TD>
+         <P>FRED3.BAS</P>
+      </TD>
+      <TD>
+         <P>FRED3.BAS</P>
+      </TD>
+   </TR>
+   <TR>
+      <TD>
+         <P>FINAL.BAS</P>
+      </TD>
+      <TD>
+         <P>FINAL.BAS</P>
+      </TD>
+      <TD>
+         <P></P>
+      </TD>
+      <TD>
+         <P>FINAL.BAS</P>
+      </TD>
+   </TR>
+</TABLE>
+</P>
+
+<P><FONT SIZE="+1">Exemples d'utilisation de commandes d'AMSDOS dans
+un programme</FONT></P>
+
+<P>Pour vous aider a bien comprendre les commandes d'AMSDOS. nous
+vous conseillons de bien regarder ces exemples, et m&ecirc;me de
+revenir sur certaines parties au moment ou nous nous y
+r&eacute;f&eacute;rerons dans la suite du chapitre. Ne faites pas
+fonctionner ces programmes avec l'original de vos disquettes
+syst&egrave;me CP/M Utilizez une disquette de travail ou une copie
+sur lesquelles ils pourront &eacute;crire en toute
+s&eacute;curit&eacute;.</P>
+
+<P><B>Sauvegarde de variables et recopie d'&eacute;cran</B></P>
+
+<P>Le programme ci-dessous inscrit des donn&eacute;es sur la
+disquette ; vous devez donc ins&eacute;rer dans l'unit&eacute; une
+disquette vierge ou une disquette de travail Le programme dessine le
+chapeau anglais et recopie la totalit&eacute; de l'&eacute;cran sur
+la disquette.</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">10 dumpfile$="flagdump.srn"</FONT>
+   
+   <P><FONT FACE="Fixedsys">20 MODE 1 : BORDER 0</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">30 DIM colour(2)</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">40 FOR i=0 TO 2</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">50 READ colour(1): REM charge les No de
+   couleurs en &lt;Data&gt;</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">60 INK i,colour(1)</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">70 NEXT</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">80 ON ERROR GOTO 40</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">90 OPENIN "param.dat" 'teste si le
+   fichier existe</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">100 CLOSEIN:ON ERROR GOTO 0</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">110 1F errnum=32 AND DERR=146 THEN
+   CLS:GOTO 160 ' le fichier n'existe pas</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">120 CURSOR 1:PRINT Do you want to
+   overwrite old file? Y/N "</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">130 a$=INKEY$:ON INSTR(" YN",UPER$(a$))
+   GOTO 130,150,140:GOTO 110</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">40 PRINT a$: PRlNT "Program
+   abandoned":END*</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">150 PRINT a$:CURSOR 0</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">160 OPENOUT "param.dat "</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">170 WRITE. #9,dumpfile$,1: REM sauvegarde
+   1e nom du fichier et son mode</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">180 FOR i=0 TO 2</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">190 WRITE #9,colour(i): REM sauvegarde
+   les couleurs</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">200 NEXT i</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">210 CLOSEOUT</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">220 CLS</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">230 gp=1:GRAPHICS PEN gp:w=125</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">240 x=65:a=240:y=400:b=-150:GOSUB
+   400</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">250 y=0: b=150:GOSUB 400</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">260 x=575:a=-240:y=400:b=-150:GOSUB
+   400</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">270 v=0: b= 1 ;,d: GOSUB 400</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">280 gp=2: GRAPHICS PEN gp :
+   w=40</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">290 a=240:x=-40:y=400:b=-150:GOSUB
+   400</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">300 x=0:y=0:b=150:GOSUB 400</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">310 a=-240:x=640:y=0:b=150:GOSUB
+   400</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">320 x=600:y=400:b=-150:GOSUB
+   400</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">330 ORIGIN 0,0,256,380,0,400:CLG
+   1</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">340 ORIGIN 0,0,0,640,150,250:CLG
+   1</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">350 ORIGIN 0,0,280,352,0,400:CLG
+   2</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">360 ORIGIN 0,0,0,640,168,230:CLG
+   2</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">370 SAVE
+   dumpfile$,b,&amp;C000,&amp;4000</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">380 DATA 2,26,6</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">390 END</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">400 MOVE x,y:DRAWR a,b:DRAWR w,0:DRAWR
+   -a,-b</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">410 MOVE x+a/2+w/2,y+b/2:FILL
+   gp</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">420 RETURN</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">430 errnum=ERR:RESUME NEXT</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">run</FONT></P></BLOCKQUOTE>
+
+<P>Le, indicateurs <B>.DAT</B> et <B>.SRN</B> n'ont d'autre
+r&ocirc;le que de nous rappeler ce que contient le fichier. Le
+fichier <B>PARAM.DAT</B> contient des param&egrave;tres cod&eacute;,
+en ASCII, donc sans ent&ecirc;te, alors que <B>FLAGDUMP.SRN</B> est
+un fichier AMSDOS en code binaire, avec en-t&ecirc;te.</P>
+
+<P>Vous remarquerez que le programme essaie d'abord de lire le
+fichier <B>PARAM.DAT</B> afin de s'assurer qu'il existe avant d'y
+inscrire des donn&eacute;es. S'il n'existe pas. le BASIC signale une
+erreur qui est captur&eacute;e par le programme et l'ex&eacute;cution
+se d&eacute;roule sans interruption. S'il existe, le programme vous
+propose d'&eacute;craser le fichier existant.</P>
+
+<P>Les particularit&eacute;s de l'&eacute;cran que l'on va copier.
+(son mode, la palette de couleurs et le nom du fichier contenant les
+donn&eacute;es) sont copi&eacute;es sur un fchier. Voici qui illustre
+l'utilisation d'un fichier de donn&eacute;es pour la sauvegarde WRITE
+des variables dans un programme (<B>dumpfile$</B>) et de constantes
+(1). pour r&eacute;utilisation dans un autre programme.</P>
+
+<P>&nbsp;</P>
+
+<P><B>Restitution d'&eacute;cran</B></P>
+
+<P>Cet exemple (<B>EX2.BAS</B>) est le programme type de restitution
+d'une copie d'&eacute;cran faisant appel au fichier des
+param&egrave;tres pour d&eacute;finir son action. Vous remarquerez la
+fa&ccedil;on d'appeler (<B>INPUT</B>) les variables se trouvant dans
+un Fichier avec variation automatique de longueur de fichier par la
+fonction <B>EOF</B> (End Of File = Fin de fichier). Il est important
+de sauvegarder les param&egrave;tres de l'&eacute;cran, pour
+&eacute;liminer tout risque de brouillage des r&eacute;sultats. La
+commande <B>MODE</B> et le blocage du d&eacute;filement continu de
+l'image accomplissent cette sauvegarde.</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">10 DIM colour(15): REM provision
+   for 16 colours</FONT>
+   
+   <P><FONT FACE="Fixedsys">20 OPENIN "param.dat"</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">30 INPUT #9,filename$,screenmode 40
+   i=0</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">50 WHILE NOT EOF</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">60 INPUT #9,colour(i)</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">70 INK i,colour(i)</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">80 i=i+1</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">90 WEND</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">100 CLOSEIN</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">110 MODE screenmode:BORDER 0</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">120 LOAD filename$</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">run</FONT></P></BLOCKQUOTE>
+
+<P>&nbsp;</P>
+
+<P><FONT SIZE="+1">Sommaire des commandes externes
+d'AMSDOS</FONT></P>
+
+<P><B>|A</B></P>
+
+<P><FONT FACE="Fixedsys">|A</FONT></P>
+
+<P>COMMANDE: Dirige les entr&eacute;es/sorties vers l'unit&eacute; A.
+Equivalent &agrave; <B>|DRIVE</B> avec <B>A</B> pour
+param&egrave;tre. (L'unit&eacute; int&eacute;gr&eacute;e est
+l'unit&eacute; A.)</P>
+
+<P><B>|B</B></P>
+
+<P><FONT FACE="Fixedsys">|B</FONT></P>
+
+<P>COMMANDE: Dirige les entr&eacute;es/sorties vers l'unit&eacute; B.
+&Eacute;quivaut &agrave; <B>|DRIVE</B> avec <B>B</B> pour
+param&egrave;tre. (L'unit&eacute; int&eacute;gr&eacute;e est
+l'unit&eacute; A.)</P>
+
+<P><B>|CPM</B></P>
+
+<P><FONT FACE="Fixedsys">|CPM</FONT></P>
+
+<P>COMMANDE : Charge et initialise le syst&egrave;me d'exploitation
+contenu dans la disquette syst&egrave;me. Les syst&egrave;mes fournis
+avec l'ordinateur sont les CP/M 2.2 et CP/M Plus.</P>
+
+<P>Cette op&eacute;ration &eacute;choue si l'unit&eacute; ne contient
+pas de disquette syst&egrave;me. La copie de la face 1 charge CP/M
+Plus et celle de la face 4, CP/M 2.2.</P>
+
+<P><B>|DIR</B></P>
+
+<P>|DIR &#91;,&lt;chaine alphanum&eacute;rique&gt;&#93;</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">|DIR,"*.BAS"</FONT></BLOCKQUOTE>
+
+<P>COMMANDE: Affiche le catalogue de la disquette (fa&ccedil;on CP/M)
+et l'espace disponible. L'absence de la cha&icirc;ne &eacute;quivaut
+&agrave; *.*.</P>
+
+<P><B>|DISC</B></P>
+
+<P>|DISC</P>
+
+<P>COMMANDE: &Eacute;quivaut aux commandes <B>|DISC.IN</B> et
+<B>|DISC.OUT</B> r&eacute;unies.</P>
+
+<P><B>|DISC.IN</B></P>
+
+<P>|DISC. IN</P>
+
+<P>COMMANDE: Force la lecture des donn&eacute;es de la disquette.</P>
+
+<P><B>|DISC.OUT</B></P>
+
+<P>|DISC.OUT</P>
+
+<P>COMMAND&Eacute;: Force l'&eacute;criture sur la disquette.</P>
+
+<P><B>|DRIVE</B></P>
+
+<P>|DRIVE,&lt;chaine alphanum&eacute;rique&gt;</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">|DRIVE,"A"</FONT></BLOCKQUOTE>
+
+<P>COMMANDE :D&eacute;signe une des unit&eacute;s. Cette commande
+avorte si AMSDOS est incapable de lire la disquette dans
+l'unit&eacute; d&eacute;sign&eacute;e.</P>
+
+<P><B>|ERA</B></P>
+
+<P>|ERA,&lt;chaine alphanum&eacute;rique&gt;</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">|ERA,"$.BAK"</FONT></BLOCKQUOTE>
+
+<P>COMMANDE: Efface tous les fichiers qui correspondent &agrave; ce
+nom de fichier et ne sont pas en &Eacute;criture seulement. Les
+jockers sont permis.</P>
+
+<P><B>|REN</B></P>
+
+<P>|REN,&lt;chaine alphanum&eacute;rique&gt;,&lt;cha&icirc;ne
+alphanum&eacute;rique&gt;</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">|REN,"NOUVEAU.BAS","ANCIEN.
+   BAS"</FONT></BLOCKQUOTE>
+
+<P>COMMANDE : Donne un nouveau nom de fichier. Il ne doit pas exister
+de fichier portant d&eacute;j&agrave; ce nom. Les jockers ne sont pas
+autoris&eacute;s.</P>
+
+<P>Le param&egrave;tre <B>USER</B> (voir <B>USER</B>) peut &ecirc;tre
+sp&eacute;cifi&eacute; dans la cha&icirc;ne alphanum&eacute;rique&gt;
+pour supplanter toutes les valeurs par d&eacute;faut. Ainsi, la
+commande <B>|REN,&#171; 0:NOUVEAU.BAS &#187;.&#171; 15:ANCIEN.BAS
+&#187;</B> rebaptise le fichier de l'utilisateur 15, &#171;
+<B>ANCIEN.BAS</B> &#187;. et l'appelle &#171; <B>NOUVEAU.BAS</B>
+&#187; en l'affectant &agrave; l'utilisateur 0, sans tenir compte des
+valeurs par d&eacute;faut ou d&eacute;finies
+pr&eacute;c&eacute;demment.</P>
+
+<P><B>|TAPE</B></P>
+
+<P>|TAPE</P>
+
+<P>COMMANDE: &Eacute;quivaut aux commandes <B>|TAPE.IN</B> et
+<B>|TAPE.OUT</B> r&eacute;unies. Utilis&eacute;e dans le cas
+o&ugrave; un lecteur de cassettes est raccord&eacute; &agrave;
+l'ordinateur.</P>
+
+<P><B>|TAPE.IN</B></P>
+
+<P>|TAPE.IN</P>
+
+<P>COMMANDE: Lit des donn&eacute;es sur un lecteur de cassettes
+connect&eacute; &agrave; l'ordinateur.</P>
+
+<P><B>|TAPE.OUT</B></P>
+
+<P>|TAPE.OUT</P>
+
+<P>COMMANDE :Envoie des donn&eacute;es vers un lecteur de cassettes
+connect&eacute; &agrave; l'ordinateur.</P>
+
+<P><B>|USER</B>&nbsp;</P>
+
+<P>|USER,&lt; nombre entier&gt;</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">|USER,3</FONT>&nbsp;</BLOCKQUOTE>
+
+<P>COMMANDE : D&eacute;termine la section du catalogue (comprise
+entre 0 et 15) sur laquelle vont s'effectuer les acc&egrave;s
+disque.</P>
+
+<P>Un fichier peut &ecirc;tre transf&eacute;r&eacute; d'un
+num&eacute;ro d'utilisateur &agrave; l'autre, &agrave; l'aide d'un
+<B>|REN</B>. Ainsi, <B>|REN,&#171;15:EXEMPLE.BAS
+&#187;,&#171;0:EXEMPLE.BAS &#187;</B> transf&egrave;re un fichier de
+l'utilisateur 0 &agrave; l'utilisateur 15, sans modifier le nom du
+fichier (<B>EXEMPLE.BAS</B>).</P>
+
+<P><FONT SIZE="+1">Copie de fichiers entre disquettes</FONT></P>
+
+<P><B>Fichiers AMSDOS &agrave; en-t&ecirc;te</B></P>
+
+<P>II est possible de copier ces fichiers sous CP/ M, en utilisant
+<B>PIP</B> (voir ce chapitre, partie 2). N'importe quel fichier
+cr&eacute;&eacute; sous AMSDOS comporte une zone d'en-t&ecirc;te
+(voir &#171; Les ent&ecirc;tes d'AMSDOS &#187;) et peut &ecirc;tre
+copi&eacute; int&eacute;gralement, de disquette &agrave; disquette et
+de cassette &agrave; disquette - toutefois, son contenu est en
+g&eacute;n&eacute;ral incompr&eacute;hensible par CP/M.</P>
+
+<P><B>Fichiers ASCII</B></P>
+
+<P>Les fichiers cr&eacute;&eacute;s sous AMSDOS sans zone
+d'en-t&ecirc;te sont g&eacute;n&eacute;ralement &eacute;crits en
+codes ASCII et sont compris par AMSDOS et CP/M. Ils peuvent donc
+s'&eacute;changer librement entre AMSDOS et CP/M.</P>
+
+<P><B>Fichiers en lecture seulement</B></P>
+
+<P>CP/M permet de limiter l'acc&egrave;s &agrave; un fichier en
+lecture seulement, et/ou selon son &eacute;tat dans le catalogue. De
+tels attributs sont accord&eacute;s et supprim&eacute;s par CP/M tout
+en &eacute;tant respect&eacute;s par AMSDOS. Pour plus de
+d&eacute;tails, voir la partie 2 de ce chapitre (utilitaire SET).</P>
+
+<P><B>Copie de fichiers entre disquettes et cassettes</B></P>
+
+<P>Le CP/M Plus ne permet pas la copie de fichiers entre disquettes
+et cassettes. Vous devez pour cela faire appel au CP/M 2.2 (face 4
+d'une des disquettes syst&egrave;me). Les utilitaires <B>CLOAD</B> et
+<B>SAVE</B> du CP/M 2.2 vous permettront d'effectuer ce type de copie
+(reportezvous aux tableaux pour leur utilisation).</P>
+
+<P><B>&nbsp;Les proc&eacute;dures de copie de fichiers</B></P>
+
+<P>Les tableaux qui suivent montrent la fa&ccedil;on de copier
+n'importe quel fichier entre disquettes et cassettes (le cas
+&eacute;ch&eacute;ant). Ils sont destin&eacute;s &agrave; un
+syst&egrave;me &agrave; une seule unit&eacute;. Il est absolument
+impossible de copier un programme BASIC prot&eacute;g&eacute; ou un
+fichier binaire (un jeu &eacute;crit en langage machine, par exemple)
+en provenance et &agrave; destination d'une cassette si les adresses
+de chargement sont inconnues. Vous trouverez plus de d&eacute;tails
+sur <B>PIP</B>, <B>CLOAD</B> et <B>CSAVE</B> &agrave; la partie 2 de
+ce chapitre.</P>
+
+<P>Voir les tableaux des deux pages suivantes.</P>
+
+<P><TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0>
+   <TR>
+      <TD>
+         <P></P>
+      </TD>
+      <TD>
+         <P><FONT FACE="Fixedsys">COPIE&nbsp;DE:</FONT></P>
+      </TD>
+      <TD>
+         <P></P>
+      </TD>
+      <TD>
+         <P></P>
+      </TD>
+   </TR>
+   <TR>
+      <TD>
+         <P><FONT FACE="Fixedsys">COPIE&nbsp;SUR:</FONT></P>
+      </TD>
+      <TD>
+         <P><FONT FACE="Fixedsys">BASIC&nbsp;AMSTRAD&nbsp;sur
+         cassette*</FONT></P>
+      </TD>
+      <TD>
+         <P><FONT FACE="Fixedsys">Donnees ASCII sur
+         cassette*</FONT></P>
+      </TD>
+      <TD>
+         <P><FONT FACE="Fixedsys">Binaire sur cassette*</FONT></P>
+      </TD>
+   </TR>
+   <TR>
+      <TD>
+         <P><FONT FACE="Fixedsys">BASIC&nbsp;AMSTRAD</FONT></P>
+      </TD>
+      <TD>
+         <P><FONT FACE="Fixedsys">|TAPE</FONT></P>
+         
+         <P><FONT FACE="Fixedsys">LOAD "FICHIER"</FONT></P>
+         
+         <P><FONT FACE="Fixedsys">&lt;changer cassette&gt;</FONT></P>
+         
+         <P><FONT FACE="Fixedsys">SAVE "FICHIER"</FONT></P>
+         
+         <P><FONT FACE="Fixedsys">|DISC</FONT></P>
+      </TD>
+      <TD>
+         <P></P>
+      </TD>
+      <TD>
+         <P></P>
+      </TD>
+   </TR>
+   <TR>
+      <TD>
+         <P><FONT FACE="Fixedsys">Binaire sur cassette*</FONT></P>
+      </TD>
+      <TD>
+         <P></P>
+      </TD>
+      <TD>
+         <P></P>
+      </TD>
+      <TD>
+         <P><FONT FACE="Fixedsys">H=HIMEM</FONT></P>
+         
+         <P><FONT FACE="Fixedsys">|TAPE</FONT></P>
+         
+         <P><FONT FACE="Fixedsys">MEMORY&lt;D&gt;-1</FONT></P>
+         
+         <P><FONT FACE="Fixedsys">LOAD "FICHIER"</FONT></P>
+         
+         <P><FONT FACE="Fixedsys">&lt;changer cassette&gt;</FONT></P>
+         
+         <P><FONT FACE="Fixedsys">SAVE
+         "FICHIER",B,&lt;d&gt;,&lt;l&gt;&#91;,r&#93;</FONT></P>
+         
+         <P><FONT FACE="Fixedsys">|DISC</FONT></P>
+         
+         <P><FONT FACE="Fixedsys">MEMORY H</FONT></P>
+         
+         <P><FONT FACE="Fixedsys">&lt;note&gt;</FONT></P>
+      </TD>
+   </TR>
+   <TR>
+      <TD>
+         <P><FONT FACE="Fixedsys">ASCII sur cassette*</FONT></P>
+      </TD>
+      <TD>
+         <P><FONT FACE="Fixedsys">|TAPE</FONT></P>
+         
+         <P><FONT FACE="Fixedsys">LOAD&nbsp;"FICHIER"</FONT></P>
+         
+         <P><FONT FACE="Fixedsys">&lt;changer cassette&gt;</FONT></P>
+         
+         <P><FONT FACE="Fixedsys">SAVE "FICHIER",A</FONT></P>
+         
+         <P><FONT FACE="Fixedsys">|DISC</FONT></P>
+      </TD>
+      <TD>
+         <P><FONT FACE="Fixedsys">ins&eacute;rez la disquette CP/M
+         2.2</FONT></P>
+         
+         <P><FONT FACE="Fixedsys">|CPM</FONT></P>
+         
+         <P><FONT FACE="Fixedsys">CLOAD "FICHIER",TEMP</FONT></P>
+         
+         <P><FONT FACE="Fixedsys">&lt;changer cassette&gt;</FONT></P>
+         
+         <P><FONT FACE="Fixedsys">CSAVE TEMP,"FICHIER"</FONT></P>
+         
+         <P><FONT FACE="Fixedsys">ERA TEMP</FONT></P>
+         
+         <P><FONT FACE="Fixedsys">AMSDOS</FONT></P>
+         
+         <P><FONT FACE="Fixedsys">&lt;note 1&gt;</FONT></P>
+      </TD>
+      <TD>
+         <P></P>
+      </TD>
+   </TR>
+   <TR>
+      <TD>
+         <P><FONT FACE="Fixedsys">BASIC&nbsp;AMSTRAD&nbsp;sur
+         disquette</FONT></P>
+      </TD>
+      <TD>
+         <P><FONT FACE="Fixedsys">|TAPE</FONT></P>
+         
+         <P><FONT FACE="Fixedsys">LOAD "FICHIER"</FONT></P>
+         
+         <P><FONT FACE="Fixedsys">|DISC</FONT></P>
+         
+         <P><FONT FACE="Fixedsys">SAVE&nbsp;"FICHIER"</FONT></P>
+      </TD>
+      <TD>
+         <P></P>
+      </TD>
+      <TD>
+         <P></P>
+      </TD>
+   </TR>
+   <TR>
+      <TD>
+         <P><FONT FACE="Fixedsys">ASCII&nbsp;sur disquette</FONT></P>
+      </TD>
+      <TD>
+         <P><FONT FACE="Fixedsys">|TAPE</FONT></P>
+         
+         <P><FONT FACE="Fixedsys">LOAD "FICHIER"</FONT></P>
+         
+         <P><FONT FACE="Fixedsys">|DISC</FONT></P>
+         
+         <P><FONT FACE="Fixedsys">SAVE&nbsp;"FICHIER",A</FONT></P>
+      </TD>
+      <TD>
+         <P><FONT FACE="Fixedsys">inserez la disquette CP/M
+         2.2</FONT></P>
+         
+         <P><FONT FACE="Fixedsys">|CPM</FONT></P>
+         
+         <P><FONT FACE="Fixedsys">CLOAD&nbsp;"FICHIER"</FONT></P>
+         
+         <P><FONT FACE="Fixedsys">AMSDOS</FONT></P>
+      </TD>
+      <TD>
+         <P></P>
+      </TD>
+   </TR>
+   <TR>
+      <TD>
+         <P><FONT FACE="Fixedsys">Binaire sur disquette</FONT></P>
+      </TD>
+      <TD>
+         <P></P>
+      </TD>
+      <TD>
+         <P></P>
+      </TD>
+      <TD>
+         <P><FONT FACE="Fixedsys">H=HIMEM</FONT></P>
+         
+         <P><FONT FACE="Fixedsys">|TAPE</FONT></P>
+         
+         <P><FONT FACE="Fixedsys">MEMORY &lt;d&gt;-1</FONT></P>
+         
+         <P><FONT FACE="Fixedsys">LOAD&nbsp;"FICHIER"</FONT></P>
+         
+         <P><FONT FACE="Fixedsys">|DISC</FONT></P>
+         
+         <P><FONT FACE="Fixedsys">SAVE
+         "FICHIER",B,&lt;d&gt;,&lt;l&gt;&lt;&#91;,&lt;r&gt;&#93;</FONT></P>
+         
+         <P><FONT FACE="Fixedsys">MEMORY&nbsp;H</FONT></P>
+         
+         <P><FONT FACE="Fixedsys">&lt;note 2&gt;</FONT></P>
+      </TD>
+   </TR>
+</TABLE>
+ <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0>
+   <TR>
+      <TD>
+         <P></P>
+      </TD>
+      <TD>
+         <P><FONT FACE="Fixedsys">COPIE&nbsp;DE:</FONT></P>
+      </TD>
+      <TD>
+         <P></P>
+      </TD>
+      <TD>
+         <P></P>
+      </TD>
+      <TD>
+         <P></P>
+      </TD>
+   </TR>
+   <TR>
+      <TD>
+         <P><FONT FACE="Fixedsys">COPIE&nbsp;SUR:</FONT></P>
+      </TD>
+      <TD>
+         <P><FONT FACE="Fixedsys">BASIC&nbsp;AMSTRAD&nbsp;sur
+         disquette*</FONT></P>
+      </TD>
+      <TD>
+         <P><FONT FACE="Fixedsys">Donnees ASCII&nbsp;sur
+         disquette</FONT></P>
+      </TD>
+      <TD>
+         <P><FONT FACE="Fixedsys">Binaire AMSDOS&nbsp;sur
+         disquette</FONT></P>
+      </TD>
+      <TD>
+         <P><FONT FACE="Fixedsys">Autres sur disquette</FONT></P>
+      </TD>
+   </TR>
+   <TR>
+      <TD>
+         <P><FONT FACE="Fixedsys">BASIC&nbsp;AMSTRAD&nbsp;SUR&nbsp;CASSETTE*</FONT></P>
+      </TD>
+      <TD>
+         <P><FONT FACE="Fixedsys">LOAD&nbsp;"FICHIER"</FONT></P>
+         
+         <P><FONT FACE="Fixedsys">|TAPE</FONT></P>
+         
+         <P><FONT FACE="Fixedsys">SAVE "FICHIER"</FONT></P>
+         
+         <P><FONT FACE="Fixedsys">|DISC</FONT></P>
+      </TD>
+      <TD>
+         <P></P>
+      </TD>
+      <TD>
+         <P></P>
+      </TD>
+      <TD>
+         <P></P>
+      </TD>
+   </TR>
+   <TR>
+      <TD HEIGHT=209>
+         <P><FONT FACE="Fixedsys">Binaire sur cassette</FONT></P>
+      </TD>
+      <TD HEIGHT=209>
+         <P></P>
+      </TD>
+      <TD HEIGHT=209>
+         <P></P>
+      </TD>
+      <TD HEIGHT=209>
+         <P><FONT FACE="Fixedsys">H=HIMEM</FONT></P>
+         
+         <P><FONT FACE="Fixedsys">MEMORY &lt;d&gt;-1</FONT></P>
+         
+         <P><FONT FACE="Fixedsys">LOAD "FICHIER"</FONT></P>
+         
+         <P><FONT FACE="Fixedsys">|TAPE</FONT></P>
+         
+         <P><FONT FACE="Fixedsys">SAVE
+         "FICHIER",B,&lt;d&gt;,&lt;l&gt;,&#91;,r&#93;</FONT></P>
+         
+         <P><FONT FACE="Fixedsys">|DISC</FONT></P>
+         
+         <P><FONT FACE="Fixedsys">MEMORY</FONT></P>
+         
+         <P><FONT FACE="Fixedsys">&lt;note 2&gt;</FONT></P>
+      </TD>
+      <TD HEIGHT=209>
+         <P></P>
+      </TD>
+   </TR>
+   <TR>
+      <TD>
+         <P><FONT FACE="Fixedsys">ASCII&nbsp;sur cassette</FONT></P>
+      </TD>
+      <TD>
+         <P><FONT FACE="Fixedsys">LOAD&nbsp;"FICHIER"</FONT></P>
+         
+         <P><FONT FACE="Fixedsys">|TAPE</FONT></P>
+         
+         <P><FONT FACE="Fixedsys">SAVE "FICHIER"</FONT></P>
+         
+         <P><FONT FACE="Fixedsys">|DISC</FONT></P>
+         
+         <P><FONT FACE="Fixedsys">ou inserez disq. CPM/2.2</FONT></P>
+         
+         <P><FONT FACE="Fixedsys">|CPM</FONT></P>
+         
+         <P><FONT FACE="Fixedsys">CSAVE&nbsp;FICHIER</FONT></P>
+         
+         <P><FONT FACE="Fixedsys">AMSDOS</FONT></P>
+      </TD>
+      <TD>
+         <P><FONT FACE="Fixedsys">inserez la disquette
+         CP/M&nbsp;2.2</FONT></P>
+         
+         <P><FONT FACE="Fixedsys">|CPM</FONT></P>
+         
+         <P><FONT FACE="Fixedsys">CSAVE&nbsp;FICHIER</FONT></P>
+         
+         <P><FONT FACE="Fixedsys">AMSDOS</FONT></P>
+      </TD>
+      <TD>
+         <P></P>
+      </TD>
+      <TD>
+         <P><FONT FACE="Fixedsys">|CPM</FONT></P>
+         
+         <P><FONT FACE="Fixedsys">CSAVE FICHIER</FONT></P>
+         
+         <P><FONT FACE="Fixedsys">AMSDOS</FONT></P>
+         
+         <P><FONT FACE="Fixedsys">&lt;note&nbsp;3&gt;</FONT></P>
+      </TD>
+   </TR>
+   <TR>
+      <TD>
+         <P><FONT FACE="Fixedsys">BASIC&nbsp;AMSTRAD&nbsp;sur
+         disquette</FONT></P>
+      </TD>
+      <TD>
+         <P><FONT FACE="Fixedsys">LOAD "FICHIER"</FONT></P>
+         
+         <P><FONT FACE="Fixedsys">&lt;changer
+         disquette&gt;</FONT></P>
+         
+         <P><FONT FACE="Fixedsys">SAVE "FICHIER"</FONT></P>
+         
+         <P><FONT FACE="Fixedsys">ou inserez disq.
+         CP/M&nbsp;PLUS</FONT></P>
+         
+         <P><FONT FACE="Fixedsys">|CPM</FONT></P>
+         
+         <P><FONT FACE="Fixedsys">PIP B:=FICHIER</FONT></P>
+         
+         <P><FONT FACE="Fixedsys">AMSDOS</FONT></P>
+      </TD>
+      <TD>
+         <P></P>
+      </TD>
+      <TD>
+         <P></P>
+      </TD>
+      <TD>
+         <P></P>
+      </TD>
+   </TR>
+   <TR>
+      <TD>
+         <P><FONT FACE="Fixedsys">ASCII&nbsp;sur disquette</FONT></P>
+      </TD>
+      <TD>
+         <P><FONT FACE="Fixedsys">LOAD&nbsp;"FICHIER"</FONT></P>
+         
+         <P><FONT FACE="Fixedsys">&lt;changer disq&gt;</FONT></P>
+         
+         <P><FONT FACE="Fixedsys">SAVE&nbsp;"FICHIER",A</FONT></P>
+      </TD>
+      <TD>
+         <P><FONT FACE="Fixedsys">inserez la disquette
+         CP/M&nbsp;PLUS</FONT></P>
+         
+         <P><FONT FACE="Fixedsys">|CPM</FONT></P>
+         
+         <P><FONT FACE="Fixedsys">PIP B:=FICHIER</FONT></P>
+         
+         <P><FONT FACE="Fixedsys">AMSDOS</FONT></P>
+      </TD>
+      <TD>
+         <P></P>
+      </TD>
+      <TD>
+         <P></P>
+      </TD>
+   </TR>
+   <TR>
+      <TD>
+         <P><FONT FACE="Fixedsys">AMSDOS&nbsp;Binaire*</FONT></P>
+      </TD>
+      <TD>
+         <P></P>
+      </TD>
+      <TD>
+         <P></P>
+      </TD>
+      <TD>
+         <P><FONT FACE="Fixedsys">inserez disq. CP/M PLUS</FONT></P>
+         
+         <P><FONT FACE="Fixedsys">|CPM</FONT></P>
+         
+         <P><FONT FACE="Fixedsys">PIP&nbsp;B:=FICHIER</FONT></P>
+         
+         <P><FONT FACE="Fixedsys">AMSDOS</FONT></P>
+      </TD>
+      <TD>
+         <P></P>
+      </TD>
+   </TR>
+   <TR>
+      <TD>
+         <P><FONT FACE="Fixedsys">Autres qsur disquette</FONT></P>
+      </TD>
+      <TD>
+         <P></P>
+      </TD>
+      <TD>
+         <P></P>
+      </TD>
+      <TD>
+         <P></P>
+      </TD>
+      <TD>
+         <P><FONT FACE="Fixedsys">ins. disq.
+         CP/M&nbsp;PLUS</FONT></P>
+         
+         <P><FONT FACE="Fixedsys">|CPM</FONT></P>
+         
+         <P><FONT FACE="Fixedsys">PIP B:=FICHIER</FONT></P>
+         
+         <P><FONT FACE="Fixedsys">AMSDOS</FONT></P>
+      </TD>
+   </TR>
+</TABLE>
+</P>
+
+<P>* Fichier avec en-t&ecirc;te</P>
+
+<P>&lt;note 1&gt; : requiert de l'espace disque libre pour y loger le
+programme de temporisation &#171;<B>TEMP</B>&#187;.</P>
+
+<P>&lt;note 2&gt; &lt;d&gt; est l'adresse de d&eacute;part du
+dossier, &lt;l&gt; sa longueur et &lt;r&gt; l'adresse de lancement
+facultative.</P>
+
+<P>&lt;note 3&gt; : la copie est inutilisable directement par le
+BASIC. Cependant cette option est un moyen tr&egrave;s rentable de
+transfert et de sauvegarde de fichiers. Le fichier peut &ecirc;tre
+ensuite r&eacute;cup&eacute;r&eacute; par la disquette au moyen de
+CLOAD &#171;FICHIER&#187; (sous CP/M 2.2).</P>
+
+<P>&nbsp;</P>
+
+<P><FONT SIZE="+1">Guide des messages d'erreur d'AMSDOS</FONT></P>
+
+<P>Lorsque, pour une raison quelconque, AMSDOS ne peut
+ex&eacute;cuter une commande, il affiche un message d'erreur &agrave;
+l'&eacute;cran. En cas de probl&egrave;me mat&eacute;riel, le message
+est suivi de la question</P>
+
+<BLOCKQUOTE><B>Retry, Ignore or Cancel ?</B></BLOCKQUOTE>
+
+<P><B>R</B> : la commande est reex&eacute;cut&eacute;e apr&egrave;s
+que l'utilisateur ait palli&eacute; au probl&egrave;me.</P>
+
+<P><B>I</B> : l'ordinateur continue son travail comme si de rien
+n'&eacute;tait, amenant souvent des r&eacute;sultats inattendus et
+probablement erron&eacute;s.</P>
+
+<P><B>C </B>: l'op&eacute;ration est annul&eacute;e, ce qui
+entra&icirc;ne souvent un autre message d'erreur.</P>
+
+<P>&nbsp;</P>
+
+<P><B>Signification des messages</B></P>
+
+<BLOCKQUOTE><B>Unknown command</B></BLOCKQUOTE>
+
+<P>La commande n'a pas &eacute;t&eacute; &eacute;crite
+correctement.</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">Bad command</FONT></BLOCKQUOTE>
+
+<P>La commande ne peut &ecirc;tre ex&eacute;cut&eacute;e. Erreur de
+syntaxe ou mauvaise configuration mat&eacute;rielle.</P>
+
+<BLOCKQUOTE>&lt;nomfich&gt; <B>already exists</B></BLOCKQUOTE>
+
+<P>L'utilisateur essaye de renommer un fichier avec un nom
+d&eacute;j&agrave; utilis&eacute; sur la disquette</P>
+
+<BLOCKQUOTE>&lt;nomfich&gt;<B> not found</B></BLOCKQUOTE>
+
+<P>Le fichier n'existe pas.</P>
+
+<BLOCKQUOTE><B>Drive</B> &lt;unit&eacute;&gt; <B>: directory full</B></BLOCKQUOTE>
+
+<P>Plus de position dans le catalogue.</P>
+
+<BLOCKQUOTE><B>Drive</B> &lt;unit&eacute;&gt;<B> : disc full</B></BLOCKQUOTE>
+
+<P>Plus de place sur la disquette.</P>
+
+<BLOCKQUOTE><B>Drive </B>&lt;unit&eacute;&gt;<B> : disc changed,
+   closing </B>&lt;nomfich&gt;</BLOCKQUOTE>
+
+<P>La disquette a &eacute;t&eacute; enlev&eacute;e avec des fichiers
+laiss&eacute;s ouverts.</P>
+
+<BLOCKQUOTE>&lt;nomfich&gt; <B>is read only</B></BLOCKQUOTE>
+
+<P>Le fichier est limit&eacute; en lecture et ne peut &ecirc;tre
+trait&eacute;. Cet attribut est accord&eacute; ou supprim&eacute;
+sous CP/M uniquement.</P>
+
+<BLOCKQUOTE><B>Drive</B> &lt;unit&eacute;&gt;<B> : disc missing</B></BLOCKQUOTE>
+
+<P>Disquette absente du lecteur, ou mal mise en place (ne tournant
+done pas). Il est alors recommand&eacute; de l'&eacute;jecter et de
+la remettre &agrave; nouveau, puis de taper <B>R</B>.</P>
+
+<BLOCKQUOTE><B>Drive</B> &lt;unit&eacute;&gt; <B>: disc is write
+   protected</B></BLOCKQUOTE>
+
+<P>&nbsp;On a essay&eacute; d'&eacute;crire sur une disquette dont le
+trou de protection en &eacute;criture est ouvert. La sortir, obturer
+le trou de protection, la r&eacute;ins&eacute;rer et taper
+<B>R</B>.</P>
+
+<BLOCKQUOTE><B>Drive</B> &lt;unit&eacute;&gt; <B>: read
+   fail</B>&nbsp;</BLOCKQUOTE>
+
+<P>Probl&egrave;me mat&eacute;riel. Il est recommand&eacute;
+d'&eacute;jecter la disquette puis de la remettre en place. Taper
+<B>R</B>.</P>
+
+<P><B>Drive</B> &lt;unit&eacute;&gt;<B> : write fail</B></P>
+
+<P>Comme pr&eacute;c&eacute;demment.</P>
+
+<BLOCKQUOTE><B>Failed to load CP/M</B></BLOCKQUOTE>
+
+<P>Erreur de lecture au chargement du CP/M (<B>|CPM</B>) ou disquette
+syst&egrave;me invalide. Ou bien votre disquette ne contient pas de
+CP/M. Si vous tenter de charger le CP/M &agrave; partir d'une
+disquette de donn&eacute;es, vous obtenez le message &#171; read fail
+&#187;.
+
+<HR>
+
+<FONT SIZE="+2"><B>Partie 2 : CP/M</B></FONT></P>
+
+<P><FONT SIZE="+1"><B>CP/M Plus</B></FONT></P>
+
+<P>Sujets abord&eacute;s:</P>
+
+<UL>
+   <LI>Introduction au CP/M Plus</LI>
+   
+   <LI>Chargement du CP/M Plus</LI>
+   
+   <LI>Le Mode Direct</LI>
+   
+   <LI>Les programmes transitoires</LI>
+   
+   <LI>Gestion des p&eacute;riph&eacute;riques</LI>
+</UL>
+
+<P>Le CP/M Plus est fourni avec le 6128. C'est un syst&egrave;me
+d'exploitation de disquettes qui vous permettra d'utiliser toute la
+puissance de votre ordinateur. Ses I28Ko de m&eacute;moire RAM sont
+pleinement exploit&eacute;s, laissant plus de 61 Ko &agrave;
+l'utilisateur pour ses programmes. CP/M int&egrave;gre un
+acc&egrave;s s&eacute;lectif aux fichiers de donn&eacute;es et le
+CP/M 6128 apporte les avantage, d'un &eacute;mulateur de terminaux
+(postes VDU) perfectionn&eacute;. Implant&eacute; sur de nombreux
+ordinateurs, CP/M a suscit&eacute; le d&eacute;veloppement de
+milliers de logiciels d'application et accumul&eacute; une
+exp&eacute;rience et des connaissances &eacute;normes, sur lesquelles
+vous pourrez vous appuyer.</P>
+
+<P>Vous trouveraz une documentation compl&egrave;te sur le CP/M Plus,
+des indications pour l'&eacute;criture de vos propres programmes et
+des informations concernant l'implantation CP/M Plus d'AMSTRAD, dans
+le guide de CP/M Plus (SOFT 971).</P>
+
+<P>&nbsp;</P>
+
+<P><FONT SIZE="+1">Introduction</FONT></P>
+
+<P>Le syst&egrave;me d'exploitation CP/M sert d'interface avec le
+m&eacute;canisme de l'unit&eacute;, vous permettant de communiquer
+avec l'ordinateur et de manipuler ses fichiers et
+p&eacute;riph&eacute;riques.</P>
+
+<P>Des commandes sp&eacute;ciales (et des programmes sur disquette
+appel&eacute;s utilitaires) vous aident &agrave; r&eacute;aliser
+votre principale t&acirc;che : l'exploitation de vos programmes
+d'applications avec vos propres donn&eacute;es.</P>
+
+<P>Il va sans dire que vous pouvez devenir expert en mati&egrave;re
+d'utilisation du CP/M et de fonctionnement des diff&eacute;rents
+utilitaires: cela vous sortira d'affaire plus d'une fois. Cependant,
+la plupart des utilisateurs peuvent se contenter des connaissances de
+base permettant de d&eacute;marrer. La suite de ce chapitre va leur
+permettre de d&eacute;couvrir les fonctions du syst&egrave;me et tous
+se avantages, sans que l'essentiel soit enseveli sous un exc&egrave;s
+de d&eacute;tails.</P>
+
+<P>Le mode direct est l'interm&eacute;diaire principal &agrave; votre
+disposition. On l'identifie par la pr&eacute;sence des indicateurs
+d'attente <B>A&gt;</B> ou <B>B&gt;</B> &agrave; l'&eacute;cran.
+Certaines commandes, dites r&eacute;sidentes, sont accessibles
+directement, &agrave; l'inverse de la plupart des fonctions, obtenues
+en chargeant en m&eacute;moire des programmes, dits transitoires,
+pour le temps de leur utilisation uniquement.</P>
+
+<P>A c&ocirc;t&eacute; des messages d'erreur standard du CP/M, le
+syst&egrave;me g&eacute;n&egrave;re ses propres messages. Ils se
+distinguent des autres car ils apparaissent dans la banni&egrave;re
+de l'&eacute;cran.</P>
+
+<P>&nbsp;</P>
+
+<P><FONT SIZE="+1">CP/M Plus sur la disquette</FONT></P>
+
+<P>La plus grande partie du CP/M Plus r&eacute;side dans un fichier
+sp&eacute;cial de type &#171;<B>.EMS*51</B>&#187; qui se trouve sur
+la face 1 d'une des disquettes syst&egrave;me. Le chargement en
+m&eacute;moire du CP/M &agrave; partir de ce fichier s'effectue en
+deux temps.</P>
+
+<P>La commande AMSDOS <B>|CPM</B> charge d'abord le premier secteur
+de la piste 0. Ce secteur de la disquette systeme contient un
+programme qui charge le fichier EMS en m&eacute;moire. Le reste des
+pistes syst&egrave;me demeure inutilis&eacute;.</P>
+
+<P>&nbsp;</P>
+
+<P><FONT SIZE="+1">Cr&eacute;ation de fichiers PROFILE</FONT></P>
+
+<P>Lors du chargement du CPIM Plus, les commandes du fichier
+<B>PROFILE.SUB</B> (s'il se trouve sur la disquette) sont
+ex&eacute;cut&eacute;es. Cette particularit&eacute; permet de
+red&eacute;finir le clavier, personnaliser le mode d'affichage de
+l'&eacute;eran, initialiser l'imprimante et m&ecirc;me effeetuer le
+lancement automatique d'un programme d'application. Nous avons vu au
+chapitre 4 comment renommer le fiehier PROFILE r&eacute;sidant sur la
+face 1 de la disquette syst&egrave;me afin qu'il soit
+ex&eacute;cut&eacute; lors du chargement.</P>
+
+<P>Pendant l'ex&eacute;cution du fichier PROFILE, un petit fiehier
+provisoire est ouvert sur la disquette qui ne doit donc pas avoir
+&eacute;t&eacute; prot&eacute;g&eacute; en &eacute;criture. C'est
+pourquoi la disquette syst&egrave;me ne peut pas contenir de fichier
+PROFILE ex&eacute;cutable.</P>
+
+<P>Les fichiers PROFILE peuvent s'obtenir &agrave; l'aide d'un
+traitement de texte, d'un &eacute;diteur de texte (<B>ED.COM</B>, par
+exemple) ou m&ecirc;me &agrave; partir du BASIC. Ainsi, le petit
+programme en BASIC ci-dessous pourrait g&eacute;n&eacute;rer le
+fichier PROFILE.SUB.</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">10 OPENOUT "PROFILE.SUB"</FONT>
+   
+   <P><FONT FACE="Fixedsys">20 PRINT #9,"SETKEYS KEYS.CCP"</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">30 PRINT #9,"LANGUAGE 3"</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">40 CLOSEOUT</FONT></P></BLOCKQUOTE>
+
+<P>&nbsp;</P>
+
+<P><FONT SIZE="+1">Codes de contr&ocirc;le de la console</FONT></P>
+
+<P>L'univers CP/M, c'est aussi un ensemble de codes clavier
+sp&eacute;ciaux pour contr&ocirc;ler le d&eacute;roulement des
+programmes. Ces codes remplacent le <B>&#91;ESC&#93;</B> du BASIC et
+les touches de d&eacute;placement du curseur du BASIC AMSTRAD. Les
+codes de contr&ocirc;le ei-dessous sont affect&eacute;s apr&egrave;s
+lancement de la commande :</P>
+
+<P>Les codes de eontr&ocirc;le ei-dessous sont affect&eacute;s
+apr&egrave;s lancement de la commande :</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">SETKEYS KEYS.CCP</FONT></BLOCKQUOTE>
+
+<P>Le programme transitoire <B>SETKEYS.COM</B> et le fichier de
+commande <B>KEYS.CCP</B> se trouvent sur la face I d'une des
+disquettes syst&egrave;me.</P>
+
+<P><TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0>
+   <TR>
+      <TD>
+         <P>Code de contr&ocirc;le</P>
+      </TD>
+      <TD>
+         <P>Touche</P>
+      </TD>
+      <TD>
+         <P>Action</P>
+      </TD>
+   </TR>
+   <TR>
+      <TD HEIGHT=17>
+         <P>&#91;CONTROL&#93;A</P>
+      </TD>
+      <TD HEIGHT=17>
+         <P><FONT FACE="Wingdings">&iuml;</FONT></P>
+      </TD>
+      <TD HEIGHT=17>
+         <P>D&eacute;place le curseur d'un caract&egrave;re vers la
+         gauche</P>
+      </TD>
+   </TR>
+   <TR>
+      <TD>
+         <P>&#91;CONTROL&#93;B</P>
+      </TD>
+      <TD>
+         <P>&#91;CONTROL&#93;<FONT FACE="Wingdings">&iuml;</FONT> ou
+         &#91;CONTROL&#93;<FONT FACE="Wingdings">&eth;</FONT></P>
+      </TD>
+      <TD>
+         <P>D&eacute;place le curseur jusqu'au d&eacute;but de la
+         ligne ou, s'il s'y trouve d&eacute;j&agrave;, en fin de
+         ligne.</P>
+      </TD>
+   </TR>
+   <TR>
+      <TD>
+         <P>&#91;CONTROL&#93;C</P>
+      </TD>
+      <TD>
+         <P>&#91;CONTROL&#93;&#91;ESC&#93;</P>
+      </TD>
+      <TD>
+         <P>Abandon</P>
+      </TD>
+   </TR>
+   <TR>
+      <TD>
+         <P>&#91;CONTROL&#93;E</P>
+      </TD>
+      <TD>
+         <P>&#91;CONTROL&#93;&#91;RETURN&#93;</P>
+      </TD>
+      <TD>
+         <P>Retour chariot physique</P>
+      </TD>
+   </TR>
+   <TR>
+      <TD>
+         <P>&#91;CONTROL&#93;F</P>
+      </TD>
+      <TD>
+         <P><FONT FACE="Wingdings">&eth;</FONT></P>
+      </TD>
+      <TD>
+         <P>D&eacute;place le curseur d'un caract&egrave;re vers la
+         droite</P>
+      </TD>
+   </TR>
+   <TR>
+      <TD>
+         <P>&#91;CONTROL&#93;G</P>
+      </TD>
+      <TD>
+         <P>&#91;CLR&#93;</P>
+      </TD>
+      <TD>
+         <P>Efface le caract&egrave;re situ&eacute; sous le
+         courseur</P>
+      </TD>
+   </TR>
+   <TR>
+      <TD>
+         <P>&#91;CONTROL&#93;H</P>
+      </TD>
+      <TD>
+         <P>&#91;DEL&#93;</P>
+      </TD>
+      <TD>
+         <P>Effacement du caract&egrave;re pr&eacute;c&eacute;dent le
+         curseur</P>
+      </TD>
+   </TR>
+   <TR>
+      <TD>
+         <P>&#91;CONTROL&#93;I</P>
+      </TD>
+      <TD>
+         <P>&#91;TAB&#93;</P>
+      </TD>
+      <TD>
+         <P>D&eacute;place le curseur jusqu'&agrave; la tabulation
+         suivante</P>
+      </TD>
+   </TR>
+   <TR>
+      <TD>
+         <P>&#91;CONTROL&#93;J</P>
+      </TD>
+      <TD>
+         <P></P>
+      </TD>
+      <TD>
+         <P>Validation de la ligne de commande</P>
+      </TD>
+   </TR>
+   <TR>
+      <TD>
+         <P>&#91;CONTROL&#93;K</P>
+      </TD>
+      <TD>
+         <P>&#91;CONTROL&#93;&#91;CLR&#93;</P>
+      </TD>
+      <TD>
+         <P>Efface les caract&egrave;res jusqu'&agrave; la fin de la
+         ligne</P>
+      </TD>
+   </TR>
+   <TR>
+      <TD>
+         <P>&#91;CONTROL&#93;M</P>
+      </TD>
+      <TD>
+         <P>&#91;RETURN&#93; ou &#91;ENTER&#93;</P>
+      </TD>
+      <TD>
+         <P>Validation de la ligne de commande</P>
+      </TD>
+   </TR>
+   <TR>
+      <TD>
+         <P>&#91;CONTROL&#93;P</P>
+      </TD>
+      <TD>
+         <P></P>
+      </TD>
+      <TD>
+         <P>Basculement en mode copie d'&eacute;cran: toute sortie
+         vers l'&eacute;cran sera automatiquement imprim&eacute;e;
+         une deuxi&egrave;me commande identique permet de revenir au
+         mode normal</P>
+      </TD>
+   </TR>
+   <TR>
+      <TD>
+         <P>&#91;CONTROL&#93;Q</P>
+      </TD>
+      <TD>
+         <P></P>
+      </TD>
+      <TD>
+         <P>Revalide la sortie des donn&eacute;es vers
+         l'&eacute;cran</P>
+      </TD>
+   </TR>
+   <TR>
+      <TD>
+         <P>&#91;CONTROL&#93;R</P>
+      </TD>
+      <TD>
+         <P>&#91;CONTROL&#93;&#91;ENTER&#93;</P>
+      </TD>
+      <TD>
+         <P>Retape une ligne de commande</P>
+      </TD>
+   </TR>
+   <TR>
+      <TD>
+         <P>&#91;CONTROL&#93;S</P>
+      </TD>
+      <TD>
+         <P>&#91;ESC&#93;</P>
+      </TD>
+      <TD>
+         <P>Suspend momentan&eacute;ment la sortie des donn&eacute;es
+         vers l'&eacute;cran en provenance du CP/M.&nbsp;Voir
+         &#91;CONTROL&#93;Q pour reprendre</P>
+      </TD>
+   </TR>
+   <TR>
+      <TD>
+         <P>&#91;CONTROL&#93;U</P>
+      </TD>
+      <TD>
+         <P></P>
+      </TD>
+      <TD>
+         <P>Supprime une ligne</P>
+      </TD>
+   </TR>
+   <TR>
+      <TD>
+         <P>&#91;CONTROL&#93;W</P>
+      </TD>
+      <TD>
+         <P>&#91;COPY&#93;</P>
+      </TD>
+      <TD>
+         <P>Rappelle la ligne de commande la plus r&eacute;cement
+         tap&eacute;e</P>
+      </TD>
+   </TR>
+   <TR>
+      <TD>
+         <P>&#91;CONTROL&#93;X</P>
+      </TD>
+      <TD>
+         <P>&#91;CONTROL&#93;&#91;DEL&#93;</P>
+      </TD>
+      <TD>
+         <P>Efface le d&eacute;but de la ligne jusqu'au curseur</P>
+      </TD>
+   </TR>
+   <TR>
+      <TD>
+         <P>&#91;CONTROL&#93;Z</P>
+      </TD>
+      <TD>
+         <P></P>
+      </TD>
+      <TD>
+         <P>Fin de texte</P>
+      </TD>
+   </TR>
+</TABLE>
+</P>
+
+<P><FONT SIZE="+1">Les noms de fichiers</FONT></P>
+
+<P>Beaucoup de commandes ont pour param&egrave;tres des noms de
+fichiers contenant, le cas &eacute;ch&eacute;ant, des jockers (voir
+le paragraphe &#171; jockers &#187; dans la partie 1 du chapitre).
+Tous les noms de fichiers sont automatiquement mis en majuscules.</P>
+
+<P>Les commandes du mode direct ne requi&egrave;rent pas le placement
+de guillemets de part et d'autre du nom de fichier.</P>
+
+<P>Rappelez-vous que les noms de fichiers peuvent &ecirc;tre
+pr&eacute;c&eacute;d&eacute;s de A: ou B: pour demander &agrave; CP/M
+d'utiliser une unit&eacute; particuli&egrave;re.</P>
+
+<P>Voici la syntaxe d'une commande CP/M type:</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">TYPE KEYS.CCP</FONT></BLOCKQUOTE>
+
+<P><B>TYPE</B> est la fonction requise : &#171;affichage &agrave;
+l'&eacute;cran&#187;, et <B>KEYS.CCP</B> est le nom du fichier que
+l'on d&eacute;sire voir appara&icirc;tre.</P>
+
+<P>&nbsp;</P>
+
+<P><FONT SIZE="+1">L'aiguillage des unit&eacute;s</FONT></P>
+
+<P>Il est possible d'aiguiller le syst&egrave;me de s&eacute;lection
+des unit&eacute;s vers A ou B en tapant <B>A:</B> ou <B>B:</B>
+apr&egrave;s le symbole <B>B&gt;</B> ou <B>A&gt;</B> (qui indique
+l'unit&eacute; en cours). L'ajout du pr&eacute;fixe <B>A:</B> ou
+<B>B:</B> au nom de fichier &eacute;crase la valeur de l'unit&eacute;
+par d&eacute;faut mais ne la red&eacute;finit pas.</P>
+
+<P>&nbsp;</P>
+
+<P><FONT SIZE="+1">Les commandes du mode direct</FONT></P>
+
+<P>Ces commandes peuvent &ecirc;tre tap&eacute;es &agrave;
+l'apparition des symboles <B>A&gt;</B> ou <B>B&gt;</B> . Elles
+peuvent &ecirc;tre abr&eacute;g&eacute;es. Les fonctions ci-dessous
+sont int&eacute;gr&eacute;es, mais il existe plusieurs commandes
+transitoires, plus complexes, portant le m&ecirc;me nom.</P>
+
+<P>&nbsp;</P>
+
+<P><FONT SIZE="+1">La commande DIR</FONT></P>
+
+<P><B>DIR</B> affiche le catalogue de la disquette. Les fichiers
+apparaissent selon leur ordre d'entr&eacute;e sur le
+r&eacute;pertoire de la disquette. Les jockers sont permis. Les
+fichiers &agrave; attribut &#171; SYS &#187; ne sont pas permis.</P>
+
+<P><B>DIR</B> donne la liste de tous les fichiers de l'unit&eacute;
+par d&eacute;faut</P>
+
+<P><B>DIR B:</B> donne la liste de tous les fichiers de
+l'unit&eacute; B</P>
+
+<P><B>DIR *.BAS</B> donne la liste des fichiers de type
+<B>.BAS</B></P>
+
+<P><B>DIR B:*.BAS</B> donne la liste des fichiers de type <B>.BAS</B>
+de l'unit&eacute; B</P>
+
+<P><B>DIR PIP.COM</B> seul <B>PIP.COM</B> appara&icirc;t sur la liste
+(s'il existe)</P>
+
+<P>&nbsp;</P>
+
+<P><FONT SIZE="+1">La commande DIRS ou DIRSYS</FONT></P>
+
+<P><B>DIRSYS</B>, ou <B>DIRS</B>, rie liste que les fichiers du
+catalogue poss&eacute;dant &#171;<B>SYS</B>&#187; comme attribut. A
+cette particularit&eacute; pr&egrave;s, cette commande fonctionne
+comme la commande <B>DIR</B>. L'attribut <B>SYS</B> est d&eacute;crit
+plus loin.</P>
+
+<P>&nbsp;</P>
+
+<P><FONT SIZE="+1">La commande ERA ou ERASE</FONT></P>
+
+<P><B>ERA</B> vient de l'anglais <B>ERA</B>se qui veut dire effacer.
+Elle sert donc &agrave; effacer un ou plusieurs fichiers du
+catalogue. En fait, la position sur le r&eacute;pertoire est
+effac&eacute;e, les donn&eacute;es restant en place jusqu'&agrave; ce
+qu'un autre fichier ne les recouvre. Elles ne peuvent toutefois
+jamais &ecirc;tre r&eacute;cup&eacute;r&eacute;es. Bien que les
+jockers soient permis, la sp&eacute;cification de *.* provoque
+l'affichage d'une demande de confirmation avant que ERA n'efface
+effectivement l'ensemble des fichiers. <B>ERA</B> ne mentionne pas le
+nom des fichiers qu'elle efface. Si l'un des fichiers &agrave;
+effacer est de type 'lecture/seulement', (voir <B>STAT</B> plus
+loin), la commande n'aboutit pas.</P>
+
+<P><B>ERA PIP.COM</B> effacera le fichier <B>PIP.COM</B></P>
+
+<P><B>ERA B:PIP.COM</B> effacera le fichier <B>PIP.COM</B> de
+l'unit&eacute; B</P>
+
+<P><B>ERA *.BAS</B> effacera tous les fichiers de type <B>BAS</B></P>
+
+<P>&nbsp;</P>
+
+<P><FONT SIZE="+1">La commande REN ou RENAME</FONT></P>
+
+<P>La eommande REN vous permet de changer le nom (<B>REN</B>ommer)
+d'un fichier existant. Le nouveau nom est sp&eacute;cifi&eacute; en
+premier suivi du signe &eacute;gal (=), puis du nom du fichier
+&agrave; renommer Si le nouveau nom existe d&eacute;j&agrave; sur la
+disquette, un message d'erreur s'affiche.</P>
+
+<P>Les noms de fichiers comportant des jokers ne rentrent pas dans le
+cadre de eette eommande int&eacute;gr&eacute;e , il faut donc faire
+appel au programme transitoire <B>RENAME.COM</B>.</P>
+
+<P><B>REN NOUVNOM.BAS=ANCNOM.BAS</B> donne au fichier
+<B>ANCNOM.BAS</B> le nouveau nom <B>NOUVNOM.BAS</B></P>
+
+<P><B>REN B:NOUVNOM.BAS=ANCNOM.BAS </B>donne au fiehier
+<B>ANCNOM.BAS</B> le nouveau nom<B> NOUVNOM.BAS</B>, sur
+<B>B</B>.</P>
+
+<P>&nbsp;</P>
+
+<P><FONT SIZE="+1">La commande TYPE ou TYP</FONT></P>
+
+<P>La commande <B>TYPE</B> (imprimer) demande que le fichier
+sp&eacute;cifi&eacute; d&eacute;file &agrave; l'&eacute;cran. Si ce
+fichier n'est pas de type ASCII, des choses impr&eacute;visibles
+risquent d'apparaitre &agrave; l'&eacute;cran.</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">TYPE KEYS.CCP</FONT></BLOCKQUOTE>
+
+<P>..affiche le fichier <B>KEYS.CCP</B>.</P>
+
+<P>&nbsp;</P>
+
+<P><FONT SIZE="+1">La commande USER, ou USE</FONT></P>
+
+<P>USER change le num&eacute;ro d'utilisateur courant. CP/M Plus
+s'initialise avec le num&eacute;ro d'utilisateur courant 0. Vous ne
+pouvez acc&eacute;der qu'aux fichiers identifi&eacute;s par le
+num&eacute;ro d'utilisateur courant. ce qui permet de partager le
+catalogue.</P>
+
+<P>Il est possible d'acc&eacute;der &agrave; un fichier de
+l'utilisateur 0 ayant &#171; <B>SYS</B> &#187; comme attribut
+&agrave; partir de tous les autres num&eacute;ros d'utilisateur.
+Cette puissante fonction permet de rendre les utilitaires et les
+programmes d'applications accessibles &agrave; tous les utilisateurs
+sans avoir &agrave; les copier dans chaque zone utilisateur.</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">USER 3</FONT></BLOCKQUOTE>
+
+<P>d&eacute;finit l'utilisateur courant num&eacute;ro 3.</P>
+
+<P>&nbsp;</P>
+
+<P><FONT SIZE="+1">Les commandes transitoires</FONT></P>
+
+<P>Pour r&eacute;aliser sur vos fichiers des op&eacute;rations un peu
+plus sophistiqu&eacute;es qu'avec le mode direct, vous pouvez faire
+appel &agrave; l'un des nombreux programmes utilitaires fournis avec
+le CP/M. Vous les appelez simplement en tapant leur nom, suivi
+parfois d'un nom de fichier et ou d'un ou plusieurs
+param&egrave;tres. Vous avez d&eacute;j&agrave; probablement
+utilis&eacute; <B>DISCKIT3</B>.&nbsp;</P>
+
+<P>Nous avons regroup&eacute; ces commandes par cat&eacute;gories.
+Vous en trouverez une documentation compl&egrave;te dans le Guide du
+CP/M Plus.</P>
+
+<P>Les commandes <B>DISCKIT3</B>, <B>SETKEYS</B>, <B>SETLST</B>,
+<B>SETSIO</B>, <B>PALETTE</B>, <B>LANGUAGE</B> et <B>AMSDOS</B>,
+ainsi que les programmes de gestion d'&eacute;cran GSX et
+I'tnstallation de <B>LOGO3</B>, propres &agrave; AMSTRAD, ne
+fonctionnent que sur son syst&egrave;me et ne peuvent &ecirc;tre
+employ&eacute;es sur les autres syst&egrave;mes CP/M.</P>
+
+<P>Vous pouvez entrer plusieurs commandes sur une m&ecirc;me ligne en
+s&eacute;parant les commandes par un point d'exclamation,
+&Eacute;xemple :</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">LANGUAGE 3!SETKEYS KEYS.WP</FONT></BLOCKQUOTE>
+
+<P>&nbsp;</P>
+
+<P><FONT SIZE="+1">La gestion des
+p&eacute;riph&eacute;riques</FONT></P>
+
+<P><B>DISCKIT3</B> formate, copie et v&eacute;rifie les disquettes.
+Il est plus rapide de formater pendant la copie que d'effectuer les
+deux op&eacute;rations en deux temps. Des menus vous indiquent les
+touches &agrave; activer (essentiellement des touches de fonction).
+Les disquettes commercialis&eacute;es sont similaires aux disquettes
+syst&egrave;me sinon qu'elles sont adapt&eacute;es &agrave; la
+distribution de logiciels ; toutefois, les disquettes
+format&eacute;es pour le stockage des donn&eacute;es sont
+peut-&ecirc;tre plus ad&eacute;quates pour travailler sous CP/M
+Plus.</P>
+
+<P><B>AVERTISSEMENT</B></P>
+
+<P>Le brevet de votre disquette CP/M (qui poss&egrave;de un
+num&eacute;ro de s&eacute;rie cod&eacute; &eacute;lectroniquement)
+vous permet de l'utiliser sur un seul micro-ordinateur. Ceci signifie
+en particulier qu'il vous est interdit de faire don d'une copie de
+votre CP/M (copie qui poss&eacute;derait alors votre num&eacute;ro de
+s&eacute;rie). Etant donn&eacute; que chacune des copies de la face 1
+des disquettes syst&egrave;me contient votre CP/M (dans le fichier
+<B>.EMS</B>), il vous est interdit de vendre ou &eacute;changer toute
+disquette contenant ce fichier ou de vous en s&eacute;parer de
+quelque fa&ccedil;on que ce soit.</P>
+
+<P>&nbsp;</P>
+
+<P><B>Jeux de caract&egrave;res</B></P>
+
+<P>Le CPC6128 poss&egrave;de un jeu complet de caract&egrave;res
+internationaux. La commande LANGUAGE modifie certains
+caract&egrave;res pour permettre &agrave; des logiciels peu
+perfectionn&eacute;s d'afficher &agrave; l'&eacute;cran d'autres
+caract&egrave;res et des lettres accentu&eacute;es. Pour plus de
+d&eacute;tails. consultez la partie 16 du chapitre &#171; Pour
+information &#187;.</P>
+
+<P>&nbsp;La commande:</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">LANGUAGE 3</FONT></BLOCKQUOTE>
+
+<P>permet d'installer le jeu de caract&egrave;res britannique,
+rempla&ccedil;ant le signe # par &#163; (le jeu am&eacute;ricain est
+le jeu par d&eacute;faut).</P>
+
+<P>&nbsp;</P>
+
+<P><B>Les couleurs</B></P>
+
+<P>Sous CP/M Plus, les couleurs par d&eacute;faut du 6128 (avec
+moniteur couleur) affichent des caract&egrave;res en blanc brillant
+sur fond bleu. Vous pouvez les modifier par la commande PALETTE, qui
+poss&egrave;de plusieurs param&egrave;tres, un pour chaque encre :
+l'encre 0 inclut le fond et la bordure de l'&eacute;cran et l'encre 1
+d&eacute;finit la couleur du texte. Chaque couleur est cod&eacute;e
+par un nombre compris entre 0 et 63. Sur un moniteur monochrome, ce
+num&eacute;ro d&eacute;finit l'intensit&eacute; d'affichage.</P>
+
+<P>&nbsp;Vous pouvez sp&eacute;cifier n'importe quel num&eacute;ro
+d'encre compris entre 1 et 16, mais seules les deux premi&egrave;res
+encres sont visibles en mode 80 colonnes.</P>
+
+<P>La commande:</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">PALETTE 63,1</FONT>&nbsp;</BLOCKQUOTE>
+
+<P>inverse les sp&eacute;cifications normales des encres 0 et 1,
+changeant le fond en blanc brillant (63) et le texte en bleu (1).</P>
+
+<P>Pour s&eacute;lectionner les couleurs (ou leurs
+intensit&eacute;s), aidez-vous du tableau de la page suivante. Vous
+pouvez au choix utiliser la repr&eacute;sentation d&eacute;cimale ou
+hexad&eacute;cimale.</P>
+
+<P><TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0>
+   <TR>
+      <TD>
+         <P>Couleur</P>
+      </TD>
+      <TD>
+         <P>Code Hexad&eacute;cimal</P>
+      </TD>
+      <TD>
+         <P>Code D&eacute;cimal</P>
+      </TD>
+      <TD>
+         <P>Couleur</P>
+      </TD>
+      <TD>
+         <P>Code Hexad&eacute;cimal</P>
+      </TD>
+      <TD>
+         <P>Code d&eacute;cimal</P>
+      </TD>
+   </TR>
+   <TR>
+      <TD>
+         <P>Noir</P>
+      </TD>
+      <TD>
+         <P>&amp;00</P>
+      </TD>
+      <TD>
+         <P>0</P>
+      </TD>
+      <TD>
+         <P>Bleu pastel</P>
+      </TD>
+      <TD>
+         <P>&amp;2B</P>
+      </TD>
+      <TD>
+         <P>43</P>
+      </TD>
+   </TR>
+   <TR>
+      <TD>
+         <P>Bleu</P>
+      </TD>
+      <TD>
+         <P>&amp;02</P>
+      </TD>
+      <TD>
+         <P>2</P>
+      </TD>
+      <TD>
+         <P>Orange</P>
+      </TD>
+      <TD>
+         <P>&amp;2C</P>
+      </TD>
+      <TD>
+         <P>44</P>
+      </TD>
+   </TR>
+   <TR>
+      <TD>
+         <P>Bleu vif</P>
+      </TD>
+      <TD>
+         <P>&amp;03</P>
+      </TD>
+      <TD>
+         <P>3</P>
+      </TD>
+      <TD>
+         <P>Rose</P>
+      </TD>
+      <TD>
+         <P>&amp;2E</P>
+      </TD>
+      <TD>
+         <P>46</P>
+      </TD>
+   </TR>
+   <TR>
+      <TD>
+         <P>Rouge</P>
+      </TD>
+      <TD>
+         <P>&amp;08</P>
+      </TD>
+      <TD>
+         <P>8</P>
+      </TD>
+      <TD>
+         <P>Magenta pastel</P>
+      </TD>
+      <TD>
+         <P>&amp;2F</P>
+      </TD>
+      <TD>
+         <P>47</P>
+      </TD>
+   </TR>
+   <TR>
+      <TD>
+         <P>Magenta</P>
+      </TD>
+      <TD>
+         <P>&amp;0A</P>
+      </TD>
+      <TD>
+         <P>10</P>
+      </TD>
+      <TD>
+         <P>Vert vif</P>
+      </TD>
+      <TD>
+         <P>&amp;30</P>
+      </TD>
+      <TD>
+         <P>48</P>
+      </TD>
+   </TR>
+   <TR>
+      <TD>
+         <P>Mauve</P>
+      </TD>
+      <TD>
+         <P>&amp;0B</P>
+      </TD>
+      <TD>
+         <P>11</P>
+      </TD>
+      <TD>
+         <P>Vert marin</P>
+      </TD>
+      <TD>
+         <P>&amp;32</P>
+      </TD>
+      <TD>
+         <P>50</P>
+      </TD>
+   </TR>
+   <TR>
+      <TD>
+         <P>Rouge vif</P>
+      </TD>
+      <TD>
+         <P>&amp;0C</P>
+      </TD>
+      <TD>
+         <P>12</P>
+      </TD>
+      <TD>
+         <P>Turquoise vif</P>
+      </TD>
+      <TD>
+         <P>&amp;33</P>
+      </TD>
+      <TD>
+         <P>51</P>
+      </TD>
+   </TR>
+   <TR>
+      <TD>
+         <P>Violet</P>
+      </TD>
+      <TD>
+         <P>&amp;0E</P>
+      </TD>
+      <TD>
+         <P>14</P>
+      </TD>
+      <TD>
+         <P>Vert citron</P>
+      </TD>
+      <TD>
+         <P>&amp;38</P>
+      </TD>
+      <TD>
+         <P>56</P>
+      </TD>
+   </TR>
+   <TR>
+      <TD>
+         <P>Magenta vif</P>
+      </TD>
+      <TD>
+         <P>&amp;0F</P>
+      </TD>
+      <TD>
+         <P>15</P>
+      </TD>
+      <TD>
+         <P>Vert pastel</P>
+      </TD>
+      <TD>
+         <P>&amp;3A</P>
+      </TD>
+      <TD>
+         <P>58</P>
+      </TD>
+   </TR>
+   <TR>
+      <TD>
+         <P>Vert</P>
+      </TD>
+      <TD>
+         <P>&amp;20</P>
+      </TD>
+      <TD>
+         <P>32</P>
+      </TD>
+      <TD>
+         <P>Turquoise pastel</P>
+      </TD>
+      <TD>
+         <P>&amp;3B</P>
+      </TD>
+      <TD>
+         <P>59</P>
+      </TD>
+   </TR>
+   <TR>
+      <TD>
+         <P>Turquoise</P>
+      </TD>
+      <TD>
+         <P>&amp;22</P>
+      </TD>
+      <TD>
+         <P>34</P>
+      </TD>
+      <TD>
+         <P>Jaune vif</P>
+      </TD>
+      <TD>
+         <P>&amp;3C</P>
+      </TD>
+      <TD>
+         <P>60</P>
+      </TD>
+   </TR>
+   <TR>
+      <TD>
+         <P>Bleu ciel</P>
+      </TD>
+      <TD>
+         <P>&amp;23</P>
+      </TD>
+      <TD>
+         <P>35</P>
+      </TD>
+      <TD>
+         <P>Jaune pastel</P>
+      </TD>
+      <TD>
+         <P>&amp;3E</P>
+      </TD>
+      <TD>
+         <P>62</P>
+      </TD>
+   </TR>
+   <TR>
+      <TD>
+         <P>Jaune</P>
+      </TD>
+      <TD>
+         <P>&amp;28</P>
+      </TD>
+      <TD>
+         <P>40</P>
+      </TD>
+      <TD>
+         <P>Blanc brillant</P>
+      </TD>
+      <TD>
+         <P>&amp;3F</P>
+      </TD>
+      <TD>
+         <P>63</P>
+      </TD>
+   </TR>
+   <TR>
+      <TD>
+         <P>Blanc</P>
+      </TD>
+      <TD>
+         <P>&amp;2A</P>
+      </TD>
+      <TD>
+         <P>42</P>
+      </TD>
+      <TD>
+         <P></P>
+      </TD>
+      <TD>
+         <P></P>
+      </TD>
+      <TD>
+         <P></P>
+      </TD>
+   </TR>
+</TABLE>
+</P>
+
+<P><B>Le clavier</B></P>
+
+<P>Vous pouvez modifier les codes g&eacute;n&eacute;r&eacute;s par le
+clavier &agrave; l'aide de la commande <B>SETKEYS</B>. Ceci permet
+d'affecter les codes ad&eacute;quats aux touches physiques ou
+logiques. Les codes doivent &ecirc;tre inscrits dans un fichier dont
+le nom est ensuite pass&eacute; en param&egrave;tre dans la commande
+<B>SETKEYS</B>. Ce fichier de commande peut &ecirc;tre
+cr&eacute;&eacute; par un &eacute;diteur de texte, <B>PIP</B>, ou
+m&ecirc;me &agrave; partir du BASIC. Par exemple :</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">SETKEYS KEYS.TST</FONT></BLOCKQUOTE>
+
+<P>o&ugrave; le fichier KEYS.TST contient</P>
+
+<P>E &amp;8C &#171; DIR <FONT FACE="Wingdings">&aacute;</FONT>M
+&#187; touche logique 12</P>
+
+<P>8 N S C &#171;<FONT FACE="Wingdings">&aacute;</FONT>H &#187;
+espace arri&egrave;re=<B>&#91;CONTROL&#93;H</B>, 08 ASCII</P>
+
+<P>Ceci modifie la touche logique
+<B>&#91;CONTROL&#93;&#91;ENTER&#93;</B> (code &amp;8C). qui devient
+<B>DIR&#91;RETURN&#93;</B>, et transforme la touche de retour
+arri&egrave;re du curseur <FONT FACE="Wingdings">&iuml;</FONT>
+(touche num&eacute;rique 8) en espace arri&egrave;re.</P>
+
+<P>&nbsp;Les fichiers standard du 6128 sont <B>KEYS.CCP</B> pour les
+commandes CP/M, <B>KEYS.DRL</B> pour le Dr. LOGO (face 3 de la
+disquette syst&egrave;me) et <B>KEYS.WP</B> qui convient &agrave; de
+nombreux traitements de texte.</P>
+
+<P>&nbsp;</P>
+
+<P><B>Les imprimantes</B></P>
+
+<P>Les imprimantes peuvent &ecirc;tre initialis&eacute;es par la
+commande:</P>
+
+<BLOCKQUOTE><B>SETLST</B> &lt;nomfch&gt;</BLOCKQUOTE>
+
+<P>le &#171; nomfich &#187; contient la ou les cha&icirc;nes &agrave;
+envoyer &agrave; l'imprimante. Comme avec le fichier de commande pour
+SETKEYS, les codes de contr&ocirc;le peuvent &ecirc;tre
+repr&eacute;sent&eacute;s par :</P>
+
+<P><FONT FACE="Wingdings">&aacute;</FONT>&lt;caract&egrave;re&gt;</P>
+
+<P>ou</P>
+
+<P><FONT FACE="Wingdings">&aacute;</FONT>'&lt;valeur du
+caract&egrave;re&gt;'</P>
+
+<P>ou bien</P>
+
+<P><FONT FACE="Wingdings">&aacute;</FONT>'&lt;nom du code de
+contr&ocirc;le&gt;'</P>
+
+<P>Les noms des codes de contr&ocirc;le sont ESC. FF, etc., comme
+l'indique le tableau des caract&egrave;res ASCII du ehapitre &#171;
+Pour information &#187;.</P>
+
+<P>Pour de nombreuses imprimantes, la valeur 15 repr&eacute;sente un
+code d'initialisation utile, d&eacute;finissant une impression
+condens&eacute;e.</P>
+
+<P>La commande :</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">PRINT #8,CHR$(15)</FONT></BLOCKQUOTE>
+
+<P>serait la syntaxe en BASIC. Sous CP/M, elle devient</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">SETLST CONDENSE</FONT></BLOCKQUOTE>
+
+<P>Lc fichier <B>CONDENSE</B> contient l'une des lignes
+ei-dessous</P>
+
+<P><FONT FACE="Wingdings">&aacute;</FONT>'SI'</P>
+
+<P><FONT FACE="Wingdings">&aacute;</FONT>0</P>
+
+<P><FONT FACE="Wingdings">&aacute;</FONT>'15'</P>
+
+<P>qui repr&eacute;sentent toutes la valeur d&eacute;cimale 15.</P>
+
+<P>Pour certains programmes d'application, l'&eacute;cran doit
+&ecirc;tre de 24 lignes x 80 colonnes. La commande <B>SET24X80</B>
+permet d'obtenir ce format d'&eacute;cran.</P>
+
+<P>Pour activer le mode 24x80, utilizez les commandes:</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">SET24X80</FONT></BLOCKQUOTE>
+
+<P>ou</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">SET24X80 ON</FONT></BLOCKQUOTE>
+
+<P>Pour le d&eacute;sactiver, utilisez la commande</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">SET24X80 OFF</FONT></BLOCKQUOTE>
+
+<P>La taille d'&eacute;cran normale du CPC6128 est 24x80, la
+derni&egrave;re ligne &eacute;tant r&eacute;serv&eacute;e aux
+messages d'&eacute;tat. La d&eacute;sactivation du mode 24 x 80 n'est
+visible que si la ligne d'&eacute;tat est &eacute;galement
+invalid&eacute;e. Pour la validation et l'invalidation de la ligne
+d'&eacute;tat, reportez-vous &agrave; la partie 15 du chapitre 7.</P>
+
+<P>&nbsp;</P>
+
+<P><B>Interface s&eacute;rie</B></P>
+
+<P>CP/M Plus permet de g&eacute;rer une interface RS232 ne
+poss&eacute;dant qu'un seul canal. Pour visualiser ses principales
+caract&eacute;ristiques, tapez la commande <B>SETSIO</B> (sans
+param&egrave;tre) :</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">SETSIO</FONT></BLOCKQUOTE>
+
+<P>ou une commande comprenant l'une (voire la totalit&eacute;) de ces
+s&eacute;lections :</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">&nbsp;SETSIO, RX 1200, TX 75,
+   PARITY NONE, STOP 1, BITS 8, HANDSHAKE ON, XOFF OFF</FONT></BLOCKQUOTE>
+
+<P>pour une nouvelle configuration.</P>
+
+<P>Le d&eacute;bit de l'interface et l'&eacute;tat <B>XON/XOFF</B>
+peuvent &eacute;galement &ecirc;tre fix&eacute;s par la commande
+<B>DEVICE</B> qui g&egrave;re les p&eacute;riph&eacute;riques
+logiques et physiques. Les p&eacute;riph&eacute;riques logiques sont
+indiqu&eacute;s par un deux points (:). Pour visualiser tous les
+attributs des p&eacute;riph&eacute;riques install&eacute;s, tapez
+:</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">DEVICE</FONT></BLOCKQUOTE>
+
+<P>Pour les modifier : un p&eacute;riph&eacute;rique.</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">DEVICE SIO&#91;1200&#93;</FONT>
+   fixe le d&eacute;bit &agrave; 1200 bauds
+   
+   <P><FONT FACE="Fixedsys">DEVICE&nbsp;SIO&#91;XON&#93;</FONT>
+   active le protocole <B>XON/XOFF</B>.</P>
+   
+   <P><FONT FACE="Fixedsys">DEVICE&nbsp;SIO&#91;NOXON&#93;</FONT>
+   d&eacute;sactive le protocole <B>XON/XOFF</B>.</P></BLOCKQUOTE>
+
+<P>Vous pouvez &eacute;galement modifier les affectations entre
+p&eacute;riph&eacute;riques logiques et physiques. Habituellement,
+<B>CON:</B> correspond &agrave; <B>CRT</B> (clavier/&eacute;cran),
+<B>AUX:</B> &agrave; <B>SIO</B> (interface s&eacute;rie en option) et
+<B>LST: </B>&agrave; <B>LPT</B> (interfaee Centronics pour
+imprimante). La commande :</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">DEVICE LST:=SIO</FONT></BLOCKQUOTE>
+
+<P>envoie les donn&eacute;es destin&eacute;es &agrave; l'imprimante
+vers l'interface s&eacute;rie (si celle-ci est install&eacute;e).</P>
+
+<P>Il s'agit d'un r&eacute;acheminement de canal, &agrave; ne pas
+confondre avec la certaines commandes <B>PIP</B>. Les deux commandes
+<B>GET</B> &lt; nom de fichier&gt; et <B>PUT</B> &lt; nom de
+fichier&gt; r&eacute;acheminent les donn&eacute;es &agrave;
+destination et en provenance de la console et les sorties vers
+l'imprimante en les dirigeant vers un fichier particulier et non pas
+vers un p&eacute;riph&eacute;rique.</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">PIP</FONT></BLOCKQUOTE>
+
+<P>L'utilitaire <B>PIP</B> (Programme d'interconnexion aux
+P&eacute;riph&eacute;riques) vous permet d'&eacute;changer des
+informations entre l'ordinateur et ses p&eacute;riph&eacute;riques.
+La forme de ces commandes est g&eacute;n&eacute;ralement :</P>
+
+<BLOCKQUOTE><B>PIP </B>&lt;destination&gt; = &lt;source&gt;</BLOCKQUOTE>
+
+<P>La &lt; source&gt; et la &lt;destination&gt; peuvent &ecirc;tre
+soit un nom de fichier (jokers accept&eacute;s) pour la source, soit
+le code du p&eacute;riph&eacute;rique. On peut utiliser les codes
+suivants:</P>
+
+<P><TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0>
+   <TR>
+      <TD>
+         <P><B>En tant que source</B></P>
+      </TD>
+      <TD>
+         <P><B>En tant que destination</B></P>
+      </TD>
+   </TR>
+   <TR>
+      <TD>
+         <P><B>CON</B>: Entr&eacute;e console</P>
+      </TD>
+      <TD>
+         <P><B>CON</B>: sortie console</P>
+      </TD>
+   </TR>
+   <TR>
+      <TD>
+         <P><B>AUX</B>: entr&eacute;e auxiliaire</P>
+      </TD>
+      <TD>
+         <P><B>AUX</B>: sortie auxiliaire</P>
+      </TD>
+   </TR>
+   <TR>
+      <TD>
+         <P><B>EOF</B>: manque de fin de fichier</P>
+      </TD>
+      <TD>
+         <P><B>LST</B>: imprimante</P>
+      </TD>
+   </TR>
+   <TR>
+      <TD>
+         <P></P>
+      </TD>
+      <TD>
+         <P><B>PRN</B>: imprimante avec tabulations
+         suppl&eacute;mentaires, num&eacute;rotation de lignes et
+         sauts de page.</P>
+      </TD>
+   </TR>
+</TABLE>
+ Exemples</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">PIP B:=A:*.COM</FONT></BLOCKQUOTE>
+
+<P>...copie tous les fichiers avec extension <B>.COM</B> de
+l'unit&eacute; A sur l'unit&eacute; B.</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">PIP KEYBOARD.CPM=KEYS.CCP</FONT></BLOCKQUOTE>
+
+<P>...r&eacute;alise une copie de <B>KEYS.CCP</B> et l'appelle
+<B>KEYBOARD.CPM</B>.</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">PIP CON:=KEYS.CCP</FONT></BLOCKQUOTE>
+
+<P>..envoie le fichier <B>KEYS.CCP</B> &agrave; l'&eacute;cran
+(m&ecirc;me effet que <B>TYPE KEYS.CCP</B>).</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">PIP LST:=KEYS.CCP</FONT></BLOCKQUOTE>
+
+<P>...envoie le Fichier<B> KEYS.CCP</B> sur l'imprimante.</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">PIP TYPEIN.TXT=CON:</FONT></BLOCKQUOTE>
+
+<P>...place des donn&eacute;es venant du clavier dans le fichier
+<B>TYPEIN.TXT</B>.</P>
+
+<P>L'op&eacute;ration s'ach&egrave;ve par un
+<B>&#91;CONTROL&#93;Z</B>. Pour acc&eacute;der &agrave; une nouvelle
+ligne, vous devez envoyer &agrave; chaque fois un
+<B>&#91;CONTROL&#93;J</B> (code ASCI I du retour &agrave; la ligne)
+apr&egrave;s <B>&#91;RETURN&#93;</B>.</P>
+
+<P>Si vous tapez <B>PIP</B> sans paramctrc. vous rccevez le message *
+: vous pouvez alors entrer les commandes qui vous int&eacute;ressent.
+Ce proc&eacute;d&eacute; est particuli&egrave;rement utile pour la
+copie de fichiers lorsque le fichier <B>PIP.COM</B> ne se trouve ni
+sur la disquette source, ni sur la disquette cible. Vous pouvez
+charger <B>PIP</B> &agrave; partir de la face I d'une des disquettes
+syst&egrave;me, retirer cette disquette et ins&eacute;rer les
+disquettes requises pour la copie.</P>
+
+<P>Pour sortir de <B>PIP</B>, appuyer sur <B>&#91;RETURN&#93;</B>
+&agrave; l'apparition du message *.</P>
+
+<P>Notes que <B>PIP</B> ne peut effectuer de copies de fichiers sur
+un syst&egrave;me &agrave; une seule unit&eacute;. Utilisez alors
+<B>FILECOPY</B></P>
+
+<P>&nbsp;</P>
+
+<P><FONT SIZE="+1">Gestion du syst&egrave;me</FONT>&nbsp;</P>
+
+<P>Les programmes transitoires <B>DIR</B>, <B>ERASE</B>,
+<B>RENAME</B> et <B>TYPE</B> offrent plus de possibilit&eacute;s que
+leurs homologues int&eacute;gr&eacute;s. Comme de nombreux programmes
+transitoires de Digital Research, leurs param&egrave;tres secondaires
+sont indiqu&eacute;; entre crochets. Tous les d&eacute;tails les
+concernant figurent dans les fichiers <B>HELP</B> (face 3 d'une des
+disquettes syst&egrave;me). En voici quelques exemples :</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">DIR &#91;FULL&#93;</FONT> affiche
+   la taille et les attributs des fichiers
+   
+   <P><FONT FACE="Fixedsys">ERASE *.COM &#91;CONFIRM&#93;</FONT> vous
+   demande confirmation pour chaque fichier rencontr&eacute;</P>
+   
+   <P><FONT FACE="Fixedsys">RENAME</FONT> vous demande de taper
+   l'ancien et le nouveau nom de fichier</P>
+   
+   <P><FONT FACE="Fixedsys">RENAME *.SAV=*.BAK</FONT> renomme tous
+   les fichiers &agrave; suffixe <B>.BAK</B> en fichiers
+   <B>.SAV</B></P>
+   
+   <P><FONT FACE="Fixedsys">TYPE KEYS. WP &#91;NOPAGE&#93;
+   </FONT>supprime la pagination de l'&eacute;cran</P></BLOCKQUOTE>
+
+<P>Nous avons d&eacute;j&agrave; &eacute;voqu&eacute; les attributs
+de fichiers <B>SYS</B> (syst&egrave;me) et <B>RO</B> (lecture
+seulement). La commande <B>SET</B> qui aceepte les jokers, permet de
+modifier ces attributs et de nombreux autres.</P>
+
+<P>Les commandes:</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">SET *.COM &#91;RO&#93;</FONT>
+   
+   <P><FONT FACE="Fixedsys">SET KEYS.CCP &#91;RO&#93;</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">SET A: &#91;RO&#93;</FONT></P></BLOCKQUOTE>
+
+<P>affectent l'attribut <B>RO</B> (lecture seulement) aux fichiers
+sp&eacute;cifi&eacute;s ou au disque tout entier, de fa&ccedil;on
+&agrave; emp&ecirc;cher un effacement accidentel.</P>
+
+<P>Les commandes:</P>
+
+<P><FONT FACE="Fixedsys">SET *.COM &#91;RW&#93;</FONT></P>
+
+<P><FONT FACE="Fixedsys">SET KEYS.CCP &#91;RW&#93;</FONT></P>
+
+<P><FONT FACE="Fixedsys">SET A: &#91;RW&#93;</FONT></P>
+
+<P>affectent l'attribut <B>RW</B> (leeture/&eacute;criture) &agrave;
+ces m&ecirc;mes fichiers. Les commandes</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">SET *.COM &#91;SYS&#93;</FONT>
+   
+   <P><FONT FACE="Fixedsys">SET KEYS.CCP &#91;SYS&#93;</FONT></P></BLOCKQUOTE>
+
+<P>affectent l'attribut <B>SYS</B> aux fichiers
+sp&eacute;cifi&eacute;s. Les fichiers affect&eacute;s de cet attribut
+ne seront pas list&eacute;s par la commande <B>DIR</B> (utilisez
+alors <B>DIRS</B>, ou <B>DIRSYS</B>). Cependant, ils peuvent
+&ecirc;tre utilis&eacute;s et, de plus, s'ils se trouvent dans la
+zone utilisateur 0, ils seront disponibles dans toutes les autres
+zones utilisateur.</P>
+
+<P>Les commandes</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">SET *.COM &#91;DIR&#93;</FONT>
+   
+   <P><FONT FACE="Fixedsys">SET KEYS.CCP &#91;DIR&#93;</FONT></P></BLOCKQUOTE>
+
+<P>retirent l'attribut SYS.</P>
+
+<P>Vous pouvez affecter aux disquettes une &eacute;tiquette, un nom
+ou un mot de passe r&eacute;servant l'acc&egrave;s de l'ensemble du
+catalogue plut&ocirc;t que celui des fichiers qu'il contient. Vous
+pouvez cependant attribuer des mots de passe &agrave; des fichiers,
+individuellement.</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">SET &#91;NAME=ROLAND&#93;</FONT>
+   
+   <P><FONT FACE="Fixedsys">SET &#91;PASSWORD=LUCIEN&#93;</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">SET &#91;PROTECT=ON&#93;</FONT></P></BLOCKQUOTE>
+
+<P>agissent sur la disquette de l'unit&eacute; par d&eacute;faut.</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">SET
+   *.*&#91;PASSWORD=LUCIEN&#93;</FONT>
+   
+   <P><FONT FACE="Fixedsys">SET *.*&#91;PROTECT=READ&#93;</FONT></P></BLOCKQUOTE>
+
+<P>agissent sur les fichiers de la disquette de l'unit&eacute; par
+d&eacute;faut (les jokers indiquent ici que tous les fichiers de la
+disquette sont concern&eacute;s par la commande).&nbsp;</P>
+
+<P>La commande <B>INITDIR</B> (face 2 d'une des disquettes
+syst&egrave;me) permet de &#171; marquer &#187; une disquette, en vue
+de la prise en compte de la date et de l'heure lors d'une
+cr&eacute;ation ou mise &agrave; jour de fichier. Les commandes:</P>
+
+<P>INITDIR</P>
+
+<P><FONT FACE="Fixedsys">SET &#91;CREATE=ON&#93; </FONT>...ou...
+<FONT FACE="Fixedsys">&#91;ACCESS=ON&#93;</FONT> ... et...</P>
+
+<P><FONT FACE="Fixedsys">SET &#91;UPDATE=ON&#93;</FONT>
+...avec...</P>
+
+<P><FONT FACE="Fixedsys">DIR &#91;FULL&#93;</FONT></P>
+
+<P>permettent de &#171; marquer &#187; la disquette (<B>INITDIR</B>),
+puis de sp&eacute;cifier que la date et l'heure seront prises en
+compte pour la cr&eacute;ation et la mise &agrave; jour de fichier.
+La commande <B>DIR &#91;FULL&#93;</B> permet de visualiser le
+catalogue de la disquette avec affichage de la date et de l'heure de
+cr&eacute;ation et de mise &agrave; jour. Vous devez alors taper
+:</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">DATE SET</FONT></BLOCKQUOTE>
+
+<P>&agrave; chaque lancement de CP/M Plus pour mettre l'horloge du
+syst&egrave;me &agrave; l'heure. Elle sera ensuite mise &agrave; jour
+r&eacute;guli&egrave;rment par votre ordinateur et vous pourrez la
+v&eacute;rifier par les commandes</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">DATE</FONT></BLOCKQUOTE>
+
+<P>...et...</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">DATE CONTINUOUS</FONT></BLOCKQUOTE>
+
+<P>&nbsp;</P>
+
+<P><B>AVERTISSEMENT</B></P>
+
+<P>Si vous attribuez &agrave; une disquette des mots de passe, une
+&eacute;tiquette ou l'indication de la date et du jour, il est
+recommand&eacute; de ne plus y &eacute;crire de donn&eacute;es sous
+AMSDOS ou CP/M 2.2 car aucun des deux ne poss&egrave;dent ces
+fonctions.</P>
+
+<P>Sauf sp&eacute;cification contraire, vous ne pourrez
+acc&eacute;der qu'aux fichiers de l'unit&eacute; par d&eacute;faut.
+La commande:</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">SETDEF *,A:</FONT></BLOCKQUOTE>
+
+<P>(o&ugrave; * renvoie &agrave; l'unit&eacute; par d&eacute;faut)
+ordonne au CP/M (lors de la recherche de fichiers) de proc&eacute;der
+d'abord dans l'unit&eacute; par d&eacute;faut, puis dans
+l'unit&eacute; A. Autrement dit, si B est l'unit&eacute; par
+d&eacute;faut, les fichiers seront automatiquement retrouv&eacute;s
+m&ecirc;me s'ils n'existent que dans l'unit&eacute; A.</P>
+
+<P>Les commandes:</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">SETDEF &#91;PAGE&#93;</FONT>
+   
+   <P><FONT FACE="Fixedsys">SETDEF &#91;NOPAGE&#93;</FONT></P></BLOCKQUOTE>
+
+<P>activent et d&eacute;sactivent la pagination automatique de la
+console.</P>
+
+<P>La plupart des param&egrave;tres sp&eacute;cifi&eacute;s dans les
+commandes <B>DEVICES</B>, <B>SET</B> et <B>SETDEF</B> doivent
+&ecirc;tre initialis&eacute;s, tout comme la date, &agrave; chaque
+lancement de CP/M Plus, surtout lorsqu'ils se rapportent aux
+unit&eacute;s de disquettes (plut&ocirc;t qu'&agrave; des fichiers ou
+des disquettes). Ceci est essentiel pour obtenir un fichier
+<B>PROFILE.SUB</B> correct.</P>
+
+<P><B>SUBMIT</B> est n&eacute;cessaire &agrave; l'ex&eacute;cution
+automatique de fichiers de commandes. Ces fichiers de commandes
+contiennent du texte et il est possible d'y ajouter des lignes de
+donn&eacute;es pour des programmes si ces derni&egrave;res commencent
+par le caract&egrave;re &lt; .</P>
+
+<P>Diff&eacute;rentes versions de la commande <B>SHOW</B> permettent
+d'afficher la taille de l'unit&eacute;, l'espace disponible, le
+nombre d'entr&eacute;es du catalogue disponibles sur la disquette
+avec les zones utilisateur eontenant les fiehiers et, s'il existe, le
+label de la disquette :</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">SHOW B:</FONT>
+   
+   <P><FONT FACE="Fixedsys">SHOW B:&#91;LABEL&#93;</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">SHOW B:&#91;USERS&#93;</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">SHOW B:&#91;DIR&#93;</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">SHOW B:&#91;DRIVE&#93;</FONT></P></BLOCKQUOTE>
+
+<P>toutes ces commandes se rapportent &agrave; l'unit&eacute;
+<B>B</B>.</P>
+
+<P>&nbsp;</P>
+
+<P><B>Abandon de CP/M Plus</B></P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">AMSDOS</FONT>&nbsp;</BLOCKQUOTE>
+
+<P>Ce programme permet l'abandon du contr&ocirc;le par CP/M pour
+revenir au BASIC AMSTRAD, d'o&ugrave; les commandes AMSDOS de gestion
+des disquettes sont disponibles.</P>
+
+<P>&nbsp;</P>
+
+<P><B>Programmation avanc&eacute;e</B></P>
+
+<P>Les programmes stock&eacute;s sur la face 2 d'une des disquettes
+syst&egrave;me serviront essentiellement aux sp&eacute;cialistes.
+Nous vous recommandons de eonsulter le guide du CP/M Plus, SOFT971 ou
+d'autres ouvrages de r&eacute;f&eacute;rence.</P>
+
+<P>&nbsp;</P>
+
+<P><FONT SIZE="+1">Exploitation sous CP/M 2.2</FONT></P>
+
+<P>Cette partie insiste sur les diff&eacute;rences de fonctionnement
+du syst&egrave;me exploit&eacute; sous CP/M 2.2</P>
+
+<P>CP/M 2.2 est charg&eacute; &agrave; partir des deux
+premi&egrave;res pistes d'une des disquettes syst&egrave;me. Le
+secteur d'amor&ccedil;age diff&egrave;re de celui du CP/M Plus;
+veillez &agrave; ne pas les confondre. Th&eacute;oriquement, vous
+pouvez utiliser, indiff&eacute;remment dans l'une ou l'autre des
+unit&eacute;s, des disquettes commercialis&eacute;es, IBM ou
+format&eacute;es pour des donn&eacute;es, mais, pour des raisons de
+fonctionnement du syst&egrave;me, vous devrez
+g&eacute;n&eacute;ralement limiter leur emploi &agrave; la
+deuxi&egrave;me unit&eacute;.</P>
+
+<P>En dehors de l'intervention d'un utilitaire CP/M (tel que
+<B>FILECOPY</B>), CP/M 2.2 ne vous permet pas d'&eacute;crire sur une
+disquette sans qu'elle ait pr&eacute;alablement &eacute;t&eacute;
+amorc&eacute;e. De plus, le type de formatage (Syst&egrave;me, Data,
+IBM) n'est pris en compte que lors de l'amor&ccedil;age. Pour
+l'unit&eacute; principale (A), cet amor&ccedil;age se produit chaque
+fois que CP M 2 2 repasse en mode direct ou que l'on envoie un
+<B>&#91;CONTROL&#93;C</B> apr&egrave;s le message d'interrogation
+<B>A&gt;</B> ou <B>B&gt;</B> . L'unit&eacute; suppl&eacute;mentaire
+(B) est amorc&eacute;e la premi&egrave;re fois que l'on y
+acc&egrave;de, l'unit&eacute; A &eacute;tant amorc&eacute;e.</P>
+
+<P>Si vous essayez d'&eacute;crire sur une disquette qui n'a pas
+&eacute;t&eacute; amorc&eacute;e, le message d'erreur :</P>
+
+<P><B>Bdos Err on</B> &lt;drive &gt;<B> : R/O</B></P>
+
+<P>...appara&icirc;t. Appuyez sur n'importe quelle touche pour
+continuer. Si, de surcro&icirc;t, la disquette est dot&eacute;e d'un
+format diff&eacute;rent, une erreur en lecture ou &eacute;criture se
+produit. Tapez <B>C</B> pour poursuivre.</P>
+
+<P>Si vous achetez un logiciel sur disquette, vous devez le copier
+sur une disquette syst&egrave;me CP/M 2.2 &agrave; l'aide de
+<B>FILECOPY</B> ou <B>PIP</B>, ou convertir la disquette en disquette
+syst&egrave;me en y ajoutant votre CP/M, &agrave; l'aide des
+commandes <B>BOOTGEN</B> et <B>SYSGEN</B>. Lisez attentivement le
+contrat d'utilisation des logiciels de l'annexe I .</P>
+
+<P><B>SYSGEN</B>, sans param&egrave;tre, est le programme de copie
+par excellence qui vous indique par des messages l'insertion des
+disquettes source et cible, et copie les pistes CP/M 2.2 d'une
+disquette sur l'autre. De m&ecirc;me, <B>BOOTGEN</B> copie le secteur
+1 de la piste 0 (le chargeur) et le secteur de configuration.</P>
+
+<P>La commande <B>DIR</B> n'accepte pas de param&egrave;tre hormis un
+identilicateur de fichier. Les fichiers apparaissent selon leur ordre
+d'entr&eacute;e sur le r&eacute;pertoire de la disquette.</P>
+
+<P>La commande <B>STAT</B> poss&egrave;de certaines fonctions de base
+de SET et SHOW. Les commandes:</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">STAT</FONT>
+   
+   <P><FONT FACE="Fixedsys">STAT A:</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">STAT B:</FONT></P></BLOCKQUOTE>
+
+<P>..affichent l'&eacute;tat de la disquette et l'espace
+disponible.</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">STAT *.COM</FONT>
+   
+   <P><FONT FACE="Fixedsys">STAT EX1.BAS</FONT></P></BLOCKQUOTE>
+
+<P>...affichent des compl&eacute;ments d'information sur un fichier
+particulier.</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">STAT t.COM $R/O</FONT>
+   
+   <P><FONT FACE="Fixedsys">STAT EX1.BAS $R/O</FONT></P></BLOCKQUOTE>
+
+<P>...attribuent &agrave; un fichier le statut 'lecture seulement',
+de fa&ccedil;on &agrave; ce qu'il ne puisse pas &ecirc;tre
+d&eacute;truit accidentellement.</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">STAT t.COM $R/W</FONT>
+   
+   <P><FONT FACE="Fixedsys">STAT EX1.BAS $R/W</FONT></P></BLOCKQUOTE>
+
+<P>...remplacent un fichier au statut normal de
+lecture/&eacute;criture.</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">STAT t.COM $SYS</FONT>
+   
+   <P><FONT FACE="Fixedsys">STAT SECRET.BAS $SYS</FONT></P></BLOCKQUOTE>
+
+<P>...attribuent &agrave; un fichier un statut &#171; syst&egrave;me
+&#187; qui le rend invisible sur le catalogue de la disquette et
+inaccessible aux programmes de copie de fichiers tout en restant
+disponible &agrave; tout autre usage.</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">STAT t.COM $DIR</FONT>
+   
+   <P><FONT FACE="Fixedsys">STAT SECRET.BAS $DIR</FONT></P></BLOCKQUOTE>
+
+<P>...inversent le statut pr&eacute;c&eacute;dent. Redonnent au
+fichier son statut visible.</P>
+
+<P>&nbsp;&nbsp;</P>
+
+<P>L'utilitaire <B>FILECOPY</B> vous permet de copier des fichiers
+d'une disquette sur une autre avec un syst&egrave;me &agrave; une
+seule unit&eacute;. Il vous donne les instructions n&eacute;cessaires
+pour les changements de disquettes. Si vous utilisez des noms de
+fichiers avec jockers, il vous demandera confirmation entre chaque
+fichier puis affichera le nom des fichiers au fur et &agrave; mesure
+de la copie.</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">FILECOPY *.COM</FONT> ...copie tous
+   les fichiers <B>.COM</B>.
+   
+   <P><FONT FACE="Fixedsys">FILECOPY PIP.COM</FONT> ...copie le
+   fichier <B>PIP.COM.</B></P></BLOCKQUOTE>
+
+<P>&nbsp;</P>
+
+<P><B>DISCKIT2</B> assure les m&ecirc;mes fonctions que
+<B>DISCKIT3</B> mais, disposant de moins de m&eacute;moire, il copie
+les disquettes plus lentement.</P>
+
+<P>Deux utilitaires sont disponibles pour des transferts entre
+cassette et disquette. Seuls les sp&eacute;cialistes trouveront
+toutefois un int&eacute;r&ecirc;t au transfert de fiehiers autres que
+des textes en codes ASCII.</P>
+
+<P><B>CLOAD</B> (cassette LOAD) accepte deux param&egrave;tres: le
+nom du fichier source (sur cassette) entre guillemets, et le nom du
+fichier destination (sur disquette). Si ce dernier est omis, le
+fichier sur disquette porte le m&ecirc;me nom que celui sur cassette
+(obligatoirement compatible avec le CP/M). Si le nom du fichier
+source est omis, <B>CLOAD</B> lit le premier nom qu'il rencontre sur
+la bande. Si le premier caract&egrave;re du nom du fichier cassette
+est un !, les messages li&eacute;s &agrave; l'utilisation des
+cassettes sont alors supprim&eacute;s&nbsp;</P>
+
+<P>Exemple</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">CLOAD "MA LETTRE"
+   MALETTRE.TXT</FONT></BLOCKQUOTE>
+
+<P><B>CSAVE</B> (cassette SAVE) accepte trois param&egrave;tres, les
+deux premiers &eacute;tant le nom du fichier source (sur disquette)
+et le nom du fichier destination (sur cassette), entre guillemets. Si
+le nom du fichier destination est omis, ce nom sera celui de la
+source. Si le premier caract&egrave;re du nom du fichier cassette est
+un !, les messages 'cassette' sont supprim&eacute;s. Si les deux noms
+sont sp&eacute;cifi&eacute;s. on peut alors utiliser un
+troisi&egrave;me param&egrave;tre sp&eacute;cifiant la vitesse
+d'enregistrement: <B>0</B> pour 1000 bauds, <B>1</B> pour 2000
+bauds.</P>
+
+<P>Exemples</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">CSAVE MALETTRE.TXT "MA LETTRE
+   TEXTE" 1</FONT>
+   
+   <P><FONT FACE="Fixedsys">CSAVE FICHIER</FONT></P></BLOCKQUOTE>
+
+<P>&nbsp;</P>
+
+<P><B>SETUP</B></P>
+
+<P>Cet utilitaire vous permet de red&eacute;finir les
+caract&eacute;ristiques du clavier de votre 6128, du lecteur de
+disquette et de l'interface s&eacute;rie ainsi que de lancer diverses
+actions au moment du chargement du CP/M 2.2</P>
+
+<P>Contrairement aux utilitaires de CP/M Plus qui remplissent leur
+fonction apr&egrave;s leur ex&eacute;cution, <B>SETUP</B> modifie le
+secteur de configuration, appel&eacute; lors de l'amor&ccedil;age
+&agrave; froid de la disquette. Il rappelle &agrave; cet &eacute;gard
+l'action de l'utilitaire <B>PROFILE.SUB</B>.</P>
+
+<P>Ce programme est dirig&eacute; par un menu: lorsqu'un &eacute;cran
+est correct ou ne requiert aucune modification, vous passez au
+suivant en r&eacute;pondant <B>Y</B> &agrave; la question :</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">Is this correct (Y/N):_</FONT></BLOCKQUOTE>
+
+<P>Il est possible d'arr&ecirc;ter le programme &agrave; tout moment
+par la commande <B>&#91;CONTROL&#93;:C</B>. Une fois tous les
+ehargements effectu&eacute;s, il vous demande:</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">Do you want to update your system
+   disc (Y/N):_</FONT></BLOCKQUOTE>
+
+<P>(Confirmez-vous cette remise &agrave; jour de la configuration de
+votre syst&egrave;me) ...qui vous permet de revenir &agrave;
+l'ancienne configuration (en tapant <B>N</B>).</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">Do you want to restart CP/M
+   (YIN):_</FONT></BLOCKQUOTE>
+
+<P>...permettant d'initialiser et donc de tester votre nouvelle
+configuration en r&eacute;pondant <B>Y</B>.</P>
+
+<P>Pour copier la zone o&ugrave; sont sauvegard&eacute;es les
+variables du syst&egrave;me, d'une disquette sur une autre, vous
+pouvez soit utiliser <B>BOOTGEN </B>(voir plus loin), soit charger<B>
+SETUP</B> du disque source, en r&eacute;pondant Y &agrave; la
+question &#171; <B>Do you want to update your system disc (Y/N) : _
+</B>&#187;</P>
+
+<P>Les caract&egrave;res qui ont une valeur ASCII inf&eacute;rieure
+&agrave; 32 peuvent &ecirc;tre entr&eacute;s &agrave;
+l'int&eacute;rieur d'une cha&icirc;ne alphanum&eacute;rique en tapant
+suivi du caract&egrave;re <FONT FACE="Wingdings">&aacute;</FONT>
+convenable tir&eacute; de la s&eacute;rie @. A...Z,&#91;,/,
+&#93;,&gt; , -.</P>
+
+<P>Les options suivantes reviennent le plus souvent</P>
+
+<P><B>** Initial command bufer (zones de commandes &agrave;
+l'initialisation)</B></P>
+
+<P>Tous les caract&egrave;res entr&eacute;s ici appara&icirc;tront
+comme s'ils avaient &eacute;t&eacute; tap&eacute;s en mode direct au
+moment du chargement du CP/M, permettant ainsi de lancer
+automatiquement un programme. Souvenez-vous d'y inclure
+l'&eacute;quivalent de la touche &#91;RETURN&#93;.
+repr&eacute;sent&eacute;e par les deux caract&egrave;res <FONT FACE="Wingdings">&aacute;</FONT>M.</P>
+
+<P>Ainsi, pour le lancement automatique de la commande DIR, vous
+devez taper dans cette zone:</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">DIR</FONT><FONT FACE="Wingdings">&aacute;</FONT><FONT FACE="Fixedsys">M</FONT></BLOCKQUOTE>
+
+<P>Pour le lancement automatique du programme Dr. LOGO, tapez dans
+cette zone:</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">SUBMIT LOGO2</FONT><FONT FACE="Wingdings">&aacute;</FONT><FONT FACE="Fixedsys">M</FONT></BLOCKQUOTE>
+
+<P>&nbsp;</P>
+
+<P><B>Sign-on string (le message d'introduction)</B></P>
+
+<P>C'est le message affich&eacute; en haut de l'&eacute;cran quand on
+charge le CP/M. Notez l'utilisation de <FONT FACE="Wingdings">&aacute;</FONT>J<FONT FACE="Wingdings">&aacute;</FONT>M
+pour l'entr&eacute;e du saut de ligne et du retour chariot. La
+premi&egrave;re partie de ce message d&eacute;finit la couleur de
+l'&eacute;cran et celle de la bordure pour le mode 80 colonnes (elle
+doit &ecirc;tre recopi&eacute;e telle quelle si les
+caract&eacute;ristiques restent inchang&eacute;es).</P>
+
+<P>&nbsp;</P>
+
+<P><B>Keyboard translations (changement des codes clavier)</B></P>
+
+<P>Donne de nouvelles valeurs ASCII aux touches du clavier, comme le
+fait la eommande '<B>KEY DEF</B>' du BASIC. Les param&egrave;tres
+requis sont les codes cl&eacute;s et les valeurs ASCII &agrave; leur
+attribuer. Vous trouverez une illustration des codes cl&eacute;s dans
+le diagramme figurant en haut &agrave; droite de l'ordinateur ou
+&agrave; la partie 4 du chapitre &#171; Pour information &#187;</P>
+
+<P>&nbsp;</P>
+
+<P><B>Keyboard expansions (extensions du clavier)</B></P>
+
+<P>Emule la commande BASIC '<B>KEY</B>'</P>
+
+<P>&nbsp;</P>
+
+<P><FONT SIZE="+1">Pour terminer...</FONT></P>
+
+<P>Les commandes <B>DISCKIT2</B>, <B>SYSGEN</B>, <B>BOOTGEN</B>,
+<B>FILECOPY</B>, <B>SETUP</B>, <B>CSAVE</B> et <B>CLOAD</B> sont
+con&ccedil;ues pour les syst&egrave;mes AMSTRAD et ne fonctionnent
+que sous CP/M 2.2. Elles n'ont aucune fonction sous les autres
+syst&egrave;mes CP/M mais certains fabricants proposent des
+utilitaires identiques (portant souvent le m&ecirc;me nom)
+adapt&eacute;s &agrave; leurs syst&egrave;mes.</P>
+
+<P>Les programmes CP/M 2.2 ci-dessous, destin&eacute;s aux
+sp&eacute;cialistes, sont &eacute;galement disponibles sur la face 4
+d'une des disquettes syst&egrave;me. L'utilisateur peut &agrave; leur
+sujet consulter le guide du CP/M. SOFT159 ainsi que d'autres ouvrages
+de r&eacute;f&eacute;rence.</P>
+
+<P><B>ASM</B> Assembleur du 8080</P>
+
+<P><B>DDT</B> Utilitaire de mise au point des codes d'assemblage du
+8080</P>
+
+<P><B>DUMP</B> Utilitaire de vidage de fichier sous forme
+hexad&eacute;cimale</P>
+
+<P><B>ED</B> Editeur de texte simple</P>
+
+<P><B>LOAD</B> Convertit les fichiers <B>.HEX</B>,
+cr&eacute;&eacute;s avee <B>ASM</B>, en fichiers <B>.COM</B></P>
+
+<P><B>MOVCPM</B> Cr&eacute;e le CP/M 2.2 avec une taille TPA
+r&eacute;duite</P>
+
+<P><B>SUBMIT</B> Utilitaire d'ex&eacute;cution de fichier de
+commandes</P>
+
+<P><B>XSUB</B> Utilitaire de traitement par lots&#93;</P>
+
+<P>Ces programmes sont r&eacute;serv&eacute;s au CP/M 2.2 (face 4) et
+ne doivent pas &ecirc;tre confondus avec d'autres programmes
+stock&eacute;s sur les faces I, 2 et 3 des disquettes syst&egrave;me
+pour exploitation sous CP/M Plus.</P>
+
+<P>&nbsp;</P>
+
+<CENTER><A HREF="chapitre4.htm">&lt;&lt; Chapitre 4</A> <A HREF="index.htm">&#91;Index&#93;</A>
+<A HREF="chapitre6.htm">Chapitre 6 &gt;&gt;</A></CENTER>
+<script type="text/javascript">
+//<![CDATA[
+if (typeof _gstat != "undefined") _gstat.audience('','pagesperso-orange.fr');
+//]]>
+</script>
+</BODY>
+</HTML>

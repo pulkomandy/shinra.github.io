@@ -1,0 +1,1024 @@
+<HTML>
+<HEAD>
+   <TITLE>Chapitre 2</TITLE>
+<script type="text/javascript">
+//<![CDATA[
+var gs_d=new Date,DoW=gs_d.getDay();gs_d.setDate(gs_d.getDate()-(DoW+6)%7+3);
+var ms=gs_d.valueOf();gs_d.setMonth(0);gs_d.setDate(4);
+var gs_r=(Math.round((ms-gs_d.valueOf())/6048E5)+1)*gs_d.getFullYear();
+var gs_p = (("https:" == document.location.protocol) ? "https://" : "http://");
+document.write(unescape("%3Cscript src='" + gs_p + "s.gstat.orange.fr/lib/gs.js?"+gs_r+"' type='text/javascript'%3E%3C/script%3E"));
+//]]>
+</script>
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<P><FONT SIZE="+3"><B>Chapitre 2</B></FONT></P>
+
+<P><FONT SIZE="+3"><B>Passons aux choses s&eacute;rieuses...
+
+<HR>
+
+</B></FONT>Apr&egrave;s la lecture du Cours
+&Eacute;l&eacute;mentaire. vous savez mettre votre ordinateur en
+marche, lui faire r&eacute;p&eacute;ter plusieurs fois une m&ecirc;me
+op&eacute;ration en utilisant la boucle <B>FOR NEXT</B> et lui
+demander de v&eacute;rifier si (<B>IF</B>) une condition est remplie
+pour qu'il ex&eacute;cute alors (<B>THEN</B>) une instruction.</P>
+
+<P>Mais vous devez en avoir assez de voir votre nom s'afficher sur
+tout l'&eacute;cran et vous voudriez maintenant commencer a faire
+vraiment de l'informatique, utile ou amusante. Vous trouverez dans le
+chapitre suivant la liste des mots cl&eacute;s du BASIC AMSTRAD,
+accompagn&eacute;s de tout ce qu'il faut savoir sur leur &#171;
+syntaxe &#187; et leur fonction. Lorsque vous la poss&eacute;derez
+&agrave; fond, votre ordinateur et vous ne conna&icirc;trez d'autres
+limites que celles de votre imagination.</P>
+
+<P>Si c'est la premi&egrave;re fois que vous vous servez d'un
+ordinateur, vous ressentirez peut-&ecirc;tre quelque
+appr&eacute;hension &agrave; l'id&eacute;e de &#171; faire de la
+programmation &#187;. Rassurez-vous : c'est bien plus simple que vous
+ne l'imaginez et certainement moins compliqu&eacute; que les
+sp&eacute;cialistes ne voudraient le faire croire avec leur jargon !
+Dites-vous que BASIC n'est pas une nouvelle langue &agrave;
+apprendre, mais plut&ocirc;t un d&eacute;riv&eacute; de l'anglais
+auquel, pour gagner du temps, on a ajout&eacute; quelques
+abr&eacute;viations. <B>CLS</B> n'est donc pas une formule magique,
+mais la forme abr&eacute;g&eacute;e de <B>CL</B>ear <B>S</B>creen
+(Vide l'&Eacute;cran).</P>
+
+<P>Finie la peur du BASIC, vous serez bient&ocirc;t surpris de voir
+comme il est agr&eacute;able, apr&egrave;s quelques heures de
+programmation, de r&eacute;colter les premiers fruits de ses efforts.
+La programmation est un exercice passionnant, surtout pour un
+d&eacute;butant qui aborde un langage et une machine pour la
+premi&egrave;re fois. Souvenez-vous bien que, tant que vous
+n'&eacute;crivez pas par inadvertance sur la disquette du
+syst&egrave;me d'exploitation CP/M, rien de ce que vous entrez au
+clavier ne peut endommager votre ordinateur. Aussi, n'h&eacute;sitez
+pas &agrave; innover !</P>
+
+<P>&nbsp;</P>
+
+<P><FONT SIZE="+1">Mais par o&ugrave; commencer ?</FONT></P>
+
+<P>C'est souvent le d&eacute;but d'un programme qui pose le plus de
+probl&egrave;mes au n&eacute;ophyte. &Eacute;vitez surtout de vous
+jeter sur le clavier avant d'avoir r&eacute;fl&eacute;chi &agrave; ce
+que vous voulez faire.</P>
+
+<P>Vous devez d'abord chercher &agrave; &eacute;tablir, d'une part,
+ce que le programme est cens&eacute; faire et, d'autre part, la
+mani&egrave;re dont les r&eacute;sultats vous seront
+pr&eacute;sent&eacute;s, c'est-&agrave;-dire ce qui appara&icirc;tra
+&agrave; l'&eacute;cran lors de l'ex&eacute;cution du programme.</P>
+
+<P>Une fois ceci &eacute;tabli, vous pouvez entamer la
+r&eacute;daction proprement dite du programme, en songeant
+constamment qu'il doit se d&eacute;rouler sans &agrave;-coups du
+d&eacute;but &agrave; la fin, avec un minimum de sauts (<B>GOTO</B>)
+en tous sens. Un programme bien &eacute;crit doit se lire
+ais&eacute;ment : songez au casse-t&ecirc;te qui vous attend lors de
+sa mise au point, ou de son &#171; d&eacute;bogage &#187;, comme on
+dit en jargon informatique.</P>
+
+<P>Soyez tranquille, BASIC est un langage extr&ecirc;mement
+tol&eacute;rant : il vous remettra souvent dans le droit chemin d'un
+simple message d'erreur affich&eacute; &agrave; l'&eacute;cran. Si
+une id&eacute;e vous vient apr&egrave;s coup, il ne fera aucune
+difficult&eacute; pour ins&eacute;rer une nouvelle ligne entre deux
+lignes existantes.</P>
+
+<P>&nbsp;</P>
+
+<P><FONT SIZE="+1">&Eacute;crivons un petit programme</FONT></P>
+
+<P>Et maintenant, au travail ! Nous allons &eacute;crire un programme
+permettant d'enregistrer le nom et le num&eacute;ro de
+t&eacute;l&eacute;phone de vos amis. Ce sera le programme &#171;
+R&eacute;pertoire T&eacute;l&eacute;phonique &#187;. Posons-nous
+d'abord les deux questions primordiales: &#171; Que doit-il faire
+?&#187;, et &#171; Comment les r&eacute;sultats seront-ils
+pr&eacute;sent&eacute;s ? &#187;</P>
+
+<P>Supposons que nous voulions un programme permettant d'enregistrer
+100 noms et num&eacute;ros de t&eacute;l&eacute;phone. Il suffira
+d'entrer au clavier le nom d'une personne donn&eacute;e pour obtenir
+aussit&ocirc;t son num&eacute;ro de t&eacute;l&eacute;phone. Ce
+programme devra de plus &ecirc;tre capable d'afficher la liste de
+toutes les informations m&eacute;moris&eacute;es, au cas o&ugrave;
+nous aurions oubli&eacute; sous quelle forme un nom a
+&eacute;t&eacute; enregistr&eacute;. Vous remarquez que nous sommes
+d&eacute;j&agrave; en train de penser &agrave; la pr&eacute;sentation
+des r&eacute;sultats.</P>
+
+<P>Tr&egrave;s bien, &agrave; vos claviers ! Commen&ccedil;ons par le
+titre:</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">10 REM repertoire
+   telephonique</FONT></BLOCKQUOTE>
+
+<P>Donner un titre n'est pas une obligation. Il vous aidera pourtant
+beaucoup &agrave; vous y retrouver lorsque vous aurez accumul&eacute;
+une quantit&eacute; de programmes.</P>
+
+<P>Nous voulons donc entrer (<B>INPUT</B>) une cha&icirc;ne de
+caract&egrave;res (un nom) dans une variable. Cette variable, nous
+l'appellerons <B>NOM$</B>. De m&ecirc;me, nous aurons une variable
+pour les num&eacute;ros de t&eacute;l&eacute;phone, que nous
+appellerons <B>TEL$</B>.</P>
+
+<P>Vous vous souvenez que, dans les exemples de programmes du Cours
+&Eacute;l&eacute;mentaire, l'instruction <B>INPUT</B> vous avait
+permis d'affecter une valeur &agrave; une variable. Ainsi, avec les
+lignes</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">20 INPUT "entrez le
+   nom";NOM$</FONT>
+   
+   <P><FONT FACE="Fixedsys">30 INPUT "entrez le numero de
+   telephone";TEL$</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">run</FONT></P></BLOCKQUOTE>
+
+<P>...nous pourrons entrer un nom (disons &#171; Paul &#187;), puis
+un num&eacute;ro de t&eacute;l&eacute;phone (par exemple 1 206 66
+60).</P>
+
+<P>Ces informations sont maintenant stock&eacute;es par le programme,
+mais nous n'obtenons encore aucun r&eacute;sultat &agrave;
+l'&eacute;cran. Il nous faut donc &eacute;crire une partie de
+programme permettant de retrouver et d'afficher ces informations.
+Pour obtenir la valeur actuelle de <B>NOM$</B> et <B>TEL$</B>, on
+aura recours aux instructions :</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">PRINT NOM$</FONT>
+   
+   <P><FONT FACE="Fixedsys">... et...</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">PRINT TEL$</FONT></P></BLOCKQUOTE>
+
+<P>Mais attendez ! Nous avions bien dit qu'avec notre programme nous
+voulions enregistrer jusqu'&agrave; 100 noms et num&eacute;ros de
+t&eacute;l&eacute;phone ? Nous n'allons tout de m&ecirc;me pas
+&eacute;crire 100 instructions <B>INPUT</B> avec un non; de variable
+diff&eacute;rent pour chacune, puts 100 instructions <B>PRINT</B>
+pour afficher la liste &agrave; l'&eacute;cran !!! Non, bien
+s&ucirc;r : l'ordinateur r&eacute;sout ce probl&egrave;me au moyen
+d'un instrument appel&eacute; &#171; tableau &#187;. Le tableau
+permet d'affecter &agrave; une m&ecirc;me variable la &#171;
+dimension &#187; (le nombre de valeurs) d&eacute;sir&eacute;e (100
+dans notre cas). Pour conna&icirc;tre l'une de ces valeur, il suffit
+d'entrer le nom de la variable suivi (entre parenth&egrave;es) du
+num&eacute;ro de r&eacute;f&eacute;rence correspondant. Ce
+num&eacute;ro s'appelle un &#171; indice &#187; et une expression
+telle que <B>NOM$(27)</B> s'appelle une &#171; variable
+indic&eacute;e &#187;. Nous sommes donc en mesure, en utilisant une
+variable num&eacute;rique x, de travailler sur l'ensemble des valeurs
+<B>NOM$(x)</B> de notre tableau : il suffit de faire prendre &agrave;
+x des valeurs de 1 &agrave; 100 dans une boucle <B>FOR NEXT</B>
+(<B>FOR x = 1 TO 100</B>). Chaque fois que x est augment&eacute; de
+1, l'indice est &eacute;galement modifi&eacute; et d&eacute;signe
+l'&eacute;l&eacute;ment suivant du tableau, un nom dans ce cas.</P>
+
+<P>Nous avons besoin, pour les variables <B>NOM$</B> et <B>TEL$</B>,
+de deux tableaux de dimension 100. Avant d'utiliser un tableau, il
+faut avoir d&eacute;clar&eacute; sa <B>DIM</B>ension.
+Rempla&ccedil;ons donc nos lignes <B>20</B> et <B>30</B> par ces
+d&eacute;clarations.</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">20 DIM NOM$(100)</FONT>
+   
+   <P><FONT FACE="Fixedsys">30 DIM TEL$(100)</FONT></P></BLOCKQUOTE>
+
+<P>Nos variables ainsi d&eacute;finies, &eacute;crivons un programme
+permettant d'introduire les noms et num&eacute;ros de
+t&eacute;l&eacute;phone dans les tableaux (nous verrons plus tard
+comment les retrouver). Ajoutons les lignes :</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">40 FOR x=1 TO 100</FONT>
+   
+   <P><FONT FACE="Fixedsys">50 INPUT "entrez le
+   nom";NOM$(x)</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">60 INPUT "entrez le numero de
+   telephone";TEL$(x)</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">70 NEXT</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">run</FONT></P></BLOCKQUOTE>
+
+<P>Tout cela est fort bien, mais nous n'avons pas l'intention
+d'entrer les 100 noms en une seule fois. De plus, la
+pr&eacute;sentation du programme &agrave; l'&eacute;cran laisse
+beaucoup &agrave; d&eacute;sirer. Il s'agit maintenant d'y mettre un
+peu d'ordre. Pour commencer, nous allons, avant chaque nouvelle
+entr&eacute;e, d&eacute;barrasser l'&eacute;cran du texte
+ant&eacute;rieur devenu inutile. C'est l'affaire de l'instruction
+<B>CLS </B>:</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">45 CLS</FONT></BLOCKQUOTE>
+
+<P>Mais comment indiquer &agrave; l'ordinateur que, pour le moment,
+nous avons fini d'introduire des donn&eacute;es ? Bien s&ucirc;r, on
+peut toujours arr&ecirc;ter un programme en frappant la touche
+&#91;ESC&#93;. mais alors nos pr&eacute;cieux enregistrements seront
+effac&eacute;s d&egrave;s que nous donnerons &agrave; nouveau l'ordre
+<B>RUN</B> !</P>
+
+<P>Il existe une meilleure solution : &agrave; chaque enregistrement
+d'un nouveau nom, demandons au programme de v&eacute;rifier si
+quelque chose a effectivement &eacute;t&eacute; frapp&eacute; au
+clavier, c'est &agrave; dire si <B>NOM$(x)</B> n'est pas une
+cha&icirc;ne vide, et demandons lui de s'interrompre dans le cas
+contraire. Avez-vous devin&eacute; par quel biais? &Eacute;crivons
+:</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">55 IF NOMS(x)="" THEN 80</FONT>
+   
+   <P><FONT FACE="Fixedsys">80 PRINT"entree des donnees
+   terminee"</FONT></P></BLOCKQUOTE>
+
+<P>Le programme doit lui-m&ecirc;me indiquer &agrave; l'utilisateur
+comment l'interrompre. Ajoutons donc</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">47 PRINT"pour arreter appuyer
+   &#91;ENTER&#93;"</FONT></BLOCKQUOTE>
+
+<P>Voyons maintenant comment obtenir l'impression des informations
+enregistr&eacute;es, d'abord sous forme de liste. &Eacute;crivons
+:</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">90 FOR x=1 to 100</FONT>
+   
+   <P><FONT FACE="Fixedsys">100 PRINT NOM$(x);" ";TEL$(x)</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">110 NEXT</FONT></P></BLOCKQUOTE>
+
+<P>Mais l&agrave; encore le programme ne sait pas comment
+s'arr&ecirc;ter avant le centi&egrave;me &eacute;l&eacute;ment du
+tableau. Ajoutons donc :</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">95 IF NOM$(x)="" THEN 120</FONT>
+   
+   <P><FONT FACE="Fixedsys">120 PRINT"liste terminee"</FONT></P></BLOCKQUOTE>
+
+<P>La cha&icirc;ne vide est d&eacute;tect&eacute;e en ligne <B>95</B>
+et le programme interrompt l'impression en sautant les lignes
+<B>100</B> et <B>110</B>.</P>
+
+<P>Passons maintenant &agrave; notre objectif suivant : nous voulons
+que le programme soit capable de rechercher un nom entr&eacute; au
+clavier. &Eacute;crivons :</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">130 INPUT "nom a trouver :
+   ":RECHERCHE$</FONT>
+   
+   <P><FONT FACE="Fixedsys">140 FOR x=1 TO 100</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">150 IF INSTR(NOM$(x),RECHERCHE$)=0 THEN
+   180</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">160 PRINT NOM$(x);" ":TEL$(x)</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">170 END</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">180 NEXT</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">l90 PRINT "Le nom n'est pas
+   repertorie"</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">run</FONT></P></BLOCKQUOTE>
+
+<P>Une nouvelle instruction est apparue en ligne <B>150 : INSTR</B>.
+Cette instruction demande &agrave; l'ordinateur de chercher &agrave;
+l'int&eacute;rieur de la premi&egrave;re cha&icirc;ne cit&eacute;e,
+la premi&egrave;re occurrence de la seconde cha&icirc;ne. Autrement
+dit, il va chercher dans <B>NOM$</B> une occurrence de
+<B>RECHERCHE$</B> (la variable introduite en ligne 130, contenant le
+nom que vous recherchez). Si <B>INSTR</B> ne trouve pas au moins une
+partie de cette cha&icirc;ne, elle fournira la valeur 0, ce qui dans
+notre programme provoque un saut en ligne 180 et donc une nouvelle
+tentative avec la valeur suivante de x (NEXT). Si le programme a
+balay&eacute; toutes les valeurs autoris&eacute;es de x (1 &agrave;
+100), il peut alors atteindre la ligne 190 et annoncer qu'il n'a pas
+trouv&eacute; le nom demand&eacute;. S'il le trouve, INSTR fournit
+une valeur diff&eacute;rente de 0. Le programme passe alors sur la
+ligne <B>160</B>. affichant le nom et le num&eacute;ro de
+t&eacute;l&eacute;phone, avant de s'achever &agrave; la ligne
+<B>170</B> (END).</P>
+
+<P>Notre programme se perfectionne tr&egrave;s rapidement, mais il
+nous reste encore beaucoup &agrave; faire. Prenons donc un peu de
+recul et consid&eacute;rons ses limites. La fa&ccedil;on dont il se
+d&eacute;roule, par exemple : on enregistre les informations, puis on
+obtient une liste, et l'on peut enfin demander la recherche d'un nom
+donn&eacute;.</P>
+
+<P>&nbsp;</P>
+
+<P><FONT SIZE="+1">Et si jamais ?</FONT></P>
+
+<P>Et si jamais cet ordre ne vous convenait pas? Si vous
+pr&eacute;f&eacute;riez commencer par la recherche d'un nom
+enregistr&eacute; la veille, ou bien ajouter des noms et des
+num&eacute;ros de t&eacute;l&eacute;phone &agrave; ceux qui existent
+d&eacute;j&agrave; ? &Eacute;tudier et r&eacute;soudre ce type de
+probl&egrave;me, c'est cela la programmation. BASIC, vous le savez, a
+la bont&eacute; de vous permettre l'insertion de nouvelles
+instructions dans un programme existant, mais un bon programmeur ne
+doit pas se laisser surprendre.</P>
+
+<P>Un autre inconv&eacute;nient, de taille, tient au fait que le
+programme stocke le contenu des tableaux dans une partie de la
+m&eacute;moire effac&eacute;e &agrave; chaque nouvelle
+ex&eacute;cution. Comme il est hors de question que vous entriez
+&agrave; chaque fois toutes vos informations &agrave; la main, il
+faudra vous r&eacute;server la possibilit&eacute;, d'une part, de
+sauvegarder les valeurs des variables <B>NOM$</B> et <B>TEL$</B>
+avant d'&eacute;teindre votre ordinateur et, d'autre part, de charger
+ces valeurs lors de l'ex&eacute;cution du programme.</P>
+
+<P>&nbsp;</P>
+
+<P><FONT SIZE="+1">R&eacute;ponses</FONT></P>
+
+<P>Voici comment nous allons r&eacute;soudre le probl&egrave;me du
+d&eacute;roulement des t&acirc;ches : nous allons faire en sorte
+qu'en d&eacute;but d'ex&eacute;cution, le programme nous propose un
+choix entre les diff&eacute;rentes op&eacute;rations qu'il est
+capable d'effectuer. Ce programme, de type &#171; pilot&eacute; par
+menu &#187;, affiche effectivement &agrave; l'&eacute;cran un menu
+des options propos&eacute;es. Vous &ecirc;tes-vous d&eacute;j&agrave;
+servi d'un distributeur automatique de billets ? Si oui, vous avez
+d&eacute;j&agrave; eu affaire &agrave; un programme pilot&eacute; par
+menu. Incorporons ce menu &agrave; notre programme :</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">32 PRINT"1. ajouter un
+   correspondant"</FONT>
+   
+   <P><FONT FACE="Fixedsys">33 PRINT"2. lister les
+   correspondants"</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">34 PRINT"3. consulter le
+   repertoire"</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">35 PRINT"4. sauvegarder le
+   repertoire"</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">36 PRINT"5. charger le
+   repertoire"</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">37 INPUT "votre choix (puis
+   ENTER)";ch</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">38 ON ch GOSUB 40,90,130</FONT></P>
+   
+   <P>&nbsp;</P>
+   
+   <P><FONT FACE="Fixedsys">85 RETURN</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">125 RETURN</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">170 RETURN</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">200 RETURN</FONT></P></BLOCKQUOTE>
+
+<P>Comme vous pouvez le constater, le programme affiche maintenant le
+menu des options, puis introduit dans la variable <B>ch</B> le
+num&eacute;ro entr&eacute; au clavier (<B>INPUT</B>). En passant sur
+l'instruction <B>ON ch GOSUB</B> (ligne <B>38</B>), il lancera le
+premier sous-programme (ligne <B>38</B>) si ch = l, le
+deuxi&egrave;me (ligne <B>90</B>) si ch = 2 et ainsi de suite.</P>
+
+<P>Maintenant que chacune des fonctions est devenue un
+sous-programme, il faut obligatoirement en indiquer la fin par une
+instruction <B>RETURN</B>, ce que nous avons fait.</P>
+
+<P>Vous souvenez-vous du mode d'ex&eacute;cution de <B>RETURN</B> ? A
+la fin du sous-programme, cette instruction BASIC renvoie le
+programme &agrave; la ligne suivant imm&eacute;diatement
+l'instruction <B>GOSUB</B> correspondante, c'est-&agrave;-dire, dans
+notre cas, &agrave; la ligne situ&eacute;e apr&egrave;s <B>38</B>
+(notre programme se poursuivrait donc &agrave; partir du point
+d'entr&eacute;e des informations, ligne <B>40</B>). Pour
+&eacute;viter cela, introduisons la ligne :</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">39 GOTO 32</FONT></BLOCKQUOTE>
+
+<P>...afin de faire boucler le programme sur l'affichage du menu.
+Faites encore tourner le programme pour constater les
+am&eacute;liorations apport&eacute;es.</P>
+
+<P>Parfait ! Voyons maintenant comment notre programme se
+pr&eacute;sente (si celui-ci n'est pas arr&ecirc;t&eacute;, faites
+&#91;ESC&#93; deux fois. Tapez</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">LIST</FONT></BLOCKQUOTE>
+
+<P>Et voici ce que vous devriez avoir sous les yeux :</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">10 REM repertoire
+   telephonique</FONT>
+   
+   <P><FONT FACE="Fixedsys">20 DIM NOM$(100)</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">30 DIM TEL$(l00)</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">32 PRINT"1. ajouter un
+   correspondant"</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">33 PRINT"2. lister les
+   correspondants"</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">34 PRINT"3. consulter le
+   repertoire"</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">35 PRINT"4. sauvegarder le
+   repertoire"</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">36 FRINT"5. charger le
+   repertoire"</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">37 INPUT"votre choix (puis
+   ENTER)";ch</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">38 ON ch GOSUB 40,90,130</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">39 GOTO 32</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">40 FOR x=l TO 100</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">45 CLS</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">47 PRINT"pour arreter appuyer
+   &#91;ENTER&#93;"</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">50 INPUT "non";NOM$(x)</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">55 IF NOM$(x)="" THEN 80</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">60 INPUT "telephone";TEL$(x)</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">70 NEXT</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">80 PRINT"entree des donnees
+   terminee."</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">85 RETURN</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">90 FOR x=1 TO 100</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">95 IF NOM$(x)="" THEN 120</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">100 PRINT NOM$(x);" ";TEL$(x)</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">110 NEXT</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">120 PRINT"fin de liste" 125
+   RETURN</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">130 INPUT "nom a
+   trouver",RECHERCHE$</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">140 FOR A=l TO 100</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">150 IF INSTR(NOM$(x),RECHERCHE$)=0 THEN
+   180</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">160 PRINT NOM$(x);" ";TEL$(x)</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">170 RETURN</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">180 NEXT</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">190 PRINT"ce nom n'est pas
+   repertorie."</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">200 RETURN</FONT></P></BLOCKQUOTE>
+
+<P>Vous remarquez qu'&agrave; certains endroits nous
+commen&ccedil;ons &agrave; manquer de place pour ins&eacute;rer de
+nouvelles lignes. Nous allons en cr&eacute;er et remettre un peu
+d'ordre en <B>RENUM</B>&eacute;rotant les lignes. Faites :</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">RENUM</FONT>
+   
+   <P><FONT FACE="Fixedsys">LIST</FONT></P></BLOCKQUOTE>
+
+<P>Vous devez maintenant obtenir :</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">10 REM repertoire
+   telephonique</FONT>
+   
+   <P><FONT FACE="Fixedsys">20 DIM NOM$(100)</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">30 DIM TEL$(100)</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">40 PRINT"1. ajouter un
+   correspondant"</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">50 PRINT"2. lister les
+   correspondants"</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">60 PRINT"3. consulter le
+   repertoire"</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">70 PRINT"4. sauvegarder le
+   repertoire"</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">80 PRINT"5. charger le
+   repertoire"</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">90 INPUT"votre choix (puis
+   ENTER)";ch</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">100 ON ch GOSUB 120,210,270</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">110 G0T0 40</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">120 FOR x=1 TO 100</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">130 CLS</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">140 PRINT"pour arreter appuyer
+   &#91;ENTER&#93;"</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">150 INPUT "nom";NOM$(x)</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">160 IF NOM$(x)="" THEN 190</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">170 INPUT "telephone",TEL$(x)</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">180 NEXT</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">190 PRINT"entree des donnees
+   termtnee."</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">200 RETURN</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">210 FOR x=1 TO 100</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">220 IF NOM$(x)="" THEN 250</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">230 PRINT NOM$(x);" ";TELS(x)</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">240 NEXT</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">250 PRINT"fin de liste"</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">260 RETURN</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">270 INPUT "nom a
+   trouver";RECHERCHE$</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">280 FOR x=1 TO 100</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">290 IF INSTR(NOM$(x),RECHERCHE$)=0 THEN
+   320</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">300 PRINT NOM$(x);" ";TEL$(x)</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">310 RETURN</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">320 NEXT</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">330 PRINT"ce nom n'est pas
+   repertorie."</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">340 RETURN</FONT></P></BLOCKQUOTE>
+
+<P>Voil&agrave; qui est mieux. Continuons ! Il nous faut maintenant
+une instruction qui fera en sorte que chaque nouvelle information
+enregistr&eacute;e soit rang&eacute;e &agrave; l'int&eacute;rieur de
+la premi&egrave;re case vide disponible dans le tableau. Nous allons
+pour cela nous servir d'une nouvelle instruction : <B>LEN</B>.
+Celle-ci permet de calculer la longueur d'une cha&icirc;ne. Voici ce
+qu'il faut indiquer &agrave; l'ordinateur :</P>
+
+<P>Si (<B>IF</B>) la longueur (<B>LEN</B>gth) de <B>NOM$(x)</B> est
+sup&eacute;rieure &agrave; 0, autrement dit si cette case est
+d&eacute;j&agrave; occup&eacute;e, il faut alors (<B>THEN</B>) passer
+directement &agrave; la ligne 180 (qui donnera la
+r&eacute;f&eacute;rence de la case suivante).</P>
+
+<P>Nul besoin, on le voit, d'&ecirc;tre dou&eacute; en anglais pour
+parler BASIC. Toutefois, c'est avant tout une question de bon sens
+!</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">135 IF LEN(NOM$(x))&gt;0 THEN
+   180</FONT></BLOCKQUOTE>
+
+<P>Enfantin, n'est-ce pas? Avec votre liste des mots-cl&eacute;s de
+BASIC, et un peu de r&eacute;flexion, aucune difficult&eacute; ne
+pourra vous arr&ecirc;ter. Vous trouverez toujours une instruction
+r&eacute;pondant exactement &agrave; vos besoins et, avec l'habitude,
+les solutions vous viendront &agrave; l'esprit comme par miracle.</P>
+
+<P>Voyons maintenant comment sauvegarder les valeurs des variables
+afin de pouvoir les recharger lorsqu'on ex&eacute;cute le programme.
+Vous savez, depuis la partie 7 du Cours &Eacute;l&eacute;mentaire,
+que l'on peut sauvegarder le programme lui-m&ecirc;me au moyen de
+l'instruction <B>SAVE</B>. Cependant, ce programme n'est qu'un cadre
+permettant l'entr&eacute;e des valeurs (au clavier) et leur sortie
+(sur l'&eacute;cran). En sauvegardant le programme (<B>SAVE</B>),
+vous conservez ce cadre, mais pas les valeurs elles-m&ecirc;mes.</P>
+
+<P>Une partie du programme devra donc pr&eacute;voir le stockage des
+valeurs sur disquette. Nous allons pour cela cr&eacute;er un &#171;
+fichier de donn&eacute;es &#187; ind&eacute;pendant.</P>
+
+<P>Il faudra d'abord ouvrir (<B>OPEN</B>) un fichier sortie
+(<B>OUT</B>put) que nous appellerons, par exemple, &#171;
+donn&eacute;es &#187;, puis &eacute;crire (<B>WRITE</B>) &agrave;
+l'int&eacute;rieur de ce fichier les valeurs (de 1 &agrave; 100) des
+variables <B>NOM$(x)</B> et <B>TEL$(x)</B> et, pour finir, refermer
+(<B>CLOSE</B>) ce fichier avant de revenir au menu. Cette section
+sera plac&eacute;e &agrave; partir de la ligne <B>350</B>. Laissons
+&agrave; l'instruction :</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">AUTO 350</FONT></BLOCKQUOTE>
+
+<P>... le soin de num&eacute;roter<B> AUTO</B>matiquement les lignes
+:</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">350 OPENOUT "donnees"</FONT>
+   
+   <P><FONT FACE="Fixedsys">360 FOR x=1 TO 100</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">370 WRITE #9,NOM$(x),TEL$(x)</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">380 NEXT</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">390 CLOSEOUT</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">400 PRINT"donnees sauvees"</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">410 RETURN</FONT></P></BLOCKQUOTE>
+
+<P>Une fois la ligne <B>410</B> entr&eacute;e par
+<B>&#91;RETURN&#93;</B>, faites <B>&#91;ESC&#93;</B> pour interrompre
+la num&eacute;rotation <B>AUTO</B>matique.</P>
+
+<P>Nous venons d'introduire une option suppl&eacute;mentaire : il
+nous faut donc ajouter un num&eacute;ro dans la liste situ&eacute;e
+apr&egrave;s l'instruction <B>ON ch GOSUB</B>, ligne <B>100</B>.
+Rappelons la ligne <B>100</B> pour op&eacute;rer cette modification,
+par <B>EDIT</B> :</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">100 ON ch GOSUB
+   120,210,270,350</FONT></BLOCKQUOTE>
+
+<P>Vous pourrez d&eacute;sormais, en choisissant l'option 4. demander
+au programme de stocker sur disquette les informations
+introduites.</P>
+
+<P>Vous remarquerez qu'au moment o&ugrave; le programme &eacute;crit
+sur la disquette les valeurs de <B>NOM$(x)</B> et de <B>TEL$(x)</B>,
+le mot cl&eacute; <B>WRITE</B> est suivi de l'expression #9. Le
+symbole # est un &#171; s&eacute;lecteur de canal &#187; qui indique
+&agrave; l'ordinateur sur quel canal les donn&eacute;es doivent
+&ecirc;tre achemin&eacute;es. II en existe 10 dans un ordinateur
+:</P>
+
+<P>Si l'on dirige les donn&eacute;es sur les canaux 0 &agrave; 7 (de
+#<B>0</B> &agrave; #<B>7</B>), celles-ci apparaissent sur
+l'&eacute;cran (les canaux <B>0</B> &agrave; <B>7</B> sont
+r&eacute;serv&eacute;s pour l'&eacute;cran et y d&eacute;finissent
+des &#171; fen&ecirc;tres &#187;).</P>
+
+<P>Les donn&eacute;es envoy&eacute;es sur le canal #8 sortiront sur
+l'imprimante, le cas &eacute;ch&eacute;ant.</P>
+
+<P>Enfin, les donn&eacute;es dirig&eacute;es sur le canal #9 seront
+envoy&eacute;es &agrave; l'unit&eacute; de disques : c'est ce que
+nous avons fait ligne <B>370</B>.</P>
+
+<P>&nbsp;</P>
+
+<P><FONT SIZE="+1">Une petite digression...</FONT></P>
+
+<P>Juste un mot sur l'instruction AUTO que nous venons d'utiliser.
+Lorsque l'on entre, sans num&eacute;ro de ligne, l'instruction :</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">AUTO</FONT></BLOCKQUOTE>
+
+<P>...l'ordinateur se met &agrave; num&eacute;roter automatiquement
+les lignes, en commen&ccedil;ant &agrave; 10, et en progressant de 10
+en 10 &agrave; chaque nouvelle ligne entr&eacute;e. Si les lignes
+<B>10</B>, <B>20</B>, <B>30</B>, etc existent d&eacute;j&agrave; dans
+votre programme, vous les ferez appara&icirc;tre sur l'&eacute;cran
+une &agrave; une en actionnant la touche <B>&#91;RETURN&#93;</B>.
+Cette proc&eacute;dure peut vous faire gagner du temps lorsque vous
+d&eacute;sirez corriger toute une s&eacute;quence de lignes
+espac&eacute;es de 10 en 10.</P>
+
+<P>&nbsp;</P>
+
+<P><FONT SIZE="+1">Revenons &agrave; notre programme...</FONT></P>
+
+<P>Apr&egrave;s avoir &eacute;crit les instructions permettant le
+stockage de nos donn&eacute;es sur disquette, il ne nous reste plus
+qu'&agrave; en pr&eacute;voir le chargement pour que notre programme
+soit termin&eacute;. Ajoutons donc une nouvelle option au menu en
+corrigeant encore une fois la ligne <B>100</B> :</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">100 ON ch GOSUB
+   120,210,270,350,420</FONT></BLOCKQUOTE>
+
+<P>Voyons maintenant les instructions de chargement. Il faudra
+d'abord ouvrir (<B>OPEN</B>) le fichier entr&eacute;e (<B>IN</B>put)
+sur la disquette de &#171; <B>donn&eacute;es</B> &#187;, puis
+chercher &agrave; partir de cette disquette (canal #9) toutes les
+valeurs, de 1 &agrave; 100, des variables <B>NOM$(x)</B> et
+<B>TEL$(x)</B>, et enfin refermer le fichier avant de revenir au
+menu. Voici la proc&eacute;dure :</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">420 OPENIN "donnees"</FONT>
+   
+   <P><FONT FACE="Fixedsys">430 FOR x=1 TO 100</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">440 INPUT 119,NOM$(x),TEL$(x)</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">450 NEXT</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">460 CLOSEIN</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">470 PRINT"donnees chargees"</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">480 RETURN</FONT></P></BLOCKQUOTE>
+
+<P>&nbsp;</P>
+
+<P><FONT SIZE="+1">La fin du commencement...</FONT></P>
+
+<P>Le programme que nous venons d'&eacute;crire remplit maintenant
+tous les objectifs que nous nous &eacute;tions fix&eacute;s au
+d&eacute;part lorsque que nous nous demandions &#171; ce qu'il
+devrait faire &#187;. Il ne nous reste donc plus qu'&agrave;
+am&eacute;liorer la &#171; pr&eacute;sentation des r&eacute;sultats
+&#187; &agrave; l'&eacute;cran.</P>
+
+<P>&nbsp;</P>
+
+<P><FONT SIZE="+1">Et le commencement de la fin...</FONT></P>
+
+<P>D'abord quelques instructions pour mettre le programme au
+propre:</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">34 MODE 1</FONT></BLOCKQUOTE>
+
+<P>Ceci d&eacute;termine le mode d'affichage : l'&eacute;cran sera
+effac&eacute; &agrave; chaque nouvelle ex&eacute;cution du programme.
+Ecrivez ensuite :</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">36 WINDOW #1,7,36,10,14</FONT></BLOCKQUOTE>
+
+<P>Cette instruction un peu obscure ne doit pas vous effrayer : elle
+consiste simplement &agrave; dessiner sur l'&eacute;cran une petite
+fen&ecirc;tre pour encadrer le menu. Le code situ&eacute;
+apr&egrave;s le mot WINDOW indique &agrave; l'ordinateur sur quel
+canal cette fen&ecirc;tre sera dirig&eacute;e (souvenez-vous que nous
+en avons 8 &agrave; notre disposition, de #<B>0</B> &agrave;
+#<B>7</B>). Sachant de plus que l'ordinateur, s'il n'a pas
+re&ccedil;u d'indication particuli&egrave;re, choisit automatiquement
+le canal #<B>0</B>, on voit bien qu'il faut &eacute;viter de diriger
+notre petite fen&ecirc;tre sur ce canal, sous peine de voir s'y
+afficher toutes les sorties du programme. Il faudra donc choisir un
+autre canal entre #<B>1</B> et #<B>7</B>, d'o&ugrave; l'indication
+#<B>1</B> sur notre exemple. Les quatre nombres qui viennent ensuite
+indiquent, de mani&egrave;re on ne peut plus simple, les dimensions
+de la fen&ecirc;tre : ils donnent la position des bords gauche,
+droit, sup&eacute;rieur et inf&eacute;rieur de la fen&ecirc;tre, en
+se r&eacute;f&eacute;rant aux num&eacute;ros de colonnes et de lignes
+de l'&eacute;cran (comme pour l'instruction <B>LOCATE</B>). Ainsi
+dans notre exemple, apr&egrave;s avoir pr&eacute;cis&eacute; que nous
+utilisions le canal 1, nous d&eacute;clarons que le bord de gauche
+commence en colonne 7, que celui de droite finit en colonne
+<B>36</B>, que le bord sup&eacute;rieur commence en ligne <B>10</B>
+et que le bord inf&eacute;rieur finit en ligne <B>14</B>.</P>
+
+<P>Si nous voulons maintenant que le menu s'affiche dans cette
+fen&ecirc;tre, il va nous falloir rectifier les lignes <B>40</B>
+&agrave; <B>80</B> :</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">40 PRINT #1,"1. ajouter un
+   correspondant"</FONT>
+   
+   <P><FONT FACE="Fixedsys">50 PRINT #1,"2. lister les
+   correspondants"</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">60 PRINT #1,"3consulter le
+   repertoire"</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">70 PRINT #1,"4. sauvegarder le
+   repertoire"</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">80 PRINT #1,"5. charger le
+   repertoire"</FONT></P></BLOCKQUOTE>
+
+<P>Ajoutons encore la ligne :</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">85 LOCATE 7,25</FONT></BLOCKQUOTE>
+
+<P>Cette instruction sert &agrave; positionner sur l'&eacute;cran la
+demande de l'option choisie. La pr&eacute;sentation sera ainsi plus
+claire.</P>
+
+<P>Vidons maintenant l'&eacute;cran de son contenu avant chaque
+retour au menu :</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">110 GOTO 34</FONT>&nbsp;</BLOCKQUOTE>
+
+<P>...et apr&egrave;s chaque selection d'option :</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">95 CLS</FONT>&nbsp;</BLOCKQUOTE>
+
+<P>Ajoutons pour finir les trois lignes suivantes, qui mettront
+l'ordinateur en attente avant de revenir au menu :</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">103 LOCATE 7,25</FONT>
+   
+   <P><FONT FACE="Fixedsys">105 PRINT"appuyez une touche pour le
+   menu"</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">107 IF INKEY$="" THEN 107</FONT></P></BLOCKQUOTE>
+
+<P>La ligne <B>103</B> indique l'endroit auquel l'ordinateur devra
+afficher le message contenu en ligne <B>105</B>. La ligne <B>107</B>
+cherche quelle cha&icirc;ne de caract&egrave;re vient d'&ecirc;tre
+entr&eacute;e au clavier. Tant que celle-ci sera vide,
+c'est-&agrave;-dire tant que l'utilisateur n'aura pas actionn&eacute;
+une touche quelconque du clavier, le programme bouclera sur cette
+instruction. Cette instruction a bien pour effet de mettre le
+programme en attente : celui-ci attend effectivement qu'une touche
+soit enfonc&eacute;e pour passer &agrave; la ligne suivante.</P>
+
+<P>Le voil&agrave; donc termin&eacute;, ce programme !
+Termin&eacute;, vraiment ? ...vous pourriez encore lui demander de
+corriger ou d'effacer des noms et des num&eacute;ros de
+t&eacute;l&eacute;phone, de trier la liste dans l'ordre
+alphab&eacute;tique, ou de vous la &#171; sortir &#187; sur
+imprimante, ou bien encore, si vous &ecirc;tes tr&egrave;s ambitieux,
+d'&eacute;mettre des signaux permettant d'appeler automatiquement
+votre correspondant en entrant simplement son nom au clavier, non
+sans avoir, bien entendu, demand&eacute; aux PTT l'autorisation de
+connecter votre ordinateur au poste t&eacute;l&eacute;phonique ! Ces
+perfectionnements sont pourtant de l'ordre du possible. A vrai dire,
+on peut am&eacute;liorer et peaufiner ainsi ses programme &agrave;
+l'infini, surtout lorsqu'on dispose d'un outil informatique aussi
+puissant que le 6128. Il faut pourtant savoir s'arr&ecirc;ter et nous
+allons laisser ce &#171; r&eacute;pertoire t&eacute;l&eacute;phonique
+&#187; &agrave; ce point en esp&eacute;rant que vous en savez
+d&eacute;sormais un peu plus sur l'art d'&eacute;crire un programme
+en partant de z&eacute;ro. Il ne vous reste qu'&agrave; le remettre
+un peu en ordre en tapant une derni&egrave;re instruction :</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">RENUM</FONT></BLOCKQUOTE>
+
+<P>...puis &agrave; le stocker sur disquette, ou vous en
+d&eacute;barrasser. Mais qui sait, il pourrait peut&ecirc;tre vous
+&ecirc;tre utile... pour noter les num&eacute;ros de
+t&eacute;l&eacute;phone de vos amis !</P>
+
+<P>Voici votre programme termin&eacute; :</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">10 REM repertoire
+   telephonique</FONT>
+   
+   <P><FONT FACE="Fixedsys">20 DIM NOM$(100)</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">30 DIM TEL$(100)</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">40 MODE 1</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">50 WINDOW #1,7,36,10,14</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">60 PRINT #1,"l. ajouter un
+   correspondant"</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">70 PRINT #1,"2. lister les
+   correspondants"</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">80 PRINT #1,"3. consulter le
+   repertoire"</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">90 PRINT #1,"4. sauvegarder le
+   repertoire"</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">100 PRINT #1,"5. charger le
+   repertoire"</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">110 LOCATE 7,25</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">120 INPUT"votre choix (puis
+   ENTER)";ch</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">130 CLS</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">140 ON ch GOSUB
+   190,290,350,430,500</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">150 LOCATE 5,25</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">160 PRINT"appuyer une touche pour le
+   menu"</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">170 IF INKEY$="" THEN 170</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">180 GOTO 40</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">190 FOR x=1 TO 100</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">200 CLS</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">210 IF LEN(NOM$(x))&gt;0 THEN
+   260</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">220 PRINT"pour arreter appuyer
+   &#91;ENTER&#93;"</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">230 INPUT "nom";NOM$(x)</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">240 IF NOM$(x)="" THEN 270</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">250 INPUT "telephone";TEL$(x)</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">260 NEXT</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">270 PRINT"entree des donnees
+   terminee."</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">280 RETURN</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">290 FOR x=1 TO 100</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">300 IF NOM$(x)="" THEN 330</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">310 PRINT NOM$(x);" ";TEL$(x)</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">320 NEXT</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">330 PRINT"fin de liste"</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">340 RETURN</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">350 INPUT "nom a
+   trouver";RECHERCHE$</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">360 FOR x=1 TO 100</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">370 IF INSTR(NOM$(x),RECHERCHE$)=0 THEN
+   400</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">380 PRINT NOM$(x);" ";TEL$(x)</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">390 RETURN</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">400 NEXT</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">410 PRINT"ce nom n'est pas
+   repertorie."</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">420 RETURN</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">430 OPENOUT "donnees"</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">440 FOR x=1 TO 100</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">450 WRITE #9,NOM$(x),TEL$(x)</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">460 NEXT</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">470 CLOSEOUT</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">480 PRINT"donnees sauvees"</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">490 RETURN</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">500 OPENIN "donnees"</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">510 FOR x=1 TO 100</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">520 INPUT #9,NOM$(x),TEL$(x)</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">530 NEXT</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">540 CLOSEIN</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">550 PRINT"donnees chargees" 360
+   RETURN</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">run</FONT></P>
+   
+   <P>&nbsp;</P></BLOCKQUOTE>
+
+<CENTER><A HREF="http://pulko.mandy.pagesperso-orange.fr/cpc/chapitre1.htm">&lt;&lt;Chapitre 1</A> <A HREF="index.htm">&#91;Index&#93;</A>
+<A HREF="chapitre3.htm">Chapitre 3&gt;&gt;</A></CENTER>
+<script type="text/javascript">
+//<![CDATA[
+if (typeof _gstat != "undefined") _gstat.audience('','pagesperso-orange.fr');
+//]]>
+</script>
+</BODY>
+</HTML>

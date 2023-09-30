@@ -1,0 +1,2654 @@
+<HTML>
+<HEAD>
+   <TITLE>Chapitre 6</TITLE>
+<script type="text/javascript">
+//<![CDATA[
+var gs_d=new Date,DoW=gs_d.getDay();gs_d.setDate(gs_d.getDate()-(DoW+6)%7+3);
+var ms=gs_d.valueOf();gs_d.setMonth(0);gs_d.setDate(4);
+var gs_r=(Math.round((ms-gs_d.valueOf())/6048E5)+1)*gs_d.getFullYear();
+var gs_p = (("https:" == document.location.protocol) ? "https://" : "http://");
+document.write(unescape("%3Cscript src='" + gs_p + "s.gstat.orange.fr/lib/gs.js?"+gs_r+"' type='text/javascript'%3E%3C/script%3E"));
+//]]>
+</script>
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<P><FONT SIZE="+3"><B>Chapitre 6</B></FONT></P>
+
+<P><FONT SIZE="+3"><B>Introduction au LOGO
+
+<HR>
+
+</B></FONT>L'objectif de ce chapitre est de vous faire prendre
+contact avec LOGO. Assorti d'exemples, il est compl&eacute;t&eacute;
+d'un guide des commandes disponibles mais n'est ni un cours
+exhaustif, ni un guide de r&eacute;f&eacute;rence. Il existe pour
+cela toute une s&eacute;rie de publications AMSOFT et d'autres
+ouvrages.</P>
+
+<P>Sujets abord&eacute;s:</P>
+
+<UL>
+   <LI>Le concept de LOGO</LI>
+   
+   <LI>Chargement et mise en service de Dr. LOGO</LI>
+   
+   <LI>Le graphisme de la tortue</LI>
+   
+   <LI>Ecrire vos propres proc&eacute;dures</LI>
+   
+   <LI>Editer vos propres proc&eacute;dures</LI>
+</UL>
+
+<P><FONT SIZE="+1">Qu'est-ce que le LOGO?</FONT></P>
+
+<P>Le LOGO peut vous aider &agrave; devenir un programmeur, que vous
+ayez ou non des notions d'informatique. C'est un langage puissant qui
+devient de plus en plus populaire en raison de sa
+simplicit&eacute;.</P>
+
+<P>Vous vous servez de &#171; proc&eacute;dures &#187; pour
+construire les diff&eacute;rentes parties de votre programme. Le Dr.
+LOGO a sa propre collection de &#171; proc&eacute;dures &#187;
+appel&eacute;es &#171; primitives &#187; que vous utiliserez
+&eacute;galement pour programmer.</P>
+
+<P>Dans les ann&eacute;es 70. une &eacute;quipe de chercheurs en
+informatique et d'&eacute;ducateurs dirig&eacute;s par Seymour Papert
+mit au point le LOGO et sa petite tortue graphique pour permettre
+&agrave; de tr&egrave;s jeunes enfants de programmer un ordinateur.
+La tortue est pour ces jeunes apprentis. comme le dit Papert, un
+&#171; objet pour penser &#187;. un outil pour apprendre d'une
+fa&ccedil;on diff&eacute;rente. En forme de t&egrave;te de
+fl&egrave;che, elle peut &ecirc;tre d&eacute;plac&eacute;e sur
+l'&eacute;cran &agrave; l'aide de commandes simples.</P>
+
+<P>&nbsp;</P>
+
+<P><FONT SIZE="+1">Dr. LOGO</FONT></P>
+
+<P>Le Dr. LOGO est une version tr&egrave;s &eacute;labor&eacute;e du
+LOGO. Elle a &eacute;t&eacute; sp&eacute;cialement adapt&eacute;
+&agrave; l'ordinateur individuel AMSTRAD afin de le rendre encore
+plus simple &agrave; programmer. Des extensions ont permis d'y
+inclure la possibilit&eacute; d'utiliser les puissantes
+facult&eacute;s sonores du CPC6128 tandis que la correction des
+programmes est facilit&eacute;e par le pav&eacute; de gestion du
+curseur.</P>
+
+<P>&nbsp;</P>
+
+<P><FONT SIZE="+1">Pr&eacute;parons-nous</FONT>&nbsp;</P>
+
+<P>Pour mettre en service le Dr. LOGO, ins&eacute;rez une copie de la
+face 1 d'une des disquettes syst&egrave;me dans l'unit&eacute; de
+disquette et tapez:</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">|cpm</FONT></BLOCKQUOTE>
+
+<P>Lorsque le message<B> A &gt; </B>apparait, retirez la disquette et
+ins&eacute;rez une copie de la face 3 (DR LOGO &amp; HELP).</P>
+
+<P>Pour lancer le Dr. LOGO, tapez:</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">SUBMIT LOGO3</FONT></BLOCKQUOTE>
+
+<P>Au bout dc quelques secondes, un message de bienvenue s'affiche,
+suivi d'un point d'interrogation.</P>
+
+<P><TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0>
+   <TR>
+      <TD>
+         <P><FONT SIZE="+1">Dr. LOGO sous CP/M 2.2</FONT></P>
+         
+         <P><B>Remarque</B></P>
+         
+         <P>La version du Dr. LOGO stock&eacute;e sur la face 4 d'une
+         des disquettes syst&egrave;me a &eacute;t&eacute;
+         pr&eacute;vue pour une utilisation du Dr. LOGO sous CP/M 2.2
+         (sur AMSTRAD CPC664 ou CPC464+ DDI1 ). Elle n'est donc pas
+         recommand&eacute;e sur le CPC6128. La face 3 contient toutes
+         les sp&eacute;cifications du Dr. LOGO de Digital
+         Research.</P>
+         
+         <P>Si vous pr&eacute;f&eacute;rez malgr&eacute; tout
+         utiliser la version CP/M 2.2 du Dr. LOGO, ins&eacute;rez
+         dans l'unit&eacute; une copie de la face 4 d'une des
+         disquettes syst&egrave;me et tapez :</P>
+         
+         <BLOCKQUOTE><FONT FACE="Fixedsys">|CPM</FONT></BLOCKQUOTE>
+         
+         <P>Lorsque A &gt; apparait. tape</P>
+         
+         <BLOCKQUOTE><FONT FACE="Fixedsys">SUBMIT LOGO2</FONT></BLOCKQUOTE>
+         
+         <P>Au bout de quelques secondes s'affiche un message de
+         bienvenue, suivi d'un point d'interrogation.</P>
+      </TD>
+   </TR>
+</TABLE>
+</P>
+
+<P><FONT SIZE="+1">Les premiers pas</FONT></P>
+
+<P>Le point d'interrogation vous indique que Dr. LOGO est pr&ecirc;t
+&agrave; recevoir vos instructions au clavier.</P>
+
+<P>Essayez de taper en minuscules :</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">fd 60 &#91;RETURN&#93;</FONT></BLOCKQUOTE>
+
+<P>... et vous verrez appara&icirc;tre une tortue (une fl&egrave;che
+grand format) qui avancera de 60 unit&eacute;s en laissant un trait
+derri&egrave;re elle. L'&eacute;cran va se restructurer en
+m&eacute;nageant une zone importante pour le graphique et un
+emplacement plus petit pour le texte (?) en bas de
+l'&eacute;cran.</P>
+
+<P>Dr. LOGO d&eacute;cide souvent de changer l'organisation de
+l'&eacute;cran avec soit une grande zone pour le texte, soit une
+grande zone pour le graphisme, selon votre besoin.</P>
+
+<P>Tapez :</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">rt 90 &#91;RETURN&#93;</FONT></BLOCKQUOTE>
+
+<P>... et la tortue bouge de 90 degr&eacute;s vers la droite.</P>
+
+<P>Maintenant tapez:&nbsp;</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">fd 60</FONT></BLOCKQUOTE>
+
+<P>...et une autre ligne se dessine de la m&ecirc;me longueur que la
+premi&egrave;re et &agrave; angle droit.</P>
+
+<P>Entra&icirc;nez-vous avec les instructions <B>fd</B>, <B>bk</B>
+(back : arri&egrave;re) <B>rt</B> et <B>lt</B> (left : gauche), pour
+voir ce qui se passe sur l'&eacute;cran.</P>
+
+<P>&nbsp;</P>
+
+<P><FONT SIZE="+1">Les &#171; proc&eacute;dures&#187; de Dr.
+LOGO</FONT></P>
+
+<P>Une proc&eacute;dure est une liste d'instructions accomplissant un
+certain travail. Vous allez s&ucirc;rement &eacute;crire vos
+premi&egrave;res proc&eacute;dures en utilisant les instructions de
+Dr. LOGO appel&eacute;es &#171; primitives &#187;.&nbsp;</P>
+
+<P><B>fd</B>, <B>bk</B>, <B>rt</B> et <B>lt</B> sont des primitives
+de Dr. LOGO utilisables &agrave; tout moment pour construire vos
+propres &#171; proc&eacute;dures &#187;. Une autre primitive
+tr&egrave;s utilis&eacute;e est <B>cs</B>, qui nettoie l'&eacute;cran
+et renvoie la tortue &agrave; la case de d&eacute;part.</P>
+
+<P>&nbsp;</P>
+
+<P><FONT SIZE="+1">L'&eacute;laboration d'une proc&eacute;dure
+simple</FONT></P>
+
+<P>Vous pouvez &eacute;galement constater que si la formule</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">fd 60 rt 90</FONT></BLOCKQUOTE>
+
+<P>...est r&eacute;p&eacute;t&eacute;e 4 fois, elle dessine un
+carr&eacute; de 60 unit&eacute;s de c&ocirc;t&eacute;.</P>
+
+<P>Vous pouvez obtenir le m&ecirc;me r&eacute;sultat en
+&eacute;crivant tr&egrave;s simplement:</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">repeat 4 &#91;fd 60 rt
+   90&#93;</FONT></BLOCKQUOTE>
+
+<P>Videz l'&eacute;cran et tapez la formule pour voir ce qui se
+passe.</P>
+
+<P>Pour faire de cette formule une nouvelle proc&eacute;dure,
+appel&eacute;e &#171; carre &#187;, tapez</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">to carre</FONT>
+   
+   <P><FONT FACE="Fixedsys">repeat 4 &#91;fd 60 rt 90&#93;</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">end</FONT></P></BLOCKQUOTE>
+
+<P>Dr. LOGO comprend maintenant &#171; <B>carre</B> &#187; et, chaque
+fois qu'il le rencontrera, il tracera un carr&eacute; sur
+l'&eacute;cran. Nous aurions pu donner n'importe quel nom &agrave;
+notre proc&eacute;dure, mais &#171; <B>carre</B> &#187; est un bon
+moyen pour s'en souvenir.</P>
+
+<P>Dr. LOGO nous permet de taper toutes sortes de combinaisons du
+style : <B>carre rt 45 carre</B>, qui va dessiner 2 carr&eacute;s, le
+second ayant un angle de 45 degr&eacute;s par rapport au premier.</P>
+
+<P>&nbsp;</P>
+
+<P><FONT SIZE="+1">Proc&eacute;dures avec
+param&egrave;tres</FONT></P>
+
+<P>Il est possible de b&acirc;tir des proc&eacute;dures auxquelles
+nous pourrons demander &#171; combien &#187;, de m&ecirc;me que pour
+les primitives. Pour b&acirc;tir une proc&eacute;dure qui va
+construire des carr&eacute;s de n'importe quelle taille, nous allons
+red&eacute;finir &#171; <B>carre</B> &#187;</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">to carrequelconque :cote</FONT>
+   
+   <P><FONT FACE="Fixedsys">repeat 4 &#91;fd :cote rt
+   90&#93;</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">end</FONT></P></BLOCKQUOTE>
+
+<P>Vous remarquerez que la variable :cote est
+pr&eacute;c&eacute;d&eacute;e de 2 points qui indiquent &agrave; Dr.
+LOGO que :cote est une variable et non pas une commande.</P>
+
+<P>Lorsque nous utiliserons la proc&eacute;dure carrequelconque,
+:cote doit recevoir une valeur. Ainsi, carrequelconque 150 donnera un
+carr&eacute; de 150 unit&eacute;s de c&ocirc;t&eacute;.</P>
+
+<P>Essayons de combiner 2 proc&eacute;dures pourvoir ce qu'il
+advient. Par exemple, &agrave; partir d'une instruction</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">cs carrequelconque 100 rt 45
+   carrequelconque 150</FONT></BLOCKQUOTE>
+
+<P>la tortue va dessiner 2 carr&eacute;s de c&ocirc;t&eacute;s
+diff&eacute;rents, l'un faisant un angle de 45 par rapport
+l'autre.</P>
+
+<P>Notez comment Dr. LOGO utilise un point d'exclamation ! pour vous
+rappeler qu'une ligne de commandes s'est divis&eacute;e en plusieurs
+lignes sur l'&eacute;cran.</P>
+
+<P>&nbsp;</P>
+
+<P><FONT SIZE="+1">Utilisation de variables pour stocker des
+valeurs</FONT></P>
+
+<P>Dr. LOGO vous permet d'utiliser des variables pour stocker des
+valeurs et en transmettre &agrave; une proc&eacute;dure.</P>
+
+<P>Elaborez tout d'abord une proc&eacute;dure appel&eacute;e
+triangle:</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">to triangle</FONT>
+   
+   <P><FONT FACE="Fixedsys">repeat 3 &#91;fd :bord rt
+   120&#93;</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">end</FONT></P></BLOCKQUOTE>
+
+<P>Vous pouvez tester ceci en tapant .</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">make "bord 100</FONT>
+   
+   <P><FONT FACE="Fixedsys">triangle</FONT></P></BLOCKQUOTE>
+
+<P>Si nous voulons conna&icirc;tre la valeur du bord, nous entrons
+<B>:bord</B> apr&egrave;s le? et Dr. LOGO nous affiche sa valeur</P>
+
+<P>Enfin, nous pouvons utiliser notre variable <B>:bord </B>dans une
+nouvelle proc&eacute;dure afin de construire un dessin. Remarquez
+comment la valeur de<B> :bord</B> est augment&eacute;e de
+fa&ccedil;on a agrandir notre dessin a chaque passage.</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">to dessin</FONT>
+   
+   <P><FONT FACE="Fixedsys">triangle lt 60 triangle rt 60</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">make "bord :bord+4</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">dessin</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">end</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">make "bord 10</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">cs dessin</FONT></P></BLOCKQUOTE>
+
+<P>Quand vous en aver assez, appuyez sur <B>&#91;ESC&#93;</B> pour
+arr&ecirc;ter le programme.</P>
+
+<P>&nbsp;</P>
+
+<P><FONT SIZE="+1">La correction des programmes et des
+proc&eacute;dures</FONT></P>
+
+<P>Dr. LOGO vous permet de corriger les fautes de frappe et de
+modifier les proc&eacute;dures que vous avez d&eacute;finies. Les
+touches utilis&eacute;es pour la correction sont:</P>
+
+<P>Les touches curseur <FONT FACE="Wingdings">&ntilde;&ograve;&iuml;&eth;</FONT>
+pour le d&eacute;placement du curseur d'un caract&egrave;re ou d'une
+ligne &agrave; la fois.</P>
+
+<P>Les touches curseur <FONT FACE="Wingdings">&ntilde;&ograve;&iuml;&eth;</FONT>
+combin&eacute;es &agrave; la touche <B>&#91;CONTROL&#93;</B> pour se
+d&eacute;placer d'une extr&eacute;mit&eacute; de l'&eacute;cran
+&agrave; l'autre.</P>
+
+<P><B>&#91;CLR&#93;</B> efface le caract&egrave;re sous le curseur.
+<B>&#91;DEL&#93;</B> efface le caract&egrave;re a gauche du
+curseur.</P>
+
+<P><B>&#91;RETURN&#93;</B> indique au Dr. LOGO que la correction
+d'une ligne de commande est termin&eacute;e ou bien donne la ligne
+suivante lors de la correction d'une proc&eacute;dure.</P>
+
+<P><B>&#91;ESC&#93;</B> signifie fin de correction et
+<B>&#91;COPY&#93;</B> signale au Dr. LOGO que la correction de la
+proc&eacute;dure est termin&eacute;e.</P>
+
+<P>Quand vous entrez des commandes ou de nouvelles proc&eacute;dures,
+corrigez le texte en face de vous sur l'&eacute;cran. Tout autre
+caract&egrave;re que ceux mentionn&eacute;s plus haut est
+ins&eacute;r&eacute; dans le texte &agrave; la position du
+curseur.</P>
+
+<P>Pour la correction d'une proc&eacute;dure existante, utilisez la
+commande <B>ed</B>.</P>
+
+<P>Dr. LOGO affiche alors l'ancienne version de la proc&eacute;dure
+sur l'&eacute;cran et vous permet d'effectuer ainsi vos modifications
+&agrave; l'aide des commandes de gestion du curseur.</P>
+
+<P>Essayez la correction de la proc&eacute;dure <B>dessin</B> en
+tapant <B>ed`` dessin</B></P>
+
+<P>Servez-vous des touches de correction. Quand vous avez
+termin&eacute;, appuyez sur la touche<B> &#91;ESC&#93;</B>. Dr. LOGO
+abandonne alors le mode correction et vous redonne la version
+originale inchang&eacute;e de votre proc&eacute;dure.</P>
+
+<P>Tapez <B>ed`` dessin</B> &agrave; nouveau puis changez le 4 en 8,
+appuyez sur la touche <B>&#91;COPY&#93;</B> pour sortir et lancez la
+proc&eacute;dure pour visualiser le graphique r&eacute;sultant.
+N'oubliez pas de donner une valeur &agrave; <B>:bord</B>.</P>
+
+<P>&nbsp;</P>
+
+<P><FONT SIZE="+1">Quelques mots sur le fonctionnement</FONT></P>
+
+<P>L'espace de travail utilis&eacute; par Dr. LOGO est divis&eacute;
+en noeuds. Vous pouvez savoir combien il vous en reste en tapant
+:</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">nodes</FONT></BLOCKQUOTE>
+
+<P>Parfois, lorsque presque tous les nceuds sont utilis&eacute;s, Dr.
+LOGO fera le m&eacute;nage de l'espace de travail et la tortue fera
+une pause. On peut aussi demander &agrave; Dr. LOGO de faire ce
+nettoyage par la commande :</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">recycle</FONT></BLOCKQUOTE>
+
+<P>Ceci pour vous permettre de continuer apr&egrave;s que Dr. LOGO se
+soit plaint de n'avoir plus de nouds disponibles.</P>
+
+<P>Si vous utilisez la version CP/M 2.2 du Dr. LOGO (face 4).
+assurez-vous, avant de lancer Dr. LOGO, qu'il y a suffisamment de
+place sur votre disquette pour vous permettre de sauvegarder vos
+proc&eacute;dures. Utilisez la commande <B>CAT</B> d'AMSDOS (voir la
+partie 7 du Cours &Eacute;l&eacute;mentaire).</P>
+
+<P>Jetez un coup d'oeil sur les paragraphes suivants et essayez
+quelques exemples. Vous ne comprendrez pas tout la premi&egrave;re
+fois, mais plus vous avancerez dans votre apprentissage de Dr. LOGO,
+plus vous utiliserez de commandes diff&eacute;rentes.</P>
+
+<P>Quand vous avez termin&eacute; avec Dr. LOGO, tapez :</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">bye</FONT></BLOCKQUOTE>
+
+<P>&nbsp;</P>
+
+<P><FONT SIZE="+1">Liste des primitives de Dr. LOGO</FONT></P>
+
+<P>Ce paragraphe dresse la liste alphab&eacute;tique des primitives
+du Dr.LOGO par groupes, en donnant la forme syntaxique, parfois
+accompagn&eacute;e d'un exemple.</P>
+
+<P>Les commandes accompagn&eacute;es d'un ast&eacute;risque ne sont
+pas disponibles avec la version CP/M 2.2 du Dr. LOGO (face 4 d'une
+des disquettes syst&egrave;me) et les programmes exploitant ces
+commandes ne seront donc pas compatibles avec les CPC664 et CPC464 +
+DDI1 sous CP/M 2.2.</P>
+
+<P><B>TRAITEMENT DE MOTS ET DE LISTES</B></P>
+
+<P>(Vous remarquerez les symboles ? et &gt; dans les exemples
+suivants)</P>
+
+<P><B>ascii</B></P>
+
+<P>Donne la valeur ASCII du premier caract&egrave;re de mot
+entr&eacute;.</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">?ascii "G</FONT>
+   
+   <P><FONT FACE="Fixedsys">71</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">?ascii "g</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">103</FONT></P></BLOCKQUOTE>
+
+<P><B>bf</B></P>
+
+<P>(but first = sauf le premier) Donne un objet sans son premier
+&eacute;l&eacute;ment.</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">?b4 "prendre</FONT>
+   
+   <P><FONT FACE="Fixedsys">rendre</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">?bf &#91;1 2 3&#93;</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">&#91;2 3&#93;</FONT></P></BLOCKQUOTE>
+
+<P><B>bl</B></P>
+
+<P>(but last = sauf le dernier) Donne un objet sans son dernier
+&eacute;l&eacute;ment.</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">?bl "prendre</FONT>
+   
+   <P><FONT FACE="Fixedsys">prendr</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">?bl &#91;1 2 3 4&#93;</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">&#91;1 2 3&#93;</FONT></P></BLOCKQUOTE>
+
+<P><B>char</B></P>
+
+<P>Donne le caract&egrave;re qui correspond &agrave; la valeur ASCII
+entr&eacute;e.</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">?char 83</FONT>
+   
+   <P><FONT FACE="Fixedsys">S</FONT></P></BLOCKQUOTE>
+
+<P><B>count</B></P>
+
+<P>Donne le nombre d'&eacute;l&eacute;ments de l'objet
+entr&eacute;.</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">?count "six</FONT>
+   
+   <P><FONT FACE="Fixedsys">3</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">?count &#91;0 1 2 3&#93;</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">4</FONT></P></BLOCKQUOTE>
+
+<P><B>emptyp</B></P>
+
+<P>R&eacute;pond <B>TRUE</B> (vrai) si l'objet entr&eacute; et un mot
+ou une liste vide. Dans le cas contraire r&eacute;pond <B>FALSE</B>
+(faux).</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">?emptyp "</FONT>
+   
+   <P><FONT FACE="Fixedsys">TRUE</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">?emptyp &#91;&#93;</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">TRUE</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">?emptyp &#91;x&#93;</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">FALSE</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">?make "x &#91;&#93;</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">?emptyp :x</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">TRUE</FONT></P></BLOCKQUOTE>
+
+<P><B>first</B></P>
+
+<P>(premier) Donne le premier &eacute;l&eacute;ment de l'objet
+entr&eacute; et supprime les crochets de la liste.</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">?first "zebre</FONT>
+   
+   <P><FONT FACE="Fixedsys">z</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">?first &#91;1 2 3&#93;</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">1</FONT></P></BLOCKQUOTE>
+
+<P><B>fput</B></P>
+
+<P>(first put = met devant) Donne un nouvel objet en ajoutant le
+premier &eacute;l&eacute;ment entr&eacute; juste devant le
+deuxi&egrave;me.</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">?fput "p "rendre</FONT>
+   
+   <P><FONT FACE="Fixedsys">prendre</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">?fput 1 &#91;2 3&#93;</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">&#91;1 2 3&#93;</FONT></P></BLOCKQUOTE>
+
+<P><B>item</B></P>
+
+<P>(article) Donn&eacute; l'&eacute;l&eacute;ment du rang
+sp&eacute;cifi&eacute;.</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">?item 4 "manuel</FONT>
+   
+   <P><FONT FACE="Fixedsys">u</FONT></P></BLOCKQUOTE>
+
+<P>*</P>
+
+<P><B>last</B></P>
+
+<P>Donne le dernier &eacute;l&eacute;ment de l'objet entr&eacute;
+(comparez avec <B>FIRST</B>).</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">?last "canibal</FONT>
+   
+   <P><FONT FACE="Fixedsys">l</FONT></P></BLOCKQUOTE>
+
+<P>*</P>
+
+<P><B>lc</B></P>
+
+<P>Donne le mot entr&eacute; avec tous les caract&egrave;res
+alphab&eacute;tiques en minuscules (voir &eacute;galement
+<B>FIRST</B>).</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">?lc "GRENIER</FONT>
+   
+   <P><FONT FACE="Fixedsys">grenier</FONT></P></BLOCKQUOTE>
+
+<P><B>list</B></P>
+
+<P>Donne la liste des &eacute;l&eacute;ments entr&eacute;s en les
+encadrant de crochets (&agrave; comparer avec la primitive
+<B>se</B>).</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">?(list 1 2 3 4)</FONT>
+   
+   <P><FONT FACE="Fixedsys">&#91;1 2 3 4&#93;</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">?list "peau &#91;rouge&#93;</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">&#91;peau &#91;rouge&#93;&#93;</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">?(list)</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">&#91;&#93;</FONT></P></BLOCKQUOTE>
+
+<P>*</P>
+
+<P><B>listp</B></P>
+
+<P>R&eacute;pond <B>TRUE</B> (vrai) si l'objet entr&eacute; est une
+liste. Dans le cas contraire. r&eacute;pond <B>FALSE</B> (faux).</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">?listp "mere</FONT>
+   
+   <P><FONT FACE="Fixedsys">FALSE</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">?listp &#91;pere frere
+   soeur&#93;</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">TRUE</FONT></P></BLOCKQUOTE>
+
+<P>*</P>
+
+<P><B>lput</B></P>
+
+<P>&#171; lastput = mettre en dernier &#187; Donne un nouvel objet en
+ajoutant le premier &eacute;l&eacute;ment entr&eacute; &agrave; la
+suite du deuxi&egrave;me.</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">?lput "s "pluriel</FONT>
+   
+   <P><FONT FACE="Fixedsys">pluriels</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">?lput "s &#91;pluriel&#93;</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">&#91;pluriel s&#93;</FONT></P></BLOCKQUOTE>
+
+<P><FONT FACE="Fixedsys">*</FONT></P>
+
+<P><B>memberp</B></P>
+
+<P>R&eacute;pond <B>TRUE</B> (vrai) si le premier
+&eacute;l&eacute;ment entr&eacute; est un &eacute;l&eacute;ment du
+deuxi&egrave;me objet entr&eacute;.</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">?memberp "y "Elysee</FONT>
+   
+   <P><FONT FACE="Fixedsys">TRUE</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">?memberp "chocolat
+   &#91;&#91;vanille&#93;&#91;chocolat&#93;&#91;fraise&#93;&#93;</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">FALSE</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">?memberp &#91;chocolat&#93;
+   &#91;&#91;vanille&#93;&#91;chocolat&#93;&#91;fraise&#93;&#93;</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">TRUE</FONT></P></BLOCKQUOTE>
+
+<P>*</P>
+
+<P><B>numberp</B></P>
+
+<P>R&eacute;pond <B>TRUE</B> (vrai) si l'objet entr&eacute; est un
+nombre.</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">?numberp 374.926</FONT>
+   
+   <P><FONT FACE="Fixedsys">TRUE</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">?numberp "six</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">FALSE</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">''numberp first &#91;2 4 6
+   8&#93;</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">TRUE</FONT></P></BLOCKQUOTE>
+
+<P><FONT FACE="Fixedsys">*</FONT></P>
+
+<P><B>piece</B></P>
+
+<P>Donne un objet contenant les &eacute;l&eacute;ment
+sp&eacute;cifi&eacute;s dans l'objet entr&eacute;.</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">?piece 4 7 "fenetres</FONT>
+   
+   <P><FONT FACE="Fixedsys">etre</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">?piece 2 4 &#91;francois daniel herve
+   olivier frederic&#93;</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">&#91;daniel herve olivier&#93;</FONT></P></BLOCKQUOTE>
+
+<P><B>se</B></P>
+
+<P>(sentence = phrase) Donne la liste des &eacute;l&eacute;ments
+entr&eacute;s en supprimant les crochets (&agrave; comparer avec
+list).</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">?make "instr_list rl</FONT>
+   
+   <P><FONT FACE="Fixedsys">repeat 4 &#91;fd 50 rt 90&#93;</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">?run (se "cs :instr list "ht)</FONT></P></BLOCKQUOTE>
+
+<P>Remarque : Le tiret s'obtient en actionnant<B>
+&#91;SHIFT&#93;0</B>.</P>
+
+<P>*</P>
+
+<P><B>shuffle</B></P>
+
+<P>Donne une liste contenant les &eacute;l&eacute;ments de la liste
+entr&eacute;e dans un ordre al&eacute;atoire.</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">?shuffle &#91;a b c d&#93;</FONT>
+   
+   <P><FONT FACE="Fixedsys">&#91;c b d a&#93;</FONT></P></BLOCKQUOTE>
+
+<P><FONT FACE="Fixedsys">*</FONT></P>
+
+<P><B>uc</B></P>
+
+<P>Donne le mot entr&eacute; avec ses caract&egrave;res
+alphab&eacute;tiques en majuscules (comparer avec lc).</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">?uc "Jones</FONT>
+   
+   <P><FONT FACE="Fixedsys">JONES</FONT></P></BLOCKQUOTE>
+
+<P><FONT FACE="Fixedsys">*</FONT></P>
+
+<P><B>where</B></P>
+
+<P>Donne un nombre calcul&eacute; &agrave; partir de l'expression
+membcrp vraie la plus r&eacute;cente.</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">?memberp "v "riviere</FONT>
+   
+   <P><FONT FACE="Fixedsys">TRUE</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">?show where</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">3</FONT></P></BLOCKQUOTE>
+
+<P><B>word</B></P>
+
+<P>(mot) Donne un seul mot &agrave; partir des mots ou
+&eacute;l&eacute;ments entr&eacute;s.</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">?word "tele "vision</FONT>
+   
+   <P><FONT FACE="Fixedsys">television</FONT></P></BLOCKQUOTE>
+
+<P><B>wordp</B></P>
+
+<P>Donne la r&eacute;ponse <B>TRUE</B> (vrai) si l'objet entr&eacute;
+est soit un mot, soit un nombre.</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">?wordp "bonjour</FONT>
+   
+   <P><FONT FACE="Fixedsys">TRUE</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">?wordp &#91;&#93;</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">FALSE</FONT></P></BLOCKQUOTE>
+
+<P><FONT SIZE="+1">Op&eacute;rations arithm&eacute;tiques:</FONT></P>
+
+<P>*</P>
+
+<P><B>arctan</B></P>
+
+<P>Donne l'arc-tangente (en degr&eacute;s) du nombre
+entr&eacute;.</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">?arctan 0</FONT>
+   
+   <P><FONT FACE="Fixedsys">0</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">?arctan 1</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">45</FONT></P></BLOCKQUOTE>
+
+<P><B>cos</B></P>
+
+<P>Donne le cosinus du nombre entr&eacute; en degr&eacute;s.</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">?cos 60</FONT>
+   
+   <P><FONT FACE="Fixedsys">0.500000000017049</FONT></P></BLOCKQUOTE>
+
+<P><B>int</B></P>
+
+<P>Donne la partie enti&egrave;re du nombre entr&eacute;.</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">?int 4/3</FONT>
+   
+   <P><FONT FACE="Fixedsys">1</FONT></P></BLOCKQUOTE>
+
+<P>*</P>
+
+<P><B>quotient</B></P>
+
+<P>Donne le r&eacute;sultat de la division enti&egrave;re des deux
+nombres entr&eacute;s.</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">?quotient 14 4</FONT>
+   
+   <P><FONT FACE="Fixedsys">3</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">?14/4</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">3.5</FONT></P></BLOCKQUOTE>
+
+<P><B>random</B></P>
+
+<P>Donne un nombre entier positif pris au hasard et inf&eacute;rieur
+au nombre entr&eacute;.</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">?random 20</FONT></BLOCKQUOTE>
+
+<P><B>*</B></P>
+
+<P><B>remainder</B></P>
+
+<P>Donne le r&eacute;sultat entier du quotient du premier nombre
+entr&eacute; par le second.</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">?remainder 7 3</FONT>
+   
+   <P><FONT FACE="Fixedsys">1</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">?remainder 8 4</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">0</FONT></P></BLOCKQUOTE>
+
+<P><B>*</B></P>
+
+<P><B>rerandom</B></P>
+
+<P>Provoque la r&eacute;p&eacute;tition d'une expression
+al&eacute;atoire.</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">?repeat 10 &#91;(type random 10
+   char 9)&#93;</FONT>
+   
+   <P><FONT FACE="Fixedsys">3 7 5 3 2 0 4 2 6</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">?repeat 10 &#91;(type random 10 char
+   9)&#93;</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">9 9 1 0 6 1 3 5 1</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">?rerandom</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">?repeat 10 &#91;(type random 10 char
+   9)&#93;</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">2 9 0 3 1 6 2 3 7</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">?rerandom</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">?repeat 10 &#91;(type random 10 char
+   9)&#93;</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">2 9 0 3 1 6 2 3 7</FONT></P></BLOCKQUOTE>
+
+<P><B>*</B></P>
+
+<P><B>round</B></P>
+
+<P>Donne le nombre entre arrondi a l'entier imm&eacute;diatement
+sup&eacute;rieur.</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">?round 3.3333333</FONT>
+   
+   <P><FONT FACE="Fixedsys">3</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">?round 3.5</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">4</FONT></P></BLOCKQUOTE>
+
+<P><B>sin</B></P>
+
+<P>Donne le sinus du nombre entr&eacute; en degr&eacute;s.</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">?sin 30</FONT>
+   
+   <P><FONT FACE="Fixedsys">0.500000000017049</FONT></P></BLOCKQUOTE>
+
+<P><B>+</B></P>
+
+<P>Donne la somme des nombres entr&eacute;s.</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">?+ 2 2</FONT>
+   
+   <P><FONT FACE="Fixedsys">4</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">?2+2</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">4</FONT></P></BLOCKQUOTE>
+
+<P><FONT FACE="Fixedsys"><B>-</B></FONT></P>
+
+<P>Donne la diff&eacute;rence des deux nombres entr&eacute;s.</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">?- 10 5</FONT>
+   
+   <P><FONT FACE="Fixedsys">5</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">?10-5</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">5</FONT></P></BLOCKQUOTE>
+
+<P><B>*</B></P>
+
+<P>Donne le produit des deux nombres entr&eacute;s.</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">?* 4 6</FONT>
+   
+   <P><FONT FACE="Fixedsys">24</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">?4*6</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">24</FONT></P></BLOCKQUOTE>
+
+<P><B>/</B></P>
+
+<P>Donne le quotient d&eacute;cimal des deux nombres
+entr&eacute;s.</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">?/ 25 5</FONT>
+   
+   <P><FONT FACE="Fixedsys">5</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">?25/5</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">5</FONT></P></BLOCKQUOTE>
+
+<P><FONT SIZE="+1">Op&eacute;rations logiques:</FONT></P>
+
+<P><B>and</B></P>
+
+<P>(et) R&eacute;pond <B>TRUE</B> (vrai) si le r&eacute;sultat de
+toutes les expressions entr&eacute;es est vrai.</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">?and (3&lt;4) (7&gt;4)</FONT>
+   
+   <P><FONT FACE="Fixedsys">TRUE</FONT></P></BLOCKQUOTE>
+
+<P><B>not</B></P>
+
+<P>R&eacute;pond <B>TRUE</B> (vrai) si l'expression entr&eacute;e est
+fausse.</P>
+
+<P>R&eacute;pond <B>FALSE</B> (faux) si l'expression entr&eacute;e
+est vraie.</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">?not (3=4) TRUE</FONT>
+   
+   <P><FONT FACE="Fixedsys">?not (3=3) FALSE</FONT></P></BLOCKQUOTE>
+
+<P><B>or</B></P>
+
+<P>(ou) R&eacute;pond <B>FALSE</B> (faux) si toutes les expressions
+entr&eacute;es sont fausses.</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">?or "TRUE "FALSE</FONT>
+   
+   <P><FONT FACE="Fixedsys">TRUE</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">?or (3=4) (1=2)</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">FALSE</FONT></P></BLOCKQUOTE>
+
+<P><FONT FACE="Fixedsys"><B>=</B></FONT></P>
+
+<P>R&eacute;pond <B>TRUE</B> (vrai) si les deux expressions
+entr&eacute;es sont &eacute;quivalentes; sinon r&eacute;pond <B>FALSE
+</B>(faux).</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">?= "LOGO "LOGO</FONT>
+   
+   <P><FONT FACE="Fixedsys">TRUE</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">?1=2</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">FALSE</FONT></P></BLOCKQUOTE>
+
+<P><B>&gt;</B></P>
+
+<P>R&eacute;pond <B>TRUE</B> (vrai) si le premier
+&eacute;l&eacute;ment entr&eacute; est plus grand que le second ;
+sinon r&eacute;pond <B>FALSE</B> (faux).</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">?&gt; 19 20</FONT>
+   
+   <P><FONT FACE="Fixedsys">FALSE</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">?20&gt;19</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">TRUE</FONT></P></BLOCKQUOTE>
+
+<P><B>&lt;</B></P>
+
+<P>R&eacute;pond <B>TRUE</B> (vrai) si le premier
+&eacute;l&eacute;ment entr&eacute; est plus petit que le second ;
+sinon r&eacute;pond<B> FALSE</B> (faux).</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">?&lt; 27 13</FONT>
+   
+   <P><FONT FACE="Fixedsys">FALSE</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">?13&lt;27</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">TRUE</FONT></P></BLOCKQUOTE>
+
+<P><FONT SIZE="+1">Variables:</FONT></P>
+
+<P><B>local</B></P>
+
+<P>Rend les variables donn&eacute;es accessibles uniquement &agrave;
+la proc&eacute;dure en cours.</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">&gt;(local "x "y "z)</FONT></BLOCKQUOTE>
+
+<P><B>make</B></P>
+
+<P>Pour donner une valeur &agrave; une variable.</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">?make "cote 50</FONT>
+   
+   <P><FONT FACE="Fixedsys">?:cote</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">50</FONT></P></BLOCKQUOTE>
+
+<P><B>*</B></P>
+
+<P><B>namep</B></P>
+
+<P>R&eacute;pond <B>TRUE</B> (vrai) si le mot entr&eacute; identifie
+une variable d&eacute;finie.</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">?make "gout "chocolat</FONT>
+   
+   <P><FONT FACE="Fixedsys">?:gout</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">chocolat</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">?namep "gout</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">TRUE</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">?namep "chocolat</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">FALSE</FONT></P></BLOCKQUOTE>
+
+<P><B>thing</B></P>
+
+<P>Donne la valeur de la variable entree sous forme de nom</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">?make "ordinateur "amstrad</FONT>
+   
+   <P><FONT FACE="Fixedsys">?thing "ordinateur</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">amstrad</FONT></P></BLOCKQUOTE>
+
+<P><FONT SIZE="+1">Proc&eacute;dures:</FONT></P>
+
+<P><B>*</B></P>
+
+<P><B>define</B></P>
+
+<P>Construit la proc&eacute;dure d&eacute;finie par la liste et
+portant le nom sp&eacute;cifi&eacute;.</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">?define "dire.bonjour
+   &#91;&#91;&#93; &#91;pr "bonjour&#93;&#93;</FONT>
+   
+   <P><FONT FACE="Fixedsys">?po "dire.bonjour</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">to dire.bonjour</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">pr "bonjour</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">.text "dire.bonjour</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">&#91;&#91;&#93; &#91;pr
+   "bonjour&#93;&#93;</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">end</FONT></P></BLOCKQUOTE>
+
+<P><B>end</B></P>
+
+<P>Indique la lin de la proc&eacute;dure. Doit &ecirc;tre
+isol&eacute; au d&eacute;but de la derni&egrave;re ligne de la
+proc&eacute;dure.</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">?to carre</FONT>
+   
+   <P><FONT FACE="Fixedsys">&gt;repeat 4 &#91;fd 50 rt
+   90&#93;</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">&gt;end</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">carre defined (carre defini)</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">?carre</FONT></P></BLOCKQUOTE>
+
+<P><B>Po</B></P>
+
+<P>(print out = affichage) Affiche sur l'&eacute;cran la
+proc&eacute;dure d&eacute;sign&eacute;e ou la valeur des variables
+sp&eacute;cifi&eacute;es.</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">?po "carre</FONT>
+   
+   <P><FONT FACE="Fixedsys">to carre</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">repeat 4 &#91;fd 50 rt 90&#93;</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">end</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">?po "x</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">x is 3 (x est 3)</FONT></P></BLOCKQUOTE>
+
+<P><B>pots</B></P>
+
+<P>(print out titles = affichage des titres) Affiche les titres de
+toutes les proc&eacute;dures de l'espace de travail.</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">?pots</FONT></BLOCKQUOTE>
+
+<P><B>*</B></P>
+
+<P><B>text</B></P>
+
+<P>Donne la liste de la proc&eacute;dure sp&eacute;cifi&eacute;e.</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">?to etoile ;cinq branches</FONT>
+   
+   <P><FONT FACE="Fixedsys">&gt;repeat 5 &#91;fd 30 rt 144 fd 30 lt
+   72&#93;</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">&gt;end</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">etoile defined</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">?text "etoile</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">&#91;&#91;&#93; &#91;repeat 5 &#91;fd 30
+   rt 144 fd 30 lt 72&#93;&#93;&#93;</FONT></P></BLOCKQUOTE>
+
+<P><B>to</B></P>
+
+<P>Indique le d&eacute;but de la construction d'une
+proc&eacute;dure.</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">?to carre</FONT>
+   
+   <P><FONT FACE="Fixedsys">&gt;repeat 4 (fd 50 rt 90&#93;</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">&gt;end</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">carre defined</FONT></P></BLOCKQUOTE>
+
+<P><FONT SIZE="+1">Correction:</FONT></P>
+
+<P><B>ed</B></P>
+
+<P>Charge sur l'&eacute;cran la proc&eacute;dure et/ou les variables
+d&eacute;sign&eacute;es dans la m&eacute;moire d'&eacute;dition de
+l'&eacute;cran.</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">?ed "carre</FONT></BLOCKQUOTE>
+
+<P><B>*</B></P>
+
+<P><B>edall</B></P>
+
+<P>Charge sur l'&eacute;cran toutes les variables et
+proc&eacute;dures de l'espace de travail d&eacute;sign&eacute;es dans
+la m&eacute;moire d'&eacute;dition de l'&eacute;cran et entre
+l'&eacute;diteur d'&eacute;cran.</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">?edal</FONT></BLOCKQUOTE>
+
+<P><B>*</B></P>
+
+<P><B>edf</B></P>
+
+<P>Charge directement dans la m&eacute;moire d'&eacute;dition de
+l'&eacute;cran le fichier sp&eacute;cifi&eacute;, ou cr&eacute;e un
+nouveau fichier en entrant l'&eacute;diteur d'&eacute;cran avec une
+m&eacute;moire vide,</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">?edf "etoile</FONT></BLOCKQUOTE>
+
+<P><FONT SIZE="+1">Fonctions d'imprimante</FONT></P>
+
+<P><B>*</B></P>
+
+<P><B>copyon</B></P>
+
+<P>Provoque l'impression du texte par &eacute;cho.</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">?copyon</FONT></BLOCKQUOTE>
+
+<P><B>*</B></P>
+
+<P><B>copyoff</B></P>
+
+<P>Arr&ecirc;te l'impression du texte par &eacute;cho.</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">?copyoff</FONT></BLOCKQUOTE>
+
+<P><FONT SIZE="+1">Ecran texte</FONT></P>
+
+<P><B>ct</B></P>
+
+<P>(clear text = vidage du texte) Efface tout le texte de la
+fen&ecirc;tre o&ugrave; se prom&egrave;ne le curseur et ram&egrave;ne
+le curseur en haut &agrave; gauche de celle-ci.</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">?ct</FONT></BLOCKQUOTE>
+
+<P><B>*</B></P>
+
+<P><B>cursor</B></P>
+
+<P>Donne les coordonn&eacute;es du curseur dans la fen&ecirc;tre
+texte (num&eacute;ro de colonne, num&eacute;ro de ligne).</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">?ct</FONT>
+   
+   <P><FONT FACE="Fixedsys">?cursor</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">&#91;0 1&#93;</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">?(type &#91;la position actuelle du
+   curseur est\&#93; show cursor</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">la position actuelle du curseur est
+   &#91;32 23&#93;</FONT></P></BLOCKQUOTE>
+
+<P><B>pr</B></P>
+
+<P>(print = affiche) Affiche les objets entr&eacute;s au clavier sur
+l'&eacute;cran texte, enl&egrave;ve les crochets d'une liste et va
+&agrave; la ligne (&agrave; comparer avec <B>show</B> et
+<B>type</B>).</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">?pr &#91;a b c&#93;</FONT>
+   
+   <P><FONT FACE="Fixedsys">a b c</FONT></P></BLOCKQUOTE>
+
+<P><B>*</B></P>
+
+<P><B>setcursor</B></P>
+
+<P>Place le curseur aux coordonn&eacute;es
+sp&eacute;cifi&eacute;es.</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">?ct</FONT>
+   
+   <P><FONT FACE="Fixedsys">?to dessin</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">&gt;make "x random 20</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">&gt;make "y random 12</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">&gt;setcursor list :x :y pr "*</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">&gt;end</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">?dessin</FONT></P></BLOCKQUOTE>
+
+<P><B>setsplit</B></P>
+
+<P>D&eacute;limite le nombre de lignes de l'&eacute;cran texte.</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">?setsplit l0</FONT></BLOCKQUOTE>
+
+<P><B>show</B></P>
+
+<P>Affiche les objets entr&eacute;s au clavier sur l'&eacute;cran
+texte, garde les crochets ext&eacute;ricurs d'une liste et va
+&agrave; la ligne (&agrave; comparer avec <B>pr</B> et
+<B>type</B>).</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">?show &#91;a b c&#93;</FONT>
+   
+   <P><FONT FACE="Fixedsys">&#91;a b c&#93;</FONT></P></BLOCKQUOTE>
+
+<P><B>ts</B></P>
+
+<P>(text screen = &eacute;cran texte) R&eacute;serve tout
+l'&eacute;cran pour le texte.</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">?ts</FONT></BLOCKQUOTE>
+
+<P><B>type</B></P>
+
+<P>Affiche les objets entr&eacute;s au clavier sur l'&eacute;cran
+texte, enl&egrave;ve les crochets d'une liste et ne va pas &agrave;
+la ligne (&agrave; comparer avec <B>pr</B> et <B>show</B>).</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">?type &#91;a b c&#93;</FONT>
+   
+   <P><FONT FACE="Fixedsys">a b c</FONT></P></BLOCKQUOTE>
+
+<P><FONT SIZE="+1">L'&eacute;cran graphique</FONT></P>
+
+<P>Notez que l'&eacute;cran est en mode 1, &agrave; 4 couleurs, et
+que le syst&egrave;me de coordination est le m&ecirc;me que celui du
+BASIC AMSTRAD. En d'autres termes, chaque position sur l'&eacute;cran
+sera arrondie au point &eacute;cran ayant le num&eacute;ro pair le
+plus proche. Les quantit&eacute;s de rouge, de vert et de bleu
+pourront varier entre 0, 1 ou 2.</P>
+
+<P><B>clean</B></P>
+
+<P>(to clean = nettoyer) Efface tout l'&eacute;cran graphique sans
+toucher &agrave; la tortue.</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">?fd 50</FONT>
+   
+   <P><FONT FACE="Fixedsys">?clean</FONT></P></BLOCKQUOTE>
+
+<P><B>cs</B></P>
+
+<P>(clear screen = vide l'&eacute;cran) Efface l'&eacute;cran
+graphique et ram&egrave;ne la tortue en position &#91;0,0&#93;
+tourn&eacute;e vers 0 (le nord) et avec le stylo baiss&eacute;.</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">?rt 90 fd 50</FONT>
+   
+   <P><FONT FACE="Fixedsys">?cs</FONT></P></BLOCKQUOTE>
+
+<P><B>dot</B></P>
+
+<P>Place un point sur l'&eacute;cran &agrave; la position
+sp&eacute;cifi&eacute;e par les coordonn&eacute;es indiqu&eacute;es
+et selon la couleur de stylo en cours.</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">?dot &#91;50 10&#93;</FONT></BLOCKQUOTE>
+
+<P><B>*</B></P>
+
+<P><B>dotc</B></P>
+
+<P>Donne le num&eacute;ro de la couleur du point
+sp&eacute;cifi&eacute; par les coordonn&eacute;es, ou -1 si le point
+n'est pas &agrave; l'&eacute;cran.</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">?cs</FONT>
+   
+   <P><FONT FACE="Fixedsys">?setpc 1</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">?dot -50 50</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">?setpc 2</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">?dot 50 50</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">?setpc 3</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">?dot 50 -50</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">?dotc 50 50</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">2</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">?dotc -50 -50</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">0</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">?dotc 1000 3000</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">-1</FONT></P></BLOCKQUOTE>
+
+<P><B>fence</B></P>
+
+<P>(barri&egrave;re) Pose une barri&egrave;re qui emp&ecirc;che la
+tortue de sortir des limites de l'&eacute;cran. <B>window</B>
+enl&egrave;ve cette barri&egrave;re.</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">?fence</FONT>
+   
+   <P><FONT FACE="Fixedsys">?fd 300</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">Turtle out of bounds (la tortue est hors
+   des limites)</FONT></P></BLOCKQUOTE>
+
+<P><B>*</B></P>
+
+<P><B>fill</B></P>
+
+<P>Peint une zone dans la couleur du stylo en cours en changeant le
+point situ&eacute; sous la tortue et tous les points contigus
+horizontaux et verticaux en utilisant l'&eacute;tat du stylo en
+cours.</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">?make "x 5</FONT>
+   
+   <P><FONT FACE="Fixedsys">?cs</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">?st</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">?pd</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">?repeat 30 &#91;fd :x rt 90 make "x :x +
+   5&#93;</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">?fd 20 rt 90</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">?fd 10</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">?pu</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">?home</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">?bk 2</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">?pd</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">?setpc 2</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">?fill</FONT></P></BLOCKQUOTE>
+
+<P><B>fs</B></P>
+
+<P>(full screen = plein &eacute;cran) R&eacute;serve la
+totalit&eacute; de l'&eacute;cran au graphique.</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">?fs</FONT></BLOCKQUOTE>
+
+<P><B>pal</B></P>
+
+<P>(palette) Donne les trois nombres repr&eacute;sentant les
+quantit&eacute;s de rouge, vert, bleu du stylo.</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">?pal 2</FONT>
+   
+   <P><FONT FACE="Fixedsys">&#91;0 2 2&#93;</FONT></P></BLOCKQUOTE>
+
+<P><B>*</B></P>
+
+<P><B>setbg</B></P>
+
+<P>Change la couleur de fond de l'&eacute;cran graphique en fonction
+du num&eacute;ro de couleur sp&eacute;cifi&eacute;.</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">?sf</FONT>
+   
+   <P><FONT FACE="Fixedsys">&#91;0 SS 5 FENCE 1&#93;</FONT></P></BLOCKQUOTE>
+
+<P>(cette instruction d&eacute;finit le fond &agrave; la couleur
+0)</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">?pal 0</FONT>
+   
+   <P><FONT FACE="Fixedsys">&#91;0 0 1&#93;</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">?setbg 2</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">?sf</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">&#91;2 SS 5 FENCE 1&#93;</FONT></P></BLOCKQUOTE>
+
+<P><B>setpal</B></P>
+
+<P>(set palette = fabrication des couleurs) Les trois chiffres
+assignent les quantit&eacute;s de rouge, de vert, de bleu du
+stylo.</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">?setpal 3 &#91;1 1 2&#93;</FONT>
+   
+   <P><FONT FACE="Fixedsys">?pal 3</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">&#91;1 1 2&#93;</FONT></P></BLOCKQUOTE>
+
+<P><B>*</B></P>
+
+<P><B>setscrunch</B></P>
+
+<P>Donne au rapport de l'&eacute;cran graphique la valeur du nombre
+sp&eacute;cifi&eacute;.</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">?sf</FONT>
+   
+   <P><FONT FACE="Fixedsys">&#91;0 SS 5 FENCE 1&#93;</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">?to cercle</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">&gt;repeat 360 &#91;fd 1 rt
+   1&#93;</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">&gt;end</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">cercle defined</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">?setscrunch 2</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">?sf</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">&#91;0 SS 5 FENCE 2&#93;</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">?cercle</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">?setscrunch 2.5</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">?cercle</FONT></P></BLOCKQUOTE>
+
+<P><B>sf</B></P>
+
+<P>(screen facts = les donn&eacute;es de l'&eacute;cran) Affiche des
+informations sur l'&eacute;tat de l'&eacute;cran graphique. La
+structure de ces informations est :&#91;&lt;couleur de fond&gt;
+&lt;&eacute;tat de l'&eacute;cran&gt; &lt;longueur de l'&eacute;cran
+texte&gt; &lt; fen&ecirc;tre&gt; &lt;scrunch&gt;&#93; o&ugrave; &lt;
+couleur de fond&gt; est la couleur du stylo de fond (toujours 0 sous
+CP/M 2.2). &lt;&eacute;tat de l'&eacute;cran &gt; indique <B>SS</B>
+(split screen = &eacute;cran partag&eacute;), <B>FS</B> (full
+screen.= plein &eacute;cran) ou <B>TS</B> (text screen = &eacute;cran
+totalement r&eacute;serv&eacute; au texte). &lt; longueur de
+l'&eacute;cran texte&gt; est le nombre de lignes
+r&eacute;serv&eacute; au texte, et &lt; fen&ecirc;tre &gt; indique
+<B>WINDOW</B> (pas de barri&egrave;re, la tortue peut sortir),
+<B>WRAP</B> (r&eacute;apparition de la tortue de l'autre
+c&ocirc;t&eacute; de l'&eacute;cran) ou <B>FENCE</B> (barri&egrave;re
+- la tortue ne peut pas sortir des limites de l'&eacute;cran). &lt;
+scrunch &gt;, le rapport d'&eacute;cran (non disponible sous CP/M
+2.2), est toujours &eacute;gal &agrave; l par d&eacute;faut et peut
+&ecirc;tre modifi&eacute; par <B>SETSCRUNCH</B>.</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">?sf</FONT>
+   
+   <P><FONT FACE="Fixedsys">&#91;0 SS 5 FENCE 1&#93;</FONT></P></BLOCKQUOTE>
+
+<P><B>ss</B></P>
+
+<P>(split screen = &eacute;cran partag&eacute;) R&eacute;serve au
+texte une fen&ecirc;tre sur l'&eacute;cran graphique.</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">?ss</FONT></BLOCKQUOTE>
+
+<P><B>window</B></P>
+
+<P>Permet &agrave; la tortue de sortir des limites de l'&eacute;cran
+apr&egrave;s un wrap ou un fence.</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">?fence fd 300</FONT>
+   
+   <P><FONT FACE="Fixedsys">Turtle out of bounds </FONT></P>
+   
+   <P><FONT FACE="Fixedsys">?window</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">?fd 300</FONT></P></BLOCKQUOTE>
+
+<P><B>wrap</B></P>
+
+<P>Fait appara&icirc;tre la tortue du c&ocirc;t&eacute; oppos&eacute;
+&agrave; celui o&ugrave; elle sort.</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">?cs wrap</FONT>
+   
+   <P><FONT FACE="Fixedsys">?rt 5 fd 1000</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">? cs window</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">?rt 5 fd 1000</FONT></P></BLOCKQUOTE>
+
+<P><FONT SIZE="+1">Les graphismes de la tortue:</FONT></P>
+
+<P><B>bk</B></P>
+
+<P>(back = arri&egrave;re) D&eacute;place la tortue du nombre de pas
+indiqu&eacute; dans la direction oppos&eacute;e au sens de la
+fl&egrave;che.</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">?cs fd 150</FONT>
+   
+   <P><FONT FACE="Fixedsys">?bk 50</FONT></P></BLOCKQUOTE>
+
+<P><B>fd</B></P>
+
+<P>(forward = avant) Avance la tortue du nombre de pas indiqu&eacute;
+dans le sens de la fl&egrave;che.</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">?fd 80</FONT></BLOCKQUOTE>
+
+<P><B>Home</B></P>
+
+<P>Replace la tortue au centre de l'&eacute;cran graphique, position
+&#91;O O&#93;, tourn&eacute;e vers 0 (le nord).</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">?fd 100</FONT>
+   
+   <P><FONT FACE="Fixedsys">?rt 45</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">?fd 100</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">?home</FONT></P></BLOCKQUOTE>
+
+<P><B>ht</B></P>
+
+<P>(hide turtle = cache tortue) Rend la tortue invisible.
+Acc&eacute;l&egrave;re et clarifie le dessin.</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">?ht</FONT>
+   
+   <P><FONT FACE="Fixedsys">?cs fd 50</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">?st</FONT></P></BLOCKQUOTE>
+
+<P><B>lt</B></P>
+
+<P>(left = gauche) La tortue tourne du nombre de degr&eacute;s
+indiqu&eacute; vers la gauche.</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">?lt 90</FONT></BLOCKQUOTE>
+
+<P><B>pd</B></P>
+
+<P>(pen down = stylo baiss&eacute;) Le stylo est pos&eacute; sur le
+papier et la tortue peut recommencer &agrave; tracer apr&egrave;s
+interruption par la primitive pu.</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">?fd 20 pu fd 20</FONT>
+   
+   <P><FONT FACE="Fixedsys">?pd</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">?fd 20</FONT></P></BLOCKQUOTE>
+
+<P><B>pe</B></P>
+
+<P>(pen erase = stylo qui efface) Cette instruction transforme la
+couleur du stylo en 0, c'est&agrave;-dire la couleur du fond, et
+permet ainsi d'effacer les traits sur l'&eacute;cran.</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">?fd 50</FONT>
+   
+   <P><FONT FACE="Fixedsys">?pe</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">?bk 25</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">?fd 50</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">?pd fd 25</FONT></P></BLOCKQUOTE>
+
+<P><B>pu</B></P>
+
+<P>(pen up = stylo lev&eacute;) Le stylo est lev&eacute;, ne laissant
+plus de trace sur l'&eacute;cran.</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">?fd 30</FONT>
+   
+   <P><FONT FACE="Fixedsys">?pu</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">?fd 30</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">?pd fd 30</FONT></P></BLOCKQUOTE>
+
+<P><B>px</B></P>
+
+<P>(pen exchange = stylo invers&eacute;) Change la couleur de tout ce
+qui a &eacute;t&eacute; trac&eacute; auparavant en sa couleur
+oppos&eacute;e ou logiquement compl&eacute;mentaire.</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">?fd 20 pu fd 20</FONT>
+   
+   <P><FONT FACE="Fixedsys">?pd setpc 3 fd 20</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">?px</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">?bk 80</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">?fd 80</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">?pd bk 100</FONT></P></BLOCKQUOTE>
+
+<P><B>rt</B></P>
+
+<P>(right = droite) La tortue tourne du nombre de degr&eacute;s
+indiqu&eacute; vers la droite.</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">? rt 90</FONT></BLOCKQUOTE>
+
+<P><B>seth</B></P>
+
+<P>(set heading = changement de direction) Tourne la tortue dans la
+direction sp&eacute;cifi&eacute;e en degr&eacute;s. Les nombres
+positifs font tourner la tortue dans le sens des aiguilles d'une
+montre, les nombres n&eacute;gatifs en sens inverse.</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">?seth 90</FONT></BLOCKQUOTE>
+
+<P><B>setpc</B></P>
+
+<P>(set pen coulour = changement de la couleur du stylo) Le stylo
+prend la couleur indiqu&eacute;e par le nombre donn&eacute; (0 est la
+couleur du fond).</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">?setpc 1</FONT></BLOCKQUOTE>
+
+<P><B>setpos</B></P>
+
+<P>(set position = changement de position) Envoie la tortue &acirc;
+la position indiqu&eacute;e par les coordonn&eacute;es
+sp&eacute;cifi&eacute;es.</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">?setpos &#91;30 20&#93;</FONT></BLOCKQUOTE>
+
+<P><B>*</B></P>
+
+<P><B>setx</B></P>
+
+<P>Change la position horizontale (le la tortue en fonction de la
+coordonn&eacute;e r sp&eacute;cifi&eacute;e (voir &eacute;galement
+<B>sety</B>).</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">?setx 80</FONT>
+   
+   <P><FONT FACE="Fixedsys">?fd 100</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">?setx -50</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">?fd 50</FONT></P></BLOCKQUOTE>
+
+<P><B>*</B></P>
+
+<P><B>Sety</B></P>
+
+<P>Change la position verticale de la tortue en fonction de la
+coordonn&eacute;e y sp&eacute;cifi&eacute;e.</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">?sety 90</FONT>
+   
+   <P><FONT FACE="Fixedsys">?fd 20</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">?sety -50</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">?fd 50</FONT></P></BLOCKQUOTE>
+
+<P><B>St</B></P>
+
+<P>(show turtle = montre tortue) Pour rendre visible &agrave; nouveau
+une tortue invisible.</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">?ht</FONT>
+   
+   <P><FONT FACE="Fixedsys">?fd 50</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">?st</FONT></P></BLOCKQUOTE>
+
+<P><B>tf</B></P>
+
+<P>(turtle facts = donn&eacute;es de la tortue) Affiche une liste
+d'informations concernant la tortue. Le format est :
+&#91;&lt;coordx&gt; &lt;coordy&gt; &lt;direction&gt; &lt;&eacute;tat
+du stylo&gt; &lt;couleur du stylo n &gt; &lt;
+visibilit&eacute;&gt;&#93; o&ugrave; &lt; coordx &gt; est la
+coordonn&eacute;e x de la tortue ; &lt; coordy &gt; est la
+coordonn&eacute;e y de la tortue ; &lt;direction&gt; indique la
+direction vers laquelle se tourne la tortue (en degr&eacute;s) ; &lt;
+visibilit&eacute;&gt; est <B>TRUE</B> (vrai) lorsque la tortue est
+visible ; &lt;&eacute;tat du stylo&gt; indique <B>PD</B> (pen down =
+stylo baiss&eacute;), <B>PE</B> (pen erase = stylo qui efface),
+<B>PX</B> (pen exchange = stylo invers&eacute;), <B>PU </B>(pen up =
+stylo lev&eacute;) ; &lt; couleur du stylo n &gt; identifie le
+num&eacute;ro de la couleur du stylo n.</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">?setpos &#91;15 30&#93;</FONT>
+   
+   <P><FONT FACE="Fixedsys">?rt 60</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">? setpc 3</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">?pe</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">?ht</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">?tf</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">&#91;15 30 60 FE 3 FALSE&#93;</FONT></P></BLOCKQUOTE>
+
+<P><B>*</B></P>
+
+<P><B>towards</B></P>
+
+<P>Donne une direction qui pointe la tortue vers les
+coordonn&eacute;es sp&eacute;cifi&eacute;es.</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">?seth towards list :x :y</FONT></BLOCKQUOTE>
+
+<P><FONT SIZE="+1">Gestion de l'espace de travail:</FONT></P>
+
+<P><B>er</B></P>
+
+<P>(erase=efface) Efface la proc&eacute;dure sp&eacute;cifi&eacute;e
+de l'espace de travail.</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">?er "carre</FONT></BLOCKQUOTE>
+
+<P><B>*</B></P>
+
+<P><B>erall</B></P>
+
+<P>Efface toutes les proc&eacute;dures et les variables de l'espace
+de travail.</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">?erall</FONT></BLOCKQUOTE>
+
+<P><B>ern</B></P>
+
+<P>(erase name=efface le nom) Efface la ou les variables
+sp&eacute;cifi&eacute;es de l'espace de travail.</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">?make "cote &#91;100&#93;</FONT>
+   
+   <P><FONT FACE="Fixedsys">?make "angle &#91;45&#93;</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">? :cote :angle</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">&#91;100&#93;</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">&#91;45&#93;</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">?ern &#91;cote angle&#93;</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">?:cote</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">cote has no value (cote ne vaut
+   rien)</FONT></P></BLOCKQUOTE>
+
+<P><B>nodes</B></P>
+
+<P>Affiche le nombre de noeuds disponible dans l'espace de
+travail.</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">?nodes</FONT></BLOCKQUOTE>
+
+<P><B>*</B></P>
+
+<P><B>noformat</B></P>
+
+<P>Supprime de l'espace de travail le formatage de la
+proc&eacute;dure et les commentaires afin de lib&eacute;rer des
+noeuds.</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">?noformat</FONT></BLOCKQUOTE>
+
+<P><B>*</B></P>
+
+<P><B>poall</B></P>
+
+<P>Affiche les noms et les valeurs de toutes les variables de
+l'espace de travail.</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">?poall</FONT></BLOCKQUOTE>
+
+<P><B>*</B></P>
+
+<P><B>pons</B></P>
+
+<P>Affiche les noms et les valeurs de toutes les variables globales
+de l'espace de travail.</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">?pons</FONT>
+   
+   <P><FONT FACE="Fixedsys">medium is 40</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">small is 20</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">large is 80</FONT></P></BLOCKQUOTE>
+
+<P><B>*</B></P>
+
+<P><B>pops</B></P>
+
+<P>Affiche les noms et les d&eacute;finitions de toutes les
+proc&eacute;dures de l'espace de travail.</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">?pops</FONT></BLOCKQUOTE>
+
+<P><B>recycle</B></P>
+
+<P>Lib&egrave;re le plus de noeuds possible et r&eacute;organise
+l'espace de travail.</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">?recycle</FONT>
+   
+   <P><FONT FACE="Fixedsys">?nodes</FONT></P></BLOCKQUOTE>
+
+<P><FONT SIZE="+1">Listes de propri&eacute;t&eacute;:</FONT></P>
+
+<P><B>glist</B></P>
+
+<P>(get list=donne la liste) Permet d'obtenir une liste de tous les
+objets de l'espace de travail auxquels on a attach&eacute; une ou des
+propri&eacute;t&eacute;s.</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">?glist ".DEF</FONT></BLOCKQUOTE>
+
+<P><B>gprop</B></P>
+
+<P>(get property= donne la propri&eacute;t&eacute;) Permet d'obtenir
+une liste de tous les objets de l'espace de travail.</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">?make "hauteur "72</FONT>
+   
+   <P><FONT FACE="Fixedsys">?gprop "hauteur ".APV</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">72</FONT></P></BLOCKQUOTE>
+
+<P><B>plist</B></P>
+
+<P>(property list=liste des propri&eacute;t&eacute;s) Permet
+d'obtenir la liste des propri&eacute;t&eacute;s attach&eacute;es
+&agrave; un mot.</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">?plist "hauteur</FONT>
+   
+   <P><FONT FACE="Fixedsys">&#91;.APV 72&#93;</FONT></P></BLOCKQUOTE>
+
+<P><B>pprop</B></P>
+
+<P>(put property= donne une propri&eacute;t&eacute;) Permet de
+cr&eacute;er un lien entre un mot et une propri&eacute;t&eacute;.</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">?pprop "maitre ".APV
+   "Corbeau</FONT>
+   
+   <P><FONT FACE="Fixedsys">?:maitre</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">Corbeau</FONT></P></BLOCKQUOTE>
+
+<P><B>*</B></P>
+
+<P><B>pps</B></P>
+
+<P>Affiche les paires de propri&eacute;t&eacute;s non standard de
+tous les objets de l'espace de travail.</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">?pprop "Helene "telephone
+   213256</FONT>
+   
+   <P><FONT FACE="Fixedsys">?pps</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">Helene's telephone is 213</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">?plist "Helene</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">&#91;telephone 2132256&#93;</FONT></P></BLOCKQUOTE>
+
+<P><B>remprop</B></P>
+
+<P>remove property= &eacute;limine la propri&eacute;t&eacute;)
+Elimine la propri&eacute;t&eacute; sp&eacute;cifi&eacute;e de la
+liste de propri&eacute;t&eacute; du mot.</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">?remprop "maitre ".APV</FONT></BLOCKQUOTE>
+
+<P><FONT SIZE="+1">Fichiers sur disquette:</FONT></P>
+
+<P><B>*</B></P>
+
+<P><B>changef</B></P>
+
+<P>Change le nom d'un fichier du catalogue de la disquette.</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">?dir</FONT>
+   
+   <P><FONT FACE="Fixedsys">&#91;CERCLE CARRE ETOILE&#93;</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">?changef "boite "carre</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">?dir</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">&#91;CERCLE&nbsp;BOITE&nbsp;ETOILE&#93;</FONT></P></BLOCKQUOTE>
+
+<P><B>*</B></P>
+
+<P><B>defaultd</B></P>
+
+<P>Donne le nom de l'unit&eacute; par d&eacute;faut en cours.</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">?defaultd</FONT>
+   
+   <P><FONT FACE="Fixedsys">A:</FONT></P></BLOCKQUOTE>
+
+<P><B>dir</B></P>
+
+<P>(directory=catalogue) Permet d'obtenir une liste de noms de
+fichiers en Dr.&nbsp;LOGO pr&eacute;sents sur une disquette, soit
+sp&eacute;cifi&eacute;e, soit prise par d&eacute;faut; accepte
+&eacute;galement les jockers.</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">?dir "a:????????</FONT></BLOCKQUOTE>
+
+<P>(Etudiez la partie 1 du chapitre intitul&eacute; " AMSDOS&nbsp;et
+CP/M" pour l'utilisation des jockers???????? Dr. LOGO ne tient
+toutefois pas compte du jocker *.)</P>
+
+<P><B>*</B></P>
+
+<P><B>dirpic</B></P>
+
+<P>Donne une liste des noms de fichiers graphiques de l'unit&eacute;
+par d&eacute;faut ou sp&eacute;cifi&eacute;e. Accepte les noms de
+fichiezrs ambigus.</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">?dirpic "b:</FONT>
+   
+   <P><FONT FACE="Fixedsys">&#91;MON_DESS CARRES&nbsp;ETOILES
+   CERCLES&#93;</FONT></P></BLOCKQUOTE>
+
+<P><B>load</B></P>
+
+<P>Charge le fichier sp&eacute;cifi&eacute;, de la disquette sur
+l'espace travail de l'ordinateur.</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">?load "monfichier</FONT>
+   
+   <P><FONT FACE="Fixedsys">?load b:dessins</FONT></P></BLOCKQUOTE>
+
+<P><B>*</B></P>
+
+<P><B>loadpic</B></P>
+
+<P>Recr&eacute;e sur l'&eacute;cran graphique le dessin
+sauvegard&eacute; dans le fichier graphique
+sp&eacute;cifi&eacute;.</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">?loadpic "mon_dess</FONT>
+   
+   <P><FONT FACE="Fixedsys">?loadpic "b:mon_dess</FONT></P></BLOCKQUOTE>
+
+<P><B>save</B></P>
+
+<P>Ecrit le contenu de l'espace travail dans un fichier sur la
+disquette sp&eacute;cifi&eacute;e.</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">?save "dessins</FONT></BLOCKQUOTE>
+
+<P><B>Remarque</B></P>
+
+<P>Avant de sauvegarder, ins&eacute;rez une disquette format&eacute;e
+disposant d'une capacit&eacute; suffisante. Ne sauvegardez pas sur
+une disquette syst&egrave;me. Il est pr&eacute;f&eacute;rable de
+fermer le trou de protection en &eacute;criture pour &eacute;viter
+tout risque d'&eacute;criture accidentelle.</P>
+
+<P>Si vous utilisez la version CP/M 2.2 du Dr. LOGO (face 4d'une des
+disquettes syst&egrave;me), veillez &agrave;ce que votre disquette de
+travail dispose de l'espace n&eacute;cessaire au stockage des
+programmes, car vous ne pourrez pas changer de disquette en cours de
+proc&eacute;dure.</P>
+
+<P><B>*</B></P>
+
+<P><B>savepic</B></P>
+
+<P>Ecrit le contenu de l'&eacute;cran graphique dans le fichier
+grahique sp&eacute;cifi&eacute;.</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">?savepic "mon_dess</FONT>
+   
+   <P><FONT FACE="Fixedsys">?savepic "b:mon_dess</FONT></P></BLOCKQUOTE>
+
+<P><B>Remarque</B></P>
+
+<P>Avant de sauvegarder, ins&eacute;rez une disquette format&eacute;e
+disposant d'une capacit&eacute; suffisante. Ne sauvegardez pas sur
+une disquette syst&egrave;me. Il est pr&eacute;f&eacute;rable de
+fermer le trou de protection en &eacute;criture pour &eacute;viter
+tout risque d'&eacute;criture accidentelle.</P>
+
+<P>Si vous utilisez la version CP/M 2.2 du Dr. LOGO (face 4d'une des
+disquettes syst&egrave;me), veillez &agrave;ce que votre disquette de
+travail dispose de l'espace n&eacute;cessaire au stockage des
+programmes, car vous ne pourrez pas changer de disquette en cours de
+proc&eacute;dure.</P>
+
+<P><B>*</B></P>
+
+<P><B>s</B><FONT FACE="Fixedsys">etd</FONT></P>
+
+<P>(setdrive) D&eacute;finit l'unit&eacute; sp&eacute;cifi&eacute;e
+comme unit&eacute; par d&eacute;faut.</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">?defaultd</FONT>
+   
+   <P><FONT FACE="Fixedsys">A:</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">?dir</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">&#91;BOITE&nbsp;CERCLE&nbsp;TRIANGLE&#93;</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">?setd b:</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">?defaultd</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">B:</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">?dir</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">&#91;ETOILE MAISON&#93;</FONT></P></BLOCKQUOTE>
+
+<P><FONT SIZE="+1">Clavier et manette de jeu :</FONT></P>
+
+<P><B>buttonp</B></P>
+
+<P>(button pressed=bouton appuy&eacute;) R&eacute;pond <B>TRUE</B>
+(vrai) si le bouton de la manette de jeu est actionn&eacute;. Les
+num&eacute;ros 0 et 1 servent a identifier les deux manettes de
+jeu.</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">?to timer</FONT>
+   
+   <P><FONT FACE="Fixedsys">&gt;label "boucle</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">&gt;if (buttonp 0) &#91;pr &#91;tirer
+   0!&#93;&#93;</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">&gt;if (buttonp 1) &#91;pr &#91;tirer
+   1!&#93;&#93;</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">&gt;go "boucle</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">&gt;end</FONT></P></BLOCKQUOTE>
+
+<P>La position de la manette de jeu est test&eacute;e par
+<B>paddle</B>.</P>
+
+<P><B>keyp</B></P>
+
+<P>R&eacute;pond <B>TRUE</B> (vrai) si un caract&egrave;re vient
+d'&ecirc;tre tap&eacute; au clavier et attend d'&ecirc;tre
+enregistr&eacute;.</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">?to inkey</FONT>
+   
+   <P><FONT FACE="Fixedsys">&gt;if keyp &#91;op rc&#93; &#91;op
+   "&#93;</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">&gt;end</FONT></P></BLOCKQUOTE>
+
+<P><B>paddle</B></P>
+
+<P>Permet de conna&icirc;tre les &eacute;tats de la manette 0 ou 1.
+Les positions sont cod&eacute;es comme suit:</P>
+
+<P><TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH="24%">
+   <TR>
+      <TD WIDTH=169>
+         <P><B>Valeur retourn&eacute;e</B></P>
+      </TD>
+      <TD WIDTH=141>
+         <P><B>Signification</B></P>
+      </TD>
+   </TR>
+   <TR>
+      <TD WIDTH=169>
+         <P>255</P>
+      </TD>
+      <TD WIDTH=141>
+         <P>Rien</P>
+      </TD>
+   </TR>
+   <TR>
+      <TD WIDTH=169>
+         <P>0</P>
+      </TD>
+      <TD WIDTH=141>
+         <P>En haut</P>
+      </TD>
+   </TR>
+   <TR>
+      <TD WIDTH=169>
+         <P>1</P>
+      </TD>
+      <TD WIDTH=141>
+         <P>En haut et &agrave; droite</P>
+      </TD>
+   </TR>
+   <TR>
+      <TD WIDTH=169>
+         <P>2</P>
+      </TD>
+      <TD WIDTH=141>
+         <P>A droite</P>
+      </TD>
+   </TR>
+   <TR>
+      <TD WIDTH=169>
+         <P>3</P>
+      </TD>
+      <TD WIDTH=141>
+         <P>En bas et &agrave; droite</P>
+      </TD>
+   </TR>
+   <TR>
+      <TD WIDTH=169>
+         <P>4</P>
+      </TD>
+      <TD WIDTH=141>
+         <P>En bas</P>
+      </TD>
+   </TR>
+   <TR>
+      <TD WIDTH=169>
+         <P>5</P>
+      </TD>
+      <TD WIDTH=141>
+         <P>En bas et &agrave; gauche</P>
+      </TD>
+   </TR>
+   <TR>
+      <TD WIDTH=169>
+         <P>6</P>
+      </TD>
+      <TD WIDTH=141>
+         <P>A gauche</P>
+      </TD>
+   </TR>
+   <TR>
+      <TD WIDTH=169>
+         <P>7</P>
+      </TD>
+      <TD WIDTH=141>
+         <P>En haut et &agrave; gauche</P>
+      </TD>
+   </TR>
+</TABLE>
+</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">?paddle 0</FONT>
+   
+   <P><FONT FACE="Fixedsys">255</FONT></P></BLOCKQUOTE>
+
+<P>Les boutons de tir sont test&eacute;s par la commande buttonp.</P>
+
+<P><B>rc</B></P>
+
+<P>(read character=sortie d'un caract&egrave;re) Sort le premier
+caract&egrave;re tap&eacute; au clavier.</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">?make "touche rc</FONT></BLOCKQUOTE>
+
+<P>...et appuyez sur la touche X :</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">?:touche</FONT>
+   
+   <P><FONT FACE="Fixedsys">X</FONT></P></BLOCKQUOTE>
+
+<P><B>rl</B></P>
+
+<P>(read list = sortie d'une liste) Donne une liste contenant une
+entr&eacute;e au clavier qui doit &ecirc;tre suivie d'un retour
+chariot.</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">?make "instr_list rl</FONT>
+   
+   <P><FONT FACE="Fixedsys">repeat 4 &#91;fd 50 rt 90&#93;</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">?:instr_list</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">&#91;repeat 4 &#91;fd 50 rt
+   90&#93;&#93;</FONT></P></BLOCKQUOTE>
+
+<P><B>rq</B></P>
+
+<P>(read quote = extraction d'un mot) Donne un mot contenant une
+ligne entr&eacute;e au clavier, qui doit &ecirc;tre suivi d'un retour
+chariot.</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">?make "commande rq</FONT>
+   
+   <P><FONT FACE="Fixedsys">repeat 3 &#91;fd 60 rt
+   120&#93;</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">?:commande</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">repeat 3 &#91;fd 60 rt
+   120&#93;</FONT></P></BLOCKQUOTE>
+
+<P>&nbsp;</P>
+
+<P><FONT SIZE="+1">LE&nbsp;SON:</FONT></P>
+
+<P>Seule la version AMSTRAD&nbsp;de Dr.&nbsp;LOGO poss&egrave;de des
+commandes pour le son. Elles sont d'ailleurs identiques &agrave;
+leurs &eacute;quivalents BASIC. Reportez-vous &agrave; la partie 9 du
+Cours El&eacute;mentaire pour plus de d&eacute;tails.</P>
+
+<P><B>sound</B></P>
+
+<P>Met un son dans une suite de sons (queue). Le format de cette
+instruction est: &#91;&lt;&eacute;tat de canal&gt; &lt;periode
+sonore&gt; &lt;dur&eacute;e&gt; &lt;volume&gt; &lt;enveloppe de
+volume&gt; &lt;enveloppe de tonalit&eacute;&gt; &lt;bruit&gt;&#93;.
+Tous les param&egrave;tres apr&egrave;s dur&eacute;e sont
+facultatifs.</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">?sound &#91;1 20 50&#93;</FONT></BLOCKQUOTE>
+
+<P><B>env</B></P>
+
+<P>Construit l'enveloppe de volume (la forme de la note). Son format
+est: &#91;&lt;num&eacute;ro de l'enveloppe&gt; &lt;section(s) de
+l'enveloppe&gt;&#93;</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">?env &#91;1 100 2 20&#93;</FONT>
+   
+   <P><FONT FACE="Fixedsys">?sound &#91;1 200 300 5 1&#93;</FONT></P></BLOCKQUOTE>
+
+<P><B>ent</B></P>
+
+<P>Construit l'enveloppe de tonalit&eacute;. Son format est
+:&#91;&lt;num&eacute;ro de l'enveloppe&gt; &lt;section(s) de
+l'enveloppe&gt;&#93;</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">?ent &#91;1 100 2 20&#93;</FONT>
+   
+   <P><FONT FACE="Fixedsys">?sound &#91;1 200 300 5 1
+   1&#93;</FONT></P></BLOCKQUOTE>
+
+<P><B>release</B></P>
+
+<P>Lib&egrave;re les canaux dont l'ex&eacute;cution a
+&eacute;t&eacute; suspendue par la commande sound. Les canaux
+&agrave; lib&eacute;rer sont indiqu&eacute;s par le code suivant:</P>
+
+<P><TABLE BORDER=1 WIDTH=200 HEIGHT=211>
+   <TR>
+      <TD WIDTH=87>
+         <P>Valeur entr&eacute;e</P>
+      </TD>
+      <TD WIDTH=109>
+         <P>Canaux lib&eacute;r&eacute;s</P>
+      </TD>
+   </TR>
+   <TR>
+      <TD WIDTH=87>
+         <P>0</P>
+      </TD>
+      <TD WIDTH=109>
+         <P>Aucun</P>
+      </TD>
+   </TR>
+   <TR>
+      <TD WIDTH=87>
+         <P>1</P>
+      </TD>
+      <TD WIDTH=109>
+         <P>A</P>
+      </TD>
+   </TR>
+   <TR>
+      <TD WIDTH=87>
+         <P>2</P>
+      </TD>
+      <TD WIDTH=109>
+         <P>B</P>
+      </TD>
+   </TR>
+   <TR>
+      <TD WIDTH=87>
+         <P>3</P>
+      </TD>
+      <TD WIDTH=109>
+         <P>A et B</P>
+      </TD>
+   </TR>
+   <TR>
+      <TD WIDTH=87>
+         <P>4</P>
+      </TD>
+      <TD WIDTH=109>
+         <P>C</P>
+      </TD>
+   </TR>
+   <TR>
+      <TD WIDTH=87>
+         <P>5</P>
+      </TD>
+      <TD WIDTH=109>
+         <P>A et C</P>
+      </TD>
+   </TR>
+   <TR>
+      <TD WIDTH=87>
+         <P>6</P>
+      </TD>
+      <TD WIDTH=109>
+         <P>B et C</P>
+      </TD>
+   </TR>
+   <TR>
+      <TD WIDTH=87>
+         <P>7</P>
+      </TD>
+      <TD WIDTH=109>
+         <P>A et B&nbsp;et C</P>
+      </TD>
+   </TR>
+</TABLE>
+</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">?release 1</FONT></BLOCKQUOTE>
+
+<P><FONT SIZE="+1">Les commandes de d&eacute;roulement de
+programme</FONT></P>
+
+<P><B>bye</B></P>
+
+<P>Lorsque l'on en a termin&eacute; avec Dr. LOGO.</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">?bye</FONT></BLOCKQUOTE>
+
+<P><B>co</B></P>
+
+<P>Pour continuer apr&egrave;s une pause provoqu&eacute;e par
+&#91;CTRL&#93;Z, pause ou ERRACT.</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">?co</FONT></BLOCKQUOTE>
+
+<P><B>go</B></P>
+
+<P>Ex&eacute;cute la ligne de commande rep&eacute;r&eacute;e par une
+&eacute;tiquette &agrave; l'int&eacute;rieur d'une
+proc&eacute;dure.</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">&gt;go "boucle</FONT></BLOCKQUOTE>
+
+<P><B>if</B></P>
+
+<P>Ex&eacute;cute une ou deux listes d'instructions suivant la valeur
+de l'expression entr&eacute;e ; ces listes en toutes lettres doivent
+&ecirc;tre entour&eacute;es de crochets.</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">&gt;if (:a&gt;:b) &#91;pr &#91;a
+   est plus grand&#93;&#93;</FONT>
+   
+   <P><FONT FACE="Fixedsys">&gt;if (:a&lt;:b) &#91;pr &#91;b est plus
+   grand&#93;&#93;</FONT></P></BLOCKQUOTE>
+
+<P><B>label</B></P>
+
+<P>Pose une &eacute;tiquette sur une ligne d'instruction qui pourra
+ainsi &ecirc;tre appel&eacute;e &agrave; l'aide de la commande
+go.</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">&gt;label "boucle</FONT></BLOCKQUOTE>
+
+<P><B>op</B></P>
+
+<P>(output = retourne) Affiche l'objet entr&eacute; et interrompt la
+proc&eacute;dure.</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">?op &#91;resultat&#93;</FONT></BLOCKQUOTE>
+
+<P><B>repeat</B></P>
+
+<P>R&eacute;p&egrave;te la liste d'instructions autant de fois que le
+num&eacute;ro le sp&eacute;cifie.</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">?repeat 4 &#91;fd 50 rt
+   90&#93;</FONT></BLOCKQUOTE>
+
+<P><B>run</B></P>
+
+<P>Ex&eacute;cute la ligne d'instructions.</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">?make "instr list &#91;Fd 40 rt
+   90&#93;</FONT>
+   
+   <P><FONT FACE="Fixedsys">?run :instr list</FONT></P></BLOCKQUOTE>
+
+<P><B>stop</B></P>
+
+<P>Interrompt l'ex&eacute;cution de la proc&eacute;dure en cours et
+revient au niveau sup&eacute;rieur TOPLEVEL (le symbole?) ou &agrave;
+la proc&eacute;dure d'appel.</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">?stop</FONT></BLOCKQUOTE>
+
+<P><B>wait</B></P>
+
+<P>Arr&ecirc;te l'ex&eacute;cution de la proc&eacute;dure pendant le
+temps sp&eacute;cifi&eacute; par le nombre entr&eacute;. La longueur
+du temps de pause est : nombre entr&eacute; * 1/60 seconde.</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">?wait 20</FONT></BLOCKQUOTE>
+
+<P><FONT SIZE="+1">Traitements des cas particuliers</FONT></P>
+
+<P><B>catch</B></P>
+
+<P>(attrape) Pour traiter une erreur ou un cas particulier qui
+survient pendant l'ex&eacute;cution d'une s&eacute;rie
+d'instructions.</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">&gt;catch "error &#91;+ &#91;&#93;
+   &#91;&#93;&#93;</FONT>
+   
+   <P><FONT FACE="Fixedsys">&gt;pr &#91;je suis ici&#93;</FONT></P>
+   
+   <P><FONT FACE="Fixedsys">je suis ici</FONT></P></BLOCKQUOTE>
+
+<P><B>error</B></P>
+
+<P>Donne la liste d'instructions qui a caus&eacute; la
+derni&egrave;re erreur.</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">&gt;catch "error &#91;execute
+   jusau'a l'erreur&#93;</FONT>
+   
+   <P><FONT FACE="Fixedsys">&gt;show error</FONT></P></BLOCKQUOTE>
+
+<P><B>*</B></P>
+
+<P><B>notrace</B></P>
+
+<P>D&eacute;sactive trace (voir cette commande).</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">?notrace</FONT></BLOCKQUOTE>
+
+<P><B>*</B></P>
+
+<P><B>nowatch</B></P>
+
+<P>D&eacute;sactive watch (voir cette commande).</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">?nowatch</FONT></BLOCKQUOTE>
+
+<P><B>pause</B></P>
+
+<P>Suspend l'ex&eacute;cution de la proc&eacute;dure en cours,
+permettant ainsi le dialogue entre Dr. LOGO et l'utilisateur.</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">&gt;if :cote&gt;5
+   &#91;pause&#93;</FONT></BLOCKQUOTE>
+
+<P><B>throw</B></P>
+
+<P>Ex&eacute;cute la ligne d'instruction identifi&eacute;e par le nom
+entr&eacute; sous <B>catch</B>.</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">?throw "TOPLEVEL</FONT></BLOCKQUOTE>
+
+<P><B>*</B></P>
+
+<P><B>trace</B></P>
+
+<P>Affiche le nom de chaque proc&eacute;dure en cours
+d'ex&eacute;cution.</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">?trace</FONT></BLOCKQUOTE>
+
+<P><B>*</B></P>
+
+<P><B>watch</B></P>
+
+<P>Affiche le nom de chaque expression en cours
+d'ex&eacute;cution.</P>
+
+<BLOCKQUOTE><FONT FACE="Fixedsys">?watch</FONT></BLOCKQUOTE>
+
+<P><FONT SIZE="+1">Les primitives syst&egrave;me</FONT></P>
+
+<P><B>.contents</B></P>
+
+<P>Affiche le contenu de l'emplacement des symboles de Dr. LOGO.</P>
+
+<P><B>.deposit</B></P>
+
+<P>Place le deuxi&egrave;me nombre entr&eacute; &agrave;
+l'emplacement m&eacute;moire donn&eacute; par le premier nombre.</P>
+
+<P><B>.examine</B></P>
+
+<P>Affiche le contenu de l'emplacement m&eacute;moire
+sp&eacute;cifi&eacute;.</P>
+
+<P>*</P>
+
+<P><B>.in</B></P>
+
+<P>Recherche la valeur en cours de l'entr&eacute;e
+sp&eacute;cifi&eacute;e.</P>
+
+<P>*</P>
+
+<P><B>.out</B></P>
+
+<P>Envoie la valeur introduite vers l'entr&eacute;e
+sp&eacute;cifi&eacute;e.</P>
+
+<P><FONT SIZE="+1">Les variables syst&egrave;me</FONT></P>
+
+<P><B>ERRACT</B></P>
+
+<P>Renvoie au niveau sup&eacute;rieur <B>TOPLEVEL</B>,lorsque
+<B>TRUE</B> (vrai) provoque une pause au moment d'une erreur.</P>
+
+<P><B>FALSE</B></P>
+
+<P>Valeur syst&egrave;me.</P>
+
+<P><B>REDEFP</B></P>
+
+<P>Quand <B>TRUE</B> (vrai) permet la red&eacute;finition des
+primitives.</P>
+
+<P><B>TOPLEVEL</B></P>
+
+<P><B>throw``TOPLEVEL</B> clos toutes les proc&eacute;dures en
+attente.</P>
+
+<P><B>TRUE</B></P>
+
+<P>Valeur syst&egrave;me.</P>
+
+<P><FONT SIZE="+1">Les propri&eacute;t&eacute;s du
+syst&egrave;me:</FONT></P>
+
+<P><B>.APV</B></P>
+
+<P>Valeur de la variable associ&eacute;e &agrave; la
+propri&eacute;t&eacute; ; &agrave; savoir la valeur de la variable
+globale.</P>
+
+<P><B>.DEF</B></P>
+
+<P>D&eacute;finition d'une proc&eacute;dure</P>
+
+<P>*</P>
+
+<P><B>.ENL</B></P>
+
+<P>Fin d'une ligne de proc&eacute;dure interrompue par un retour
+chariot ou des espaces.</P>
+
+<P>*</P>
+
+<P><B>.EMT</B></P>
+
+<P>D&eacute;but d'une ligne de proc&eacute;dure interrompue par un
+retour chariot ou des espaces.</P>
+
+<P><B>.PRM</B></P>
+
+<P>Identifie une primitive.</P>
+
+<P><B>*		</B></P>
+
+<P><B>.REM (ou;)</B>		</P>
+
+<P>Remarques ou commentaires.</P>
+
+<CENTER><A HREF="chapitre5.htm">&lt;&lt; Chapitre 5</A> <A HREF="index.htm">&#91;Index&#93;</A></CENTER>
+<script type="text/javascript">
+//<![CDATA[
+if (typeof _gstat != "undefined") _gstat.audience('','pagesperso-orange.fr');
+//]]>
+</script>
+</BODY>
+</HTML>

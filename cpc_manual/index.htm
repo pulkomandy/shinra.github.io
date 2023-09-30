@@ -1,0 +1,953 @@
+<HTML>
+<!--This file created 13:59  25/05/2004 by Claris Home Page version 3.0This file created 14:31  25/05/2004 by Claris Home Page version 3.0This file created 14:38  25/05/2004 by Claris Home Page version 3.0This file created 14:38  25/05/2004 by Claris Home Page version 3.0This file created 14:39  25/05/2004 by Claris Home Page version 3.0This file created 14:45  25/05/2004 by Claris Home Page version 3.0This file created 14:46  25/05/2004 by Claris Home Page version 3.0This file created 14:46  25/05/2004 by Claris Home Page version 3.0This file created 14:48  25/05/2004 by Claris Home Page version 3.0This file created 15:14  25/05/2004 by Claris Home Page version 3.0This file created 15:26  25/05/2004 by Claris Home Page version 3.0-->
+<HEAD>
+   <TITLE>Manuel Amstrad cpc 6128</TITLE>
+<script type="text/javascript">
+//<![CDATA[
+var gs_d=new Date,DoW=gs_d.getDay();gs_d.setDate(gs_d.getDate()-(DoW+6)%7+3);
+var ms=gs_d.valueOf();gs_d.setMonth(0);gs_d.setDate(4);
+var gs_r=(Math.round((ms-gs_d.valueOf())/6048E5)+1)*gs_d.getFullYear();
+var gs_p = (("https:" == document.location.protocol) ? "https://" : "http://");
+document.write(unescape("%3Cscript src='" + gs_p + "s.gstat.orange.fr/lib/gs.js?"+gs_r+"' type='text/javascript'%3E%3C/script%3E"));
+//]]>
+</script>
+</HEAD>
+<BODY BGCOLOR="#FFFFFF" LINK="#000000" VLINK="#666666">
+<CENTER><FONT SIZE="+4"><B>AMSTRAD CPC464 &amp; CPC6128</B></FONT>
+
+<P><FONT SIZE="+4"><B>CLAVIER AZERTY</B></FONT></P></CENTER>
+
+<P><FONT SIZE="+2"><B>NOTE IMPORTANTE</B></FONT></P>
+
+<P><B>Vous poss&eacute;dez la version AZERTY du CPC, et un certain
+nombre de pr&eacute;cisions sont n&eacute;cessaires pour une
+meilleure lecture de votre manuel.</B></P>
+
+<P>&nbsp;</P>
+
+<P><FONT SIZE="+1">1 CLAVIER FRAN&Ccedil;AIS (AZERTY) ET ANGLAIS
+(QWERTY)</FONT></P>
+
+<P>La diff&eacute;rence entre les claviers AZERTY et QWERTY n'est pas
+qu'une question d'ordre des touches de l'Alphabet, la langue
+Fran&ccedil;aise poss&egrave;de des lettres accentu&eacute;es, qui
+pour la plupart, ont &eacute;t&eacute; ajout&eacute;es sur le clavier
+fran&ccedil;ais. De ce fait un certain nombre de caract&egrave;res du
+Basic Locomotive se sont trouv&eacute;s "chass&eacute;s" de leur
+place habituelle sur le clavier. Ces caract&egrave;res qui se
+trouvent ajout&eacute;s cr&eacute;ent une contrainte obligeant
+certains caract&egrave;res utilis&eacute;s sous Basic, &agrave;
+perdre leur repr&eacute;sentation usuelle &agrave; l'&eacute;cran.
+Ainsi, par exemple Le symbole de la division enti&egrave;re du Basic
+ne se trouve plus repr&eacute;sent&eacute; comme "\" mais comme
+"&ccedil;". L'effet de ce caract&egrave;re reste le m&ecirc;me, sa
+repr&eacute;sentation seule est alt&eacute;r&eacute;e ... Ce n'est
+qu'une question de convention.</P>
+
+<P>Il est important de noter qu'un langage de programmation n'est pas
+n&eacute;cessairement un langage d'&eacute;criture. La francisation
+du clavier des CPC aura tendance &agrave; faciliter la frappe et la
+lecture des messages d'un programme, sans toutefois vous permettre
+d'utiliser les caract&egrave;res accentu&eacute;s dans les noms de
+variable ni d'obtenir directement une lettre avec un accent
+circonflexe. En effet l'accent circonflexe en Basic est le symbole de
+l'&eacute;l&eacute;vation &agrave; la puissance: Il vous faudra donc
+r&eacute;soudre ce probl&egrave;me par un moyen logiciel.</P>
+
+<P>Vous ne devrez jamais perdre de vue que les logiciels
+d&eacute;velopp&eacute;s jusqu'&agrave; maintenant sur nos machines
+de type QWERTY peuvent utiliser un moyen d'interrogation du clavier
+relatif &agrave; la position physique de la touche et non pas au
+caract&egrave;re correspondant &agrave; cette touche. Prenons
+l'exemple d'un jeu vous proposant &agrave; un certain stade l'option:
+&#91;Q&#93;uitter. Si le test est effectu&eacute; sur la position
+physique de la touche 'Q', le programme ne r&eacute;agira pas en
+appuyant sur la lettre Q du clavier AZERTY. Il ne r&eacute;agira en
+fait qu'&agrave; la frappe de la lettre A (les lettres A et Q ayant
+sur un QWERTY ou AZERTY la m&ecirc;me position physique sur le
+clavier).</P>
+
+<P>Vous pouvez trouver un clavier QWERTY repr&eacute;sent&eacute;
+&agrave; la page 4 de cette note</P>
+
+<P>&nbsp;</P>
+
+<P><FONT SIZE="+1">2 FRAPPE ET VISUALISATION</FONT></P>
+
+<P>Le manuel que vous avez sous les yeux contient des exemples et des
+explications pour un CPC QWERTY. Certaines de ces explications
+relatives au clavier s'en trouvent erron&eacute;es. Toutefois, dans
+les exemples, TAPEZ toujours au CLAVIER les caract&egrave;res que
+vous LISEZ dans le MANUEL.</P>
+
+<P>Si vous lisez dans le Manuel:</P>
+
+<P><FONT FACE="Fixedsys">PRINT 3</FONT><FONT FACE="Wingdings">&aacute;</FONT><FONT FACE="Fixedsys">2
+(3 puissance 2)</FONT></P>
+
+<P>tapez au clavier sur les touches suivantes:</P>
+
+<P><FONT FACE="Fixedsys">PRINT 3</FONT><FONT FACE="Wingdings">&aacute;</FONT><FONT FACE="Fixedsys">2</FONT></P>
+
+<P>lisez sur l'&eacute;cran:</P>
+
+<P><FONT FACE="Fixedsys">PRINT 3 " 2</FONT></P>
+
+<P>Ce qui est &eacute;crit &agrave; l'&eacute;cran est valide quoique
+diff&eacute;rent. La correspondance des symboles
+alt&eacute;r&eacute;s est la suivante:</P>
+
+<P><TABLE BORDER=1>
+   <TR>
+      <TD>
+         <P>Valeur d&eacute;cimale</P>
+      </TD>
+      <TD>
+         <P>Hexa</P>
+      </TD>
+      <TD>
+         <P>Caract&egrave;re ASCII&nbsp;AZERTY</P>
+      </TD>
+      <TD>
+         <P>Caract&egrave;re ASCII&nbsp;QWERTY</P>
+      </TD>
+   </TR>
+   <TR>
+      <TD>
+         <P>64</P>
+      </TD>
+      <TD>
+         <P>40</P>
+      </TD>
+      <TD>
+         <P>&agrave;</P>
+      </TD>
+      <TD>
+         <P>@</P>
+      </TD>
+   </TR>
+   <TR>
+      <TD>
+         <P>92</P>
+      </TD>
+      <TD>
+         <P>5C</P>
+      </TD>
+      <TD>
+         <P>&ccedil;</P>
+      </TD>
+      <TD>
+         <P>\</P>
+      </TD>
+   </TR>
+   <TR>
+      <TD>
+         <P>94</P>
+      </TD>
+      <TD>
+         <P>5E</P>
+      </TD>
+      <TD>
+         <P>^</P>
+      </TD>
+      <TD>
+         <P><FONT FACE="Wingdings">&aacute;</FONT></P>
+      </TD>
+   </TR>
+   <TR>
+      <TD>
+         <P>123</P>
+      </TD>
+      <TD>
+         <P>7B</P>
+      </TD>
+      <TD>
+         <P>&eacute;</P>
+      </TD>
+      <TD>
+         <P>{</P>
+      </TD>
+   </TR>
+   <TR>
+      <TD>
+         <P>124</P>
+      </TD>
+      <TD>
+         <P>7C</P>
+      </TD>
+      <TD>
+         <P>&ugrave;</P>
+      </TD>
+      <TD>
+         <P>|</P>
+      </TD>
+   </TR>
+   <TR>
+      <TD>
+         <P>125</P>
+      </TD>
+      <TD>
+         <P>7D</P>
+      </TD>
+      <TD>
+         <P>&egrave;</P>
+      </TD>
+      <TD>
+         <P>}</P>
+      </TD>
+   </TR>
+</TABLE>
+</P>
+
+<P>Familiarisez vous avec ces 6 principales diff&eacute;rences, c'est
+la contrainte la plus g&ecirc;nante qu'apporte le clavier AZERTY.</P>
+
+<P>&nbsp;</P>
+
+<P><FONT SIZE="+1">3 CONTR&Ocirc;LE DU CLAVIER</FONT></P>
+
+<P>En AZERTY, pour taper un chiffre, il faut auparavant appuyer sur
+la touche SHIFT puis sur le chiffre correspondant. La touche CAPS
+LOCK ne fait que bloquer les lettres de l'Alphabet en majuscule. Pour
+bloquer tout le clavier en position haute (toutes les touches
+shift&eacute;es), vous devez appuyer simultan&eacute;ment sur les
+touches CTRL et CAPS LOCK. La m&ecirc;me combinaison vous fera
+revenir &agrave; un clavier normal.</P>
+
+<P><I>SI VOUS UTILISEZ DES DISQUETTES...</I></P>
+
+<P>&nbsp;</P>
+
+<BLOCKQUOTE><FONT SIZE="+1">AZERTY SOUS AMSDOS</FONT></BLOCKQUOTE>
+
+<P>Hormis CAT, toutes les commandes AMSDOS sont
+pr&eacute;c&eacute;d&eacute;es du symbole: |</P>
+
+<P>Lorsque vous taperez' | 'vous verrez appara&icirc;tre &agrave;
+l'&eacute;cran le symbole '&ugrave;'. Dans la syntaxe des commandes
+AMSDOS, la variable (qui repr&eacute;sente un nom de fichiers est
+toujours pr&eacute;c&eacute;d&eacute;e du caract&egrave;re @. La
+visualisation de ce caract&egrave;re en sera &eacute;videmment
+alt&eacute;r&eacute;e.</P>
+
+<P>Sur le manuel vous lirez par ex: <FONT FACE="Fixedsys">|ren,@n$,@a$</FONT></P>
+
+<P>vous taperez sur le clavier: <FONT FACE="Fixedsys">|ren,@n$,@a$</FONT></P>
+
+<P>vous verrez &agrave; l'&eacute;cran: <FONT FACE="Fixedsys">&ugrave;ren,&agrave;n$,&agrave;a$</FONT></P>
+
+<BLOCKQUOTE><FONT SIZE="+1">SOUS CP/M</FONT></BLOCKQUOTE>
+
+<P>CP/M est appel&eacute; en tapant sous Basic la commande:
+<FONT FACE="Fixedsys">&ugrave;cpm</FONT></P>
+
+<P>Une fois sous CP/M, aucun des caract&egrave;res sp&eacute;ciaux
+n'est n&eacute;cessaire dans la syntaxe des commandes.</P>
+
+<P>Si vous tapez un texte sous CP/M, tous les caract&egrave;res
+accentu&eacute;s sont disponibles et seront conformes &agrave;
+l'&eacute;dition comme &agrave; l'impression.</P>
+
+<P>Notez que les crochets droit et gauche sont imprim&eacute;s ainsi
+quand l'imprimante est r&eacute;gl&eacute;e en caract&egrave;res
+fran&ccedil;ais:</P>
+
+<P>&eacute;cran imprimante</P>
+
+<P>I ----&gt; &#176;</P>
+
+<P>I ----&gt; &#167;</P>
+
+<P>Sous CP/M+ sur le 6128, il est quelquefois utile d'ex&eacute;cuter
+le programme LANGUAGE 0 pour programmer.</P>
+
+<P>&nbsp;</P>
+
+<CENTER><FONT SIZE="+3"><B>CPC464 AZERTY</B></FONT></CENTER>
+
+<P><FONT SIZE="+1"><B>Valeurs ASCII&nbsp;par d&eacute;faut (en
+hexad&eacute;cimal)</B></FONT></P>
+
+<P><FONT SIZE="+1"><B><IMG SRC="http://pulko.mandy.pagesperso-orange.fr/cpc/Images/ascii464.gif" WIDTH=1000 HEIGHT=400 ALIGN=bottom></B></FONT></P>
+
+<P><FONT SIZE="+1"><B>Caract&egrave;res d'expansion, valeurs et
+emplacements par d&eacute;faut</B></FONT></P>
+
+<P><FONT SIZE="+1"><B><IMG SRC="http://pulko.mandy.pagesperso-orange.fr/cpc/Images/clavier464.gif" WIDTH=1000 HEIGHT=400 ALIGN=bottom></B></FONT></P>
+
+<CENTER><FONT SIZE="+3"><B>CPC6128
+AZERTY&amp;QWERTY</B></FONT></CENTER>
+
+<P><FONT SIZE="+1"><B>Valeurs ASCII&nbsp;par d&eacute;faut (en
+hexad&eacute;cimal)</B></FONT></P>
+
+<P><FONT SIZE="+1"><B><IMG SRC="http://pulko.mandy.pagesperso-orange.fr/cpc/Images/ascii6128.gif" WIDTH=1000 HEIGHT=300 ALIGN=bottom></B></FONT></P>
+
+<P><FONT SIZE="+1"><B>Caract&egrave;res d'expansion, valeurs et
+emplacements par d&eacute;faut</B></FONT></P>
+
+<P><FONT SIZE="+1"><B><IMG SRC="http://pulko.mandy.pagesperso-orange.fr/cpc/Images/clavier6128.gif" WIDTH=1000 HEIGHT=300 ALIGN=bottom></B></FONT></P>
+
+<P><FONT SIZE="+2"><B>Introduction</B>
+
+<HR>
+
+AMSTRAD CPC6128</FONT></P>
+
+<P><FONT SIZE="+2">Ordinateur &agrave; untit&eacute; de disque
+int&eacute;gr&eacute;e</FONT></P>
+
+<P>&nbsp;</P>
+
+<P><B>Une progression logique</B></P>
+
+<P>Encourag&eacute;s par l'immense succ&egrave;s des syst&egrave;mes
+AMSTRAD CPC464 et CPC664 et m&ucirc;s par la m&ecirc;me impulsion
+novatrice, nous sommes fiers de vous pr&eacute;senter le CPC6128.</P>
+
+<P>Fid&egrave;le &agrave; notre concept de compatibilit&eacute;, le
+CPC6128 fonctionne avec les logiciels de ces deux
+pr&eacute;d&eacute;cesseurs et dispose en outre d'une RAM
+suppl&eacute;mentaire de 64Ko pour exploitation du syst&egrave;me
+CP/M et autres applications utilisateur.</P>
+
+<P>&nbsp;</P>
+
+<P><B>CP/M PLus</B></P>
+
+<P>Le syst&egrave;me CP/M plus, appel&eacute; &eacute;galemet CP/M
+3.1, offre une gerande facilit&eacute; d'acc&egrave;s &agrave; la
+biblioth&egrave;que des logiciels CP/M80. Les 61Ko de TPA (Transient
+Program Array ou "Tableau de prgramme transitoire") fournissent
+&agrave; tous les programmes CP/M80 une vaste capacit&eacute;
+d'exploitation et tout l'espace requis pour le stockage des
+donn&eacute;es. Bien que compatibles entre elles, les versions CP/M
+Plus et CP/M 2.2 sont toutes deux disponibles pour vous permettre
+d'exploiter sans modification les applications
+d&eacute;velopp&eacute;es avec le syst&egrave;me CP/M 2.2.</P>
+
+<P>&nbsp;</P>
+
+<P>La plupart des logiciels CP/M 2.2 peuvent b&eacute;n&eacute;ficier
+des nombreuses am&eacute;liorations du CP/M Plus, sans risque de
+conflit La fonction d'&eacute;mulation des terminaux
+int&eacute;gr&eacute;e au CP/M Plus permet d'installer directement
+des logiciels configur&eacute;s pour l'exploitation d'&eacute;crans
+aux caract&eacute;ristiques analogues &agrave; celles des terminaux
+VT52 et Z&eacute;nith Z19/Z29.</P>
+
+<P>&nbsp;</P>
+
+<P><B>GSX</B></P>
+
+<P>Gr&acirc;ce au syst&egrave;me d'extension graphique
+GSX&nbsp;fourni avec le CP/M Plus, les programmes d'application
+peuvent adresser les imprimantes, tables tra&ccedil;antes et
+&eacute;crans utilisant des instructions standard; la notion de
+portabilit&eacute; des programmes CP/M est ainsi &eacute;largie
+au-del&agrave; des seuls &eacute;crans de texte. Il est possible, en
+outre, d'interfacer les logiciels b&eacute;n&eacute;ficiant du
+GSX&nbsp;avec un grand nombre d'imprimantes, pour obtenir des copies
+sur papier degraphiques, diagrammes, etc.</P>
+
+<P>&nbsp;</P>
+
+<P><B>Dr.&nbsp;LOGO</B></P>
+
+<P>Tandis que LOGO&nbsp;de Digital Research poursuit ses
+investigations dans le monde de l'enseignement assist&eacute; par
+ordinateur, la capacit&eacute; accrue du 6128 permet d'&eacute;tendre
+le logiciel Dr. LOGO, utilis&eacute; pr&eacute;c&eacute;demment sous
+CP/M 2.2.&nbsp;Et, bien entendu, les programmes &eacute;crits sous
+CP/M 2.2 jouissent d'une compatibilit&eacute; ascendante.</P>
+
+<P>&nbsp;</P>
+
+<P><B>Les disquettes</B></P>
+
+<P>Avec son syst&egrave;me de disquettes int&eacute;gr&eacute;, le
+CP664 a ouvert la voie du futur; le CPC6128 reprend le flambeau:
+offrrant &agrave; une client&egrave;le de plus en plus exigeante une
+informatique &agrave; disquettes pour un prix abordable, il
+r&eacute;concilie enfin les performances de l'informatique personelle
+avec les co&ucirc;ts des ordinateurs individuels. Les disquettes de
+tous les syst&egrave;mes AMSTRAD&nbsp;sont interchangeables, mais les
+programmes b&eacute;n&eacute;ficiant des am&eacute;lioratins du CP/M
+Plus et du syst&egrave;me GSX ne tournent pas, on s'en doute, sur les
+syst&egrave;mes d&eacute;pourvus de ces avantages.</P>
+
+<P>Derri&egrave;re le CPC6128 s'inscrit, en fait, l'un des noms les
+plus prestigieux de l'informatique britannique. Par ailleurs, le
+clubdes utilisateurs AMSTRAD et son mensuel jouissent d'une solide
+r&eacute;putation pour la qualit&eacute; et la primeur des
+informations qu'ils diffusent.</P>
+
+<P>&nbsp;</P>
+
+<P><B>Les logiciels</B></P>
+
+<P>Le CPC6128 accepte tous les logiciels sur disquette des CPC664 et
+CPC464/DDI1 et la quasi-totalit&eacute; des logiciels sur cassette du
+CPC464 (si un lecteur de cassette lui est raccord&eacute;, bien
+s&ucirc;r).&nbsp;Il offre ainsi &agrave; l'utilisateur un choix
+fantastique de logiciels imm&eacute;diatements disponibles, issus de
+la gamme &eacute;tendue d'AMSOFT, et de produits existant sur le
+march&eacute;.</P>
+
+<P>&nbsp;</P>
+
+<P>&nbsp;</P>
+
+<P>&nbsp;</P>
+
+<P>&nbsp;</P>
+
+<CENTER><FONT SIZE="+1"><B>AMSOFT</B></FONT>
+
+<P>Un d&eacute;partement de</P>
+
+<P><FONT SIZE="+2" COLOR="#666666"><B>AMSTRAD</B></FONT></P>
+
+<P>&copy; Copyright 1985 AMSOFT, AMSTRAD Consumer Electronics
+plc.</P>
+
+<P>&nbsp;</P>
+
+<P>&nbsp;</P>
+
+<P>&nbsp;</P>
+
+<P>&nbsp;</P>
+
+<P>Tout commentaire ou suggestion concernant ce produit ou son manuel
+sera bienvenu...
+
+<HR>
+
+<FONT SIZE="-1">Ni l'information contenue aux pr&eacute;sentes, ni le
+produit d&eacute;crit dans ce manuel, ne peuvent &ecirc;tre
+modifi&eacute;s ou reproduits totalement ou partiellement, en tout ou
+partie, et sous quelque forme que ce soit, sans l'accord &eacute;crit
+pr&eacute;alable d'Amstrad SARL.</FONT></P></CENTER>
+
+<P><FONT SIZE="-1">AMSOFT et AMSTRAD&nbsp;accepteront volontiers vos
+suggestions &agrave; propos de l'ordinateur ou de ce guide</FONT></P>
+
+<CENTER><FONT SIZE="-1">Toute correspondance doit &ecirc;tre
+adress&eacute;e &agrave; :</FONT>
+
+<P><B>AMSTRAD&nbsp;FRANCE</B></P>
+
+<P><B>143, Grande Rue</B></P>
+
+<P><B>92310 S&egrave;vres</B></P></CENTER>
+
+<P><FONT SIZE="-1">Toute maintenance et service apr&egrave;s-vente
+concernant le produit doivent &ecirc;tre effectu&eacute;s
+obligatoirement par des revendeurs AMSOFT agr&eacute;&eacute;s. Ni
+Amsoft, ni Amstrad ne seront responsables, de quelque fa&ccedil;on
+que ce soit, de toute perte ou dommage caus&eacute; par une
+mintenance ou service effectu&eacute; par des personnes non
+agr&eacute;&eacute;es.</FONT></P>
+
+<P><FONT SIZE="-1">Ce guide est seulementr destin&eacute; &agrave;
+faciliter l'utilisation du produit par le lecteur et, par
+cons&eacute;quent, ni Amsoft, ni Amstrad ne seront responsables de
+toute perte ou dommage quelconque qui pourrait r&eacute;sulter de
+l'utilisation de toutes informations, renseignements, erreurs ou
+ommissions contenus dans ce guide ainsi que de toute utilisation
+impropre du produit.</FONT></P>
+
+<P><FONT SIZE="-1">Il est recommand&eacute; de joindre le talon
+d'enregistrement de Digital Research.</FONT></P>
+
+<P>&nbsp;</P>
+
+<CENTER><FONT SIZE="-1">Dr. LOGO et CP/M sont des marques
+d&eacute;pos&eacute;es de Digital Research Inc.</FONT>
+
+<P><FONT SIZE="-1">Z80 est une marque d&eacute;pos&eacute;e de Zilog
+Inc.</FONT></P>
+
+<P><FONT SIZE="-1">IBM et IBM PC sont des marques
+d&eacute;pos&eacute;es de International Business Machines
+Inc.</FONT></P>
+
+<P><FONT SIZE="-1">Z19, Z29 et H89 sont des marques
+d&eacute;pos&eacute;es de Zenith Data Systems Inc.</FONT></P>
+
+<P><FONT SIZE="-1">VT52 est une marque d&eacute;pos&eacute;e de
+Digital Equipement Corp.</FONT></P>
+
+<P><FONT SIZE="-1">AMSDOS, CPC6128, CPC664 et CPC464 sont des marques
+d&eacute;pos&eacute;es</FONT></P>
+
+<P><FONT SIZE="-1">de AMSTRAD Consumer Electronics plc.</FONT></P>
+
+<P><FONT SIZE="-1">Premi&egrave;re publication 1985</FONT></P>
+
+<P>&nbsp;</P>
+
+<P><FONT SIZE="-1">Compil&eacute; par Ivor Spital</FONT></P>
+
+<P><FONT SIZE="-1">Auteurs: Roland Perry, Ivor Spital, William Poel,
+Cliff Lawson, avec accord de Locomotive Software Ltd.</FONT></P>
+
+<P>&nbsp;</P>
+
+<P><FONT SIZE="-1">AMSTRAD&nbsp;est une marque d&eacute;pos&eacute;e
+de AMSTRAD&nbsp;Consumer Electronics plc.</FONT></P>
+
+<P><FONT SIZE="-1">L'emploi de la marque ou du nom AMSTRAD sans
+autorisation pr&eacute;alable est strctement interdit.</FONT></P>
+
+<P>&nbsp;</P>
+
+<P><FONT SIZE="-1">Publi&eacute; par AMSOFT</FONT></P>
+
+<P><FONT SIZE="-1">Traduit et adapt&eacute; par le Groupe KUJAWSKI et
+l'&eacute;quipe d'AMSOFT, France.</FONT></P></CENTER>
+
+<P><FONT SIZE="-2">
+
+<HR>
+
+</FONT><FONT SIZE="+2"><B>IMPORTANT</B></FONT><FONT SIZE="+1"><B>
+
+<HR>
+
+</B></FONT><B>Remarques relatives &agrave; l'installation</B></P>
+
+<P>1. Suivez les instructions dans la partie 1 du Cours
+El&eacute;mentaire et utilisez une prise &agrave; 3 broches pour le
+raccordement au secteur.</P>
+
+<P>2. Ne tentez jamais de brancher le syst&egrave;me sur une autre
+tension que 220 V CA, 50 Hz.</P>
+
+<P>3. Aucune pi&egrave;ce du syst&egrave;me n'&eacute;tant
+d&eacute;pannable par l'utilisateur, il est superflu et peu
+recommand&eacute; de chercher &agrave; y acc&eacute;der.&nbsp;Pour le
+d&eacute;pannage, faites toujours appel &agrave; un technicien
+qualifi&eacute;.</P>
+
+<P>4. Pour plus de confort visuel, &eacute;loignez le moniteur le
+plus possible du clavier et r&eacute;glez la luminosit&eacute; de
+l'&eacute;cran en fonction de l'&eacute;clairage de la pi&egrave;ce.
+La commande de brillance du moniteur doit &ecirc;tre
+r&eacute;gl&eacute;e sur le niveau le plus faible possible.</P>
+
+<P>5. L'ordinateur doit se trouver en face du monteur et le plus loin
+possible de ce dernier. Pour une fiabilit&eacute; maximale, placez
+l'unit&eacute; de disque &agrave; droite de l'&eacute;cran. Evitez
+d'installer l'ordinateur &agrave; proximit&eacute; d'une source
+d'interf&eacute;rences.</P>
+
+<P>6. Veillez a &eacute;loigner les disques et les unit&eacute;s de
+disque des champs magn&eacute;tiques.</P>
+
+<P>7. Si vous disposez d'une deuxi&egrave;me unit&eacute; de disque,
+s&eacute;parez le c&acirc;ble plat d'interconnexion de l'unit&eacute;
+du c&acirc;ble d'alimentation secteur.</P>
+
+<P>8. Veillez &agrave; d&eacute;gager les orifices de ventilation du
+syst&egrave;me.</P>
+
+<P>9. Evitez d'entreposer votre mat&eacute;riel dans des endroits
+trop chauds, froids, umides ou g&eacute;n&eacute;rateurs de
+poussi&egrave;re.</P>
+
+<P>&nbsp;</P>
+
+<P><B>Remarques relatives au fonctionnement</B></P>
+
+<P>(Ne vous inqui&eacute;tez pas si les termes techniques
+employ&eacute;s dans ce chapitre vous parraissent obscurs ; ils
+s'&eacute;clairciront au fur et &agrave; mesure que vous avancerez
+dans le manuel).</P>
+
+<P>1. N'oubliez jamais de retirer la disquette de son unit&eacute;
+avant de mettre le syst&egrave;me sous ou hors tension.&nbsp;Vous
+risqueriez de l'endommager et de perdre les programmes et
+donn&eacute;es qu'elle contient.</P>
+
+<P>2. Faites toujours une sauvegarde des disquettes contenant des
+programmes pr&eacute;cieux. C'est le cas notament de la disquette du
+sys&egrave;me d'exploitation CP/M fournie avec le 6128. En cas de
+perte ou 'alt&eacute;ration accidentelle des donn&eacute;es d'une
+disquette, son remplacement pourrait s'av&eacute;rer des plus
+co&ucirc;teux.</P>
+
+<P>3. Pour &eacute;viter l'&eacute;crasement accidentel des
+donn&eacute;es stock&eacute;es sur la disquette CP/M, veillez
+&agrave; ne pas recouvrir ses ouvertures de protection &agrave;
+l'&eacute;criture.</P>
+
+<P>4. Si vous utilisez deux untit&eacute;s de disquettes,
+l'unit&eacute; AMSTRAD&nbsp;FD1, par exemple, mettez toujours la
+deuxi&egrave;me unit&eacute; sous tension avant d'allumer
+l'ordinateur.</P>
+
+<P>5. Ne touchez pas la surface magn&eacute;tique de la
+disquette.</P>
+
+<P>6. Ne retirez jamais la disquette en cours de lecture ou
+d'&eacute;criture.</P>
+
+<P>7. Rappelez-vous que le formatage d'une disquette entra&icirc;ne
+l'effacement des donn&eacute;es qu'elle contient.</P>
+
+<P>8. Les progiciels sur cassettes destin&eacute;s au syst&egrave;me
+AMSTRAD CPC464 font parfois appel &agrave; l'espace m&eacute;moire
+occup&eacute; par l'interface interne d'exploitation sur disques et
+sont donc inutilisables sur le 6128 &eacute;quip&eacute; d'un lecteur
+de cassette. Pour les probl&egrave;mes de compatibilit&eacute;
+concernant les logiciels sur cassette, adressez-vous directement
+&agrave; AMSOFT. De toute fa&ccedil;on, la plupart des logiciels
+AMSOFT&nbsp;sont disponibles sur disquettes, compatibles avec le
+syst&egrave;me 6128.</P>
+
+<P>9. Le d&eacute;p&ocirc;t l&eacute;gal de votre disquette CP/M
+(encod&eacute;e d'une r&eacute;f&eacute;rence) ne permet son
+utilisation que sur un seul syst&egrave;me informatique. Vous
+n'&ecirc;tes donc pas autoriser &agrave; donner cette disquette
+&agrave; un autre utilisateur. A ce sujet, lisez attentivement le
+texte de d&eacute;p&ocirc;t l&eacute;gal situ&eacute; &agrave; la fin
+du manuel (Annexe 1).
+
+<HR>
+
+<FONT SIZE="+2"><B>TABLE&nbsp;DES&nbsp;MATIERES
+
+<HR>
+
+</B></FONT></P>
+
+<P><A HREF="http://pulko.mandy.pagesperso-orange.fr/cpc/chapitre1.htm"><FONT SIZE="+1"><B>Chapitre
+1</B></FONT></A></P>
+
+<P><FONT SIZE="+1"><B>Cours &eacute;l&eacute;mentaire</B></FONT></P>
+
+<P>Mise en marche</P>
+
+<P>Connexion de vos p&eacute;riph&eacute;riques</P>
+
+<P>Les disquettes</P>
+
+<P>Familiarisation avec le clavier</P>
+
+<P>Chargement desd logiciels et des jeux</P>
+
+<P>Introduction aux mots cl&eacute;s du BASIC AMSTRAD</P>
+
+<P>Introduction au fonctionnement des disquettes</P>
+
+<P>Modes couleurs et graphiques</P>
+
+<P>Utilisation des sons</P>
+
+<P>Introduction &agrave; AMSDOS et CP/M...</P>
+
+<P>Introduction a Bank Manager</P>
+
+<P><A HREF="chapitre2.htm"><FONT SIZE="+1"><B>Chapitre
+2</B></FONT></A></P>
+
+<P><FONT SIZE="+1"><B>Passons aux choses
+s&eacute;rieuses</B></FONT></P>
+
+<P>Ecriture d'un programme simple</P>
+
+<P>Evolution et r&eacute;flexions</P>
+
+<P>Utilisation d'un tableau</P>
+
+<P>Introduction d'un menu</P>
+
+<P>Chargement et sauvegarde de variables sur une disquette</P>
+
+<P>Edition et num&eacute;rotation des lignes</P>
+
+<P>Mise en ordre d'un programme</P>
+
+<P><A HREF="chapitre3.htm"><FONT SIZE="+1"><B>Chapitre
+3</B></FONT></A></P>
+
+<P><FONT SIZE="+1"><B>Liste compl&egrave;te des mots cl&eacute;s du
+BASIC AMSTRAD du 6128</B></FONT></P>
+
+<P>Description des notation utilis&eacute;es</P>
+
+<P>Liste alphab&eacute;tique des mots cl&eacute;s</P>
+
+<BLOCKQUOTE>Mot cl&eacute;
+   
+   <P>Syntaxe</P>
+   
+   <P>Exemples</P>
+   
+   <P>Description</P>
+   
+   <P>Remarques (le cas &eacute;ch&eacute;ant)</P>
+   
+   <P>Mots cl&eacute;s associ&eacute;s</P></BLOCKQUOTE>
+
+<P><A HREF="chapitre4.htm"><FONT SIZE="+1"><B>Chapitre
+4</B></FONT></A></P>
+
+<P><FONT SIZE="+1"><B>Utilisation des disquettes et des
+cassettes</B></FONT></P>
+
+<P>Duplication de la disquette originale</P>
+
+<P>Introduction au CP/M Plus</P>
+
+<P>Utilisation des fichiers Help</P>
+
+<P>Fonctionnement du syst&egrave;me avec une et plusieurs
+unit&eacute;s</P>
+
+<P>Copie de fichiers</P>
+
+<P>Utilisation d'une disquette pour un travail en
+BASIC&nbsp;uniquement</P>
+
+<P>Introduction aus extensions graphiques GSX</P>
+
+<P>Exploitation sous CP/M&nbsp;2.2</P>
+
+<P>Les cassettes</P>
+
+<P><A HREF="chapitre5.htm"><FONT SIZE="+1"><B>Chapitre
+5</B></FONT></A></P>
+
+<P><FONT SIZE="+1"><B>Les &eacute;l&eacute;ments d'AMSDOS et du
+CP/M</B></FONT></P>
+
+<P>AMSDOS:</P>
+
+<BLOCKQUOTE>Introduction &agrave; AMSDOS
+   
+   <P>Le catalogue de la disquette</P>
+   
+   <P>Nom, genres et en-t&ecirc;tes des fichiers AMSDOS</P>
+   
+   <P>Les jokers</P>
+   
+   <P>R&eacute;capitulatif des commandes AMSDOS</P>
+   
+   <P>Copie de fichiers</P>
+   
+   <P>Guide de r&eacute;f&eacute;rence des messages d'erreur</P></BLOCKQUOTE>
+
+<P>CP/M:</P>
+
+<BLOCKQUOTE>Introduction au CP/M
+   
+   <P>Chargement du CP/M Plus</P>
+   
+   <P>Le mode direct</P>
+   
+   <P>Les programmes transitoires</P>
+   
+   <P>Gestion des p&eacute;riph&eacute;riques</P>
+   
+   <P>Exploitation sous CP/M 2.2</P></BLOCKQUOTE>
+
+<P><A HREF="chapitre6.htm"><FONT SIZE="+1"><B>Chapitre
+6</B></FONT></A></P>
+
+<P><FONT SIZE="+1"><B>Introduction au LOGO</B></FONT></P>
+
+<P>Qu'est-ce que le LOGO</P>
+
+<P>Proc&eacute;dures Dr. LOGO</P>
+
+<P>Programmes et proc&eacute;dures d'&eacute;dition</P>
+
+<P>Aides &agrave; l'utilisation</P>
+
+<P>R&eacute;capitulatif des primitives Dr. LOGO</P>
+
+<BLOCKQUOTE>Traitement des mots et des listes
+   
+   <P>Op&eacute;rations arithm&eacute;tiques</P>
+   
+   <P>Op&eacute;rations logiques</P>
+   
+   <P>Variables</P>
+   
+   <P>Proc&eacute;dures</P>
+   
+   <P>Edition/Modification</P>
+   
+   <P>Fonction d'imprimante</P>
+   
+   <P>Ecran texte</P>
+   
+   <P>Ecran graphique</P>
+   
+   <P>Graphiques "tortues"</P>
+   
+   <P>Gestion de l'espace de travail</P>
+   
+   <P>Listes "de propri&eacute;t&eacute;"</P>
+   
+   <P>Fichiers sur disquette</P>
+   
+   <P>Clavier et levier de commande</P>
+   
+   <P>Son</P>
+   
+   <P>Ordre d'ex&eacute;cution</P>
+   
+   <P>Manipulation des exceptions</P>
+   
+   <P>Primitives du syst&egrave;me</P>
+   
+   <P>Variables du syst&egrave;me</P>
+   
+   <P>"Propri&eacute;t&eacute;s" du syst&egrave;me</P></BLOCKQUOTE>
+
+<P><FONT SIZE="+1"><B>Capitre 7</B></FONT></P>
+
+<P><FONT SIZE="+1"><B>Pour information...</B></FONT></P>
+
+<P>Emplacement du curseur et extensions du code de contr&ocirc;le</P>
+
+<P>Interruptions</P>
+
+<P>Caract&egrave;res graphiques et ASCII</P>
+
+<P>R&eacute;f&eacute;rences des touches (cl&eacute;s)</P>
+
+<P>Sons</P>
+
+<P>Messages d'erreur</P>
+
+<P>Mots cl&eacute;s du BASIC</P>
+
+<P>Grilles</P>
+
+<P>Connexions</P>
+
+<P>Imprimantes</P>
+
+<P>Leviers de commande</P>
+
+<P>Extensions r&eacute;sidentes RSX</P>
+
+<P>M&eacute;moire</P>
+
+<P>Emulateur de terminaux du CP/M Plus</P>
+
+<P>Jeu de caract&egrave;res du CP/M&nbsp;Plus</P>
+
+<P><FONT SIZE="+1"><B>Chapitre 8</B></FONT></P>
+
+<P><FONT SIZE="+1"><B>Compl&eacute;ment d'informations sur Bank
+Manager</B></FONT></P>
+
+<P>Utilisation du scond bloc de 64Ko</P>
+
+<P>Stockage des images &eacute;cran</P>
+
+<BLOCKQUOTE>Changement mat&eacute;riel des bancs
+   
+   <P>Echange d'&eacute;crans</P>
+   
+   <P>Copie d'&eacute;crans</P></BLOCKQUOTE>
+
+<P>Fonctionnement des fichiers virtuels</P>
+
+<BLOCKQUOTE>Cr&eacute;ation d'un disque virtuel
+   
+   <P>Enregistrement courant</P>
+   
+   <P>Lecture, &eacute;criturze et recherche de cha&icirc;nes</P>
+   
+   <P>Exemple de programme de fichiers virtuels</P></BLOCKQUOTE>
+
+<P><FONT SIZE="+1"><B>Chapitre 9</B></FONT></P>
+
+<P><FONT SIZE="+1"><B>A vos heures de loisir...</B></FONT></P>
+
+<P>G&eacute;n&eacute;ralit&eacute;s</P>
+
+<BLOCKQUOTE>Le monde des micros
+   
+   <P>Mat&eacute;riel et logiciel</P>
+   
+   <P>Comparaison entre plusieurs ordinateurs</P>
+   
+   <P>Pr&eacute;jug&eacute;s r&eacute;pandus</P>
+   
+   <P>Comment un ordinateur appr&eacute;hende vos instructions</P>
+   
+   <P>Le monde num&eacute;rique</P>
+   
+   <P>Bits et octets</P>
+   
+   <P>Syst&egrave;me de num&eacute;rotation binaire</P>
+   
+   <P>Syst&egrave;me de num&eacute;rotation hexad&eacute;cimal</P></BLOCKQUOTE>
+
+<P>Fonctions propres au 6128</P>
+
+<BLOCKQUOTE>Jeu de caract&egrave;res
+   
+   <P>Variables</P>
+   
+   <P>Logique</P>
+   
+   <P>Caract&egrave;res d&eacute;finis par l'utilisateur</P>
+   
+   <P>Formatage d'impression</P>
+   
+   <P>Fen&ecirc;tre</P>
+   
+   <P>Interruptions</P>
+   
+   <P>Donn&eacute;es</P>
+   
+   <P>Sons</P>
+   
+   <P>Graphiques</P>
+   
+   <P>Les graphiques exploitant la m&eacute;moire
+   suppl&eacute;mentaire</P>
+   
+   <P>Programme: "Salut l'artiste"</P></BLOCKQUOTE>
+
+<P><FONT SIZE="+1"><B>Annexes</B></FONT></P>
+
+<P>&nbsp;</P>
+
+<P>Annexe 1: Contrat d'utilisation des logiciels</P>
+
+<P>Annexe 2: Petit dictionnaire</P>
+
+<P>Annexe 3: Et pour quelques programmes de plus...</P>
+
+<BLOCKQUOTE>Bustout
+   
+   <P>Bombardier</P>
+   
+   <P>Ping-Pong</P>
+   
+   <P>Escrime &eacute;lectrique</P>
+   
+   <P>Database</P>
+   
+   <P>Ars&egrave;ne Lupin</P></BLOCKQUOTE>
+
+<P>Annexe 4: Index</P>
+
+<P></P>
+<script type="text/javascript">
+//<![CDATA[
+if (typeof _gstat != "undefined") _gstat.audience('','pagesperso-orange.fr');
+//]]>
+</script>
+</BODY>
+</HTML>
