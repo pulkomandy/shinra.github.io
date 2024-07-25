@@ -533,6 +533,7 @@ This little subroutine waits for an interrupt and then reads and return the
 status (using CMD_GET_STATUS). Most of the time the status should be &amp;14,
 when everything went well.
 </p>
+
 <h4>Configuring the mouse</h4>
 <p>
 Ok, the device and configuration are now set, which means we are now ready to
@@ -660,6 +661,31 @@ And that's it! We can send the command to get the next report and start over.
 </p>
 
 
+<h3>Sending data to a device</h3>
+
+<p>Here are some notes for sending a simple control transfer with data phase to
+a device. For example, to turn on a LED on a keyboard, you would use the HID
+"Set Report" transfer.</p>
+
+<p>As you can see in the <a href="https://beyondlogic.org/usbnutshell/usb4.shtml#Control">USB in a Nutshell</a> website, a control transfer is made of multiple stages. A SETUP stage, a IN or OUT stage, and a STATUS stage. In the case of the CH376, which is a quite low level chip, you will have to complete these stages one by one.</p>
+
+<p>In the diagrams there, the grey parts are what the CH376 (host) sends, and the white part is what the keyboard ("function") sends.</p>
+
+<p>Each of these stage is accomplished with a CMD_ISSUE_TOKEN_X command. If the stage is sending data, that data should be uploaded to the
+CH376 first (this includes the 8 bytes for the HID "Set Report" command, as well as the content of the report). Then, the token (of the right type)
+can be executed. For data input tokens, of course, you read the data from the CH376 after executing the token.</p>
+
+<p>The other information needed is the token types: <a href="https://beyondlogic.org/usbnutshell/usb3.shtml#USBProtocols">USB in a Nutshell</a> tells us that the SETUP token has value 1101 or 0xD, and that the DATA IN token has a value of 0001. These wil lbe the 4 low bits of the second parameter of CMD_ISSUE_TOKEN_X. Since we are doing control transfers, we use endpoint 0 (the other endpoints are used only for other types of transfers). So the 4 high bits can be set to 0.</p>
+
+<p>So, first end a SETUP token with the 8 byte HID Set Report command. Then wait for the command to complete.</p>
+
+<p>Then, send an OUT token, with the report content (the appropriate values to turn the LED on). Again wait for the command to complete.</p>
+
+<p>Finally, you need an IN command, which should receive a 0-byte data packet if all went well.</p>
+
+<p>CH376DS2.PDF gives a complete example for an INPUT control transfer (at the end in the "external firmware" chapter). This can be used as a base to build the similar flow for an OUTPUT transfer, by comparing with the USB in a Nutshell diagrams. The main missing information will be the values to use for the "synchronization byte" (first parameter of the CMD_ISSUE_TOKEN_X command). Can someone explain how to set it?</p>
+
+
 <h2>Using the serial link</h2>
 
 <h3>Overview</h3>
@@ -740,7 +766,8 @@ the incoming data from the RBR register.</p>
 
 <p>
 The datasheets of the chips used on the board may be useful:
-<ul><li>CH376: USB-Host and SD card controller (part 1 readily available as "CH376DS1.PDF", and <a href="CH376_ext.html">part 2</a>, with help from Google translate.</li>
+<ul><li>CH376: USB-Host and SD card controller (part 1 readily available as "CH376DS1.PDF", and <s><a href="CH376_ext.html">part 2</a>, with help from Google translate.</s></li>
+	<li><strong>Update: <a href="https://bitsavers.org/components/wch/_dataSheets/CH376DS2.PDF">CH376DS2.PDF official english version</a></li> is now available!</li>
 	<li>SC16C650B: UART for hi-speed link (also used for interrupts control)</li>
 	<li>FT231X: UART to USB converter for hi-speed link (also used for clock generation)</li>
 </ul>
